@@ -3,14 +3,20 @@ import { memo, useState } from 'react';
 import { Handle, Position, NodeToolbar } from 'reactflow';
 
 const labelStyle = {
-  position: 'absolute',
+    position: 'absolute' as Position,
   color: '#555',
   bottom: -20,
   fontSize: 12,
   fontFamily: '"Poppins", sans-serif',
 };
 
-function ToolbarNode({ data }) {
+interface ToolbarNodeProps {
+    data: {
+      label: string;
+    };
+  }
+
+function ToolbarNode({ data }: ToolbarNodeProps) {
   const [title, setTitle] = useState(() => 'Title 1');
 
   return (
