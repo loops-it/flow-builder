@@ -9,6 +9,7 @@ import ReactFlow, {
   NodeToolbar,
   Connection,
   Edge,
+  updateEdge,
 } from "reactflow";
 
 import initialNodes from "../data/nodes";
@@ -38,7 +39,8 @@ const processNode = {
 
 const nodeClassName = (node: { type: any; }) => node.type;
 
-const generateId = () => `node_${Math.random().toString(36).substr(2, 9)}`;
+const generateNodeId = () => `node_${Math.random().toString(36).substr(2, 9)}`;
+const generateEdgeId = () => `edge_${Math.random().toString(36).substr(2, 9)}`;
 
 
 const FlowPanel = () => {
@@ -46,7 +48,7 @@ const FlowPanel = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const addTextNode = () => {
-    const newNodeId = generateId();
+    const newNodeId = generateNodeId();
     const newNode = {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
@@ -66,7 +68,7 @@ const FlowPanel = () => {
   };
 
   const addToolNode = () => {
-    const newNodeId = generateId();
+    const newNodeId = generateNodeId();
     const newNode = {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
@@ -85,9 +87,44 @@ const FlowPanel = () => {
       });
   };
 
+//   const onEdgeUpdate = useCallback(
+//     (oldEdge: Edge, newConnection: Connection) => setEdges((els) => updateEdge(oldEdge, newConnection, els)),
+//     []
+//   );
+
+//   const onConnect = useCallback(
+//     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
+//     []
+//   );
+
+const onEdgeUpdate = useCallback(
+    (oldEdge: Edge, newConnection: Connection) => {
+      const updatedEdge = updateEdge(oldEdge, newConnection, edges);
+      updatedEdge.type = 'button';
+      setEdges((prevEdges) => {
+        const updatedEdges = prevEdges.map((edge) =>
+          edge.id === updatedEdge.id ? updatedEdge : edge
+        );
+        console.log('Updated Edges List:', updatedEdges);
+        return updatedEdges;
+      });
+    },
+    [edges, setEdges]
+  );
+
   const onConnect = useCallback(
-    (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
-    []
+    (params: Edge | Connection) => {
+      if (!('id' in params)) {
+        params.id = generateEdgeId();
+      }
+      params.type = 'button';
+      setEdges((prevEdges) => {
+        const newEdges = addEdge(params, prevEdges);
+        console.log('Updated Edges List:', newEdges);
+        return newEdges;
+      });
+    },
+    [setEdges]
   );
 
   return (
@@ -102,6 +139,7 @@ const FlowPanel = () => {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
+          onEdgeUpdate={onEdgeUpdate}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
