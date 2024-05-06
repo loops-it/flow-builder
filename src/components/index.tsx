@@ -65,6 +65,26 @@ const FlowPanel = () => {
       });
   };
 
+  const addToolNode = () => {
+    const newNodeId = generateId();
+    const newNode = {
+      id: newNodeId,
+      data: { label: `Node ${newNodeId}` },
+      position: {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+      },
+      type: 'tools',
+      style: processNode,
+    };
+
+    setNodes((prevNodes) => {
+        const updatedNodes = [...prevNodes, newNode];
+        console.log('Updated Node List:', updatedNodes);
+        return updatedNodes;
+      });
+  };
+
   const onConnect = useCallback(
     (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
     []
@@ -72,8 +92,9 @@ const FlowPanel = () => {
 
   return (
     <>
-    <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999 }}>
+    <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex' , flexDirection: 'column' }}>
         <button onClick={addTextNode}>Add Text Node</button>
+        <button onClick={addToolNode} style={{ marginTop: '10px'}}>Add Tool Node</button>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
