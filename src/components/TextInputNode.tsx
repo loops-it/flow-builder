@@ -17,6 +17,7 @@ export default memo(({ id }) => {
     };
 
     const logUserInput = () => {
+        console.log('node id :',id)
         console.log('Title:', title);
         console.log('Description:', description);
     };
