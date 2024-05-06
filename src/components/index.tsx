@@ -17,11 +17,13 @@ import ButtonEdge from "./ButtonEdge";
 import TextInputNode from "./TextInputNode";
 
 import '../styles/overview.css';
+import ToolBarNode from "./ToolBarNode";
 
 
 
 const nodeTypes = {
     textinput: TextInputNode,
+    tools: ToolBarNode,
   };
 
 

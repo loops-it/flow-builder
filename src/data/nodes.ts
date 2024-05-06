@@ -33,9 +33,9 @@ export default [
     },
     {
       id: '3',
-      type: 'output',
+      type: 'tools',
       data: { label: 'Output Node 2' },
-      position: { x: 400, y: 150 },
+      position: { x: 500, y: 150 },
       style: endNode,
     },
     {
