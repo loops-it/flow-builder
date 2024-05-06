@@ -66,3 +66,20 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+.edgebutton{
+  border-radius: 100% !important;
+  background-color: #fff !important;
+  border: solid 1px #cacaca !important;
+  color: black !important;
+  /* padding: 5px !important; */
+  /* line-height: 6px !important; */
+  font-size: 12px !important;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 20px;
+    width: 20px;
+}

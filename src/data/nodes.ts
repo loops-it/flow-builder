@@ -1,3 +1,6 @@
+import React from 'react';
+import { MarkerType } from 'reactflow';
+
 const startNode = {
   color: '#22092C',
   borderColor: '#22092C',
@@ -24,14 +27,14 @@ export default [
     {
       id: '2',
       type: 'output',
-      data: { label: 'Output Node' },
+      data: { label: 'Output Node 1' },
       position: { x: 200, y: 150 },
       style: endNode,
     },
     {
       id: '3',
       type: 'output',
-      data: { label: 'Output Node' },
+      data: { label: 'Output Node 2' },
       position: { x: 400, y: 150 },
       style: endNode,
     },
@@ -44,6 +47,7 @@ export default [
     {
       id: '5',
       data: { label: 'B' },
+      type: 'textinput',
       position: { x: 400, y: 400 },
       style: processNode,
     },
