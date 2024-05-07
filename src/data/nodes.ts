@@ -19,13 +19,13 @@ const endNode = {
 export default [
     {
       id: '1',
-      type: 'input',
+      type: 'start',
       data: { label: 'Input Node' },
       position: { x: 300, y: 25 },
     },
     {
       id: '2',
-      type: 'circle',
+      type: 'output',
       data: { label: 'Output Node 1' },
       position: { x: 200, y: 150 },
     },

@@ -69,6 +69,7 @@
   
   .react-flow__node-resizer .react-flow__handle,
   .react-flow__node-circle .react-flow__handle,
+  .react-flow__node-start .react-flow__handle,
   .react-flow__node-textinput .react-flow__handle {
     background: #bbb;
     border-radius: 0;
@@ -81,6 +82,7 @@
   
   .react-flow__node-resizer .react-flow__handle-bottom,
   .react-flow__node-circle .react-flow__handle-bottom,
+  .react-flow__node-start .react-flow__handle-bottom,
   .react-flow__node-textinput .react-flow__handle-bottom {
     bottom: -5px;
     transform: none;
@@ -89,6 +91,7 @@
   
   .react-flow__node-resizer .react-flow__handle-top,
   .react-flow__node-circle .react-flow__handle-top,
+  .react-flow__node-start .react-flow__handle-top,
   .react-flow__node-textinput .react-flow__handle-top {
     top: -5px;
     transform: none;
@@ -97,6 +100,7 @@
   
   .react-flow__node-resizer .react-flow__handle-left,
   .react-flow__node-circle .react-flow__handle-left,
+  .react-flow__node-start .react-flow__handle-left,
   .react-flow__node-textinput .react-flow__handle-left {
     height: 8px;
     width: 4px;
@@ -118,6 +122,7 @@
   }
   
   .react-flow__node-circle,
+  .react-flow__node-start,
   .react-flow__node-textinput {
     color: #fff;
     border-radius: 100%;
@@ -131,6 +136,7 @@
   }
   
   .react-flow__node-circle .wrapper,
+  .react-flow__node-start .wrapper,
   .react-flow__node-textinput .wrapper {
     overflow: hidden;
     display: flex;
@@ -140,7 +146,8 @@
     flex-grow: 1;
   }
   
-  .react-flow__node-circle .inner {
+  .react-flow__node-circle .inner,
+  .react-flow__node-start .inner {
     background: rgba(255, 255, 255, 0.5);
     border-radius: 100%;
     display: flex;
@@ -149,6 +156,8 @@
     flex-grow: 1;
     position: relative;
     text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
   }
   
   .react-flow__node-textinput {
@@ -208,6 +217,7 @@
   .react-flow__minimap .resizer,
   .react-flow__minimap .tools,
   .react-flow__minimap .circle,
+  .react-flow__minimap .start,
   .react-flow__minimap .textinput {
     fill: rgb(208, 192, 247);
   }
@@ -216,7 +226,8 @@
     fill: rgb(208, 192, 247);
   }
   
-  .react-flow__minimap .circle {
+  .react-flow__minimap .circle,
+  .react-flow__minimap .start {
     rx: 100%;
     ry: 100%;
   }
