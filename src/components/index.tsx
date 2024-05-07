@@ -19,6 +19,8 @@ import TextInputNode from "./TextInputNode";
 
 import '../styles/overview.css';
 import ToolBarNode from "./ToolBarNode";
+import { v4 as uuidv4 } from 'uuid';
+
 
 
 
@@ -39,8 +41,15 @@ const processNode = {
 
 const nodeClassName = (node: { type: any; }) => node.type;
 
-const generateNodeId = () => `node_${Math.random().toString(36).substr(2, 9)}`;
-const generateEdgeId = () => `edge_${Math.random().toString(36).substr(2, 9)}`;
+
+// node id generate
+// const generateNodeId = () => `node_${Math.random().toString(36).substr(2, 9)}`;
+const generateNodeId = () => `node_${uuidv4()}`;
+
+// edge id generate
+// const generateEdgeId = () => `edge_${Math.random().toString(36).substr(2, 9)}`;
+const generateEdgeId = () => `edge_${uuidv4()}`;
+
 
 
 const FlowPanel = () => {

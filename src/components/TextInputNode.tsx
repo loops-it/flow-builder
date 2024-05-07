@@ -10,20 +10,46 @@ export default memo(({ id }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
+    // node title input
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
     };
 
+    // node text area input
     const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
 
+    // console.log the node data
     const logUserInput = () => {
         console.log('node id :', id)
         console.log('Title:', title);
         console.log('Description:', description);
     };
 
+
+    // add data from node to node list
+    const saveNode = () => {
+        setNodes((prevNodes) => {
+            const updatedNodes = prevNodes.map(node => {
+                if (node.id === id) {
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            title,
+                            description
+                        }
+                    };
+                }
+                return node;
+            });
+            console.log('Updated Node List:', updatedNodes);
+            return updatedNodes;
+        });
+    };
+
+    // delete node from list
     const deleteNode = () => {
         setNodes((prevNodes) => {
             const updatedNodes = prevNodes.filter(node => node.id !== id);
@@ -57,7 +83,7 @@ export default memo(({ id }) => {
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
-                        <button onClick={logUserInput} className='saveButton'>Save</button>
+                        <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 
 

@@ -21,6 +21,8 @@ function ToolbarNode({ data, id }: ToolbarNodeProps) {
   const [title, setTitle] = useState(() => 'Title 1');
   const { setNodes } = useReactFlow();
 
+
+  // delete node from list
   const deleteNode = () => {
     setNodes((prevNodes) => {
       const updatedNodes = prevNodes.filter(node => node.id !== id);
