@@ -20,6 +20,7 @@ import TextInputNode from "./TextInputNode";
 import '../styles/overview.css';
 import ToolBarNode from "./ToolBarNode";
 import { v4 as uuidv4 } from 'uuid';
+import CircleNode from "./CircleNode";
 
 
 
@@ -27,6 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
 const nodeTypes = {
     textinput: TextInputNode,
     tools: ToolBarNode,
+    circle: CircleNode
   };
 
 
@@ -136,6 +138,20 @@ const onEdgeUpdate = useCallback(
     [setEdges]
   );
 
+  const onNodeDragStop = useCallback(
+    (event, node) => {
+      const { x, y } = node.position;
+      setNodes((prevNodes) =>
+        prevNodes.map((n) =>
+          n.id === node.id ? { ...n, position: { x, y } } : n
+        )
+      );
+      console.log('Updated Node List:', nodes);
+    },
+    [nodes, setNodes]
+  );
+  
+
   return (
     <>
     <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex' , flexDirection: 'column' }}>
@@ -146,6 +162,7 @@ const onEdgeUpdate = useCallback(
         <ReactFlow
           nodes={nodes}
           edges={edges}
+          onNodeDragStop={onNodeDragStop}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onEdgeUpdate={onEdgeUpdate}

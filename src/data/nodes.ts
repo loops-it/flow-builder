@@ -22,34 +22,43 @@ export default [
       type: 'input',
       data: { label: 'Input Node' },
       position: { x: 300, y: 25 },
-      style: startNode,
     },
     {
       id: '2',
       type: 'output',
       data: { label: 'Output Node 1' },
       position: { x: 200, y: 150 },
-      style: endNode,
     },
     {
       id: '3',
       type: 'tools',
       data: { label: 'Output Node 2' },
       position: { x: 500, y: 150 },
-      style: endNode,
     },
     {
       id: '4',
       data: { label: 'A' },
       position: { x: 300, y: 250 },
-      style: processNode,
     },
     {
       id: '5',
       data: { label: 'B' },
       type: 'textinput',
-      position: { x: 400, y: 400 },
-      style: processNode,
+      position: { x: 450, y: 400 },
+    },
+    {
+      id: '6',
+      data: { label: 'D',title: 'Savings accounts',description: 'this is a test' },
+      type: 'textinput',
+      position: { x: 150, y: 400 },
     },
   ];
   
+
+  // {
+  //   id: '5',
+  //   data: { label: 'B' },
+  //   type: 'textinput',
+  //   position: { x: 400, y: 400 },
+  //   style: processNode,
+  // },

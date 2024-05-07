@@ -1,22 +1,29 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id }) => {
+export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [title, setTitle] = useState(data.label || '');
+    const [description, setDescription] = useState(data.description || '');
+
+    // Update title state when props change
+    useEffect(() => {
+        setTitle(data.title || '');
+        setDescription(data.description || '');
+    }, [data]);
+
 
     // node title input
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setTitle(event.target.value);
     };
 
     // node text area input
-    const handleDescriptionChange = (event) => {
+    const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setDescription(event.target.value);
     };
 
@@ -58,6 +65,9 @@ export default memo(({ id }) => {
         });
         console.log('Node deleted:', id);
     };
+
+
+    
 
     return (
         <>
