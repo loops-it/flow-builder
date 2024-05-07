@@ -238,5 +238,19 @@
   
 
   .plainColor{
-    background-color: #85032c;
+    /* background-color: #85032c; */
+    /* background: conic-gradient(
+    from -160deg at 50% 50%,
+    #e92a67 0deg,
+    #a853ba 120deg,
+    #2a8af6 240deg,
+    #e92a67 360deg
+  ); */
+  background: conic-gradient(
+    from -160deg at 50% 50%,
+    rgba(233, 42, 103, 0.6) 0deg,
+    rgba(168, 83, 186, 0.6) 120deg,
+    rgba(42, 138, 246, 0.6) 240deg,
+    rgba(233, 42, 103, 0.6) 360deg
+  );
   }
