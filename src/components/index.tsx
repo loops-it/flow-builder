@@ -256,6 +256,7 @@ const FlowPanel = () => {
         width: '248px',
         height: '300px',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
+        zIndex: '999'
       },
     };
   
@@ -328,18 +329,18 @@ const FlowPanel = () => {
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        <button onClick={addCircleNode} ><FaFirstdraft /></button>
+        <button onClick={addCircleNode} >start</button>
         {/* <button onClick={addTextNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
         {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button> */}
-        {/* <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
-          <FaRegObjectGroup />
-        </button> */}
+        <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
+          button
+        </button>
         {/* <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
-          <FaRegObjectGroup />
+          <MdSimCard />
         </button> */}
         {/* <button onClick={addCardViewNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
 
-        <button onClick={addGroup} style={{ marginTop: '10px' }}><FaRegObjectGroup /></button>
+        <button onClick={addGroup} style={{ marginTop: '10px' }}>card</button>
 
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
