@@ -17,48 +17,50 @@ const endNode = {
 };
 
 export default [
-    {
-      id: '1',
-      type: 'start',
-      data: { label: 'Input Node' },
-      position: { x: 300, y: 25 },
+  {
+    id: '1',
+    type: 'start',
+    data: { label: 'Input Node' },
+    position: { x: 300, y: 25 },
+  },
+  {
+    id: '2-1',
+    type: 'group',
+    position: {
+      x: 250,
+      y: 200,
     },
-    {
-      id: '2',
-      type: 'output',
-      data: { label: 'Output Node 1' },
-      position: { x: 200, y: 150 },
+    style: {
+      width: '248px',
+      height: '300px',
+      backgroundColor: 'rgba(208, 192, 247, 0.2)',
     },
-    {
-      id: '3',
-      type: 'tools',
-      data: { label: 'Output Node 2' },
-      position: { x: 500, y: 150 },
-    },
-    {
-      id: '4',
-      data: { label: 'A' },
-      position: { x: 300, y: 250 },
-    },
-    {
-      id: '5',
-      data: { label: 'B' },
-      type: 'textinput',
-      position: { x: 450, y: 400 },
-    },
-    {
-      id: '6',
-      data: { label: 'D',title: 'Savings accounts',description: 'this is a test' },
-      type: 'textinput',
-      position: { x: 150, y: 400 },
-    },
-  ];
-  
+  },
+  {
+    id: '5',
+    data: { label: 'B' },
+    type: 'cardHeader',
+    position: { x: 0, y: 0 },
+    parentId: '2-1',
+    extent: 'parent',
+  },
+  {
+    id: '8',
+    data: { label: 'B' },
+    type: 'button',
+    position: { x: 10, y: 220 },
+    parentId: '2-1',
+    extent: 'parent',
+  },
+];
 
-  // {
-  //   id: '5',
-  //   data: { label: 'B' },
+
+
+
+
+ // {
+  //   id: '6',
+  //   data: { label: 'D', title: 'Savings accounts', description: 'this is a test' },
   //   type: 'textinput',
-  //   position: { x: 400, y: 400 },
-  //   style: processNode,
+  //   position: { x: 150, y: 400 },
   // },

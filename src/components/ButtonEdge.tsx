@@ -5,6 +5,8 @@ import {
   getBezierPath,
   useReactFlow,
 } from 'reactflow';
+import { IoIosCloseCircle } from "react-icons/io";
+
 
 export default function CustomEdge({
   id,
@@ -18,7 +20,7 @@ export default function CustomEdge({
   markerEnd,
 }) {
   const { setEdges, getEdgeById } = useReactFlow();
-    const [edgePath, labelX, labelY] = getBezierPath({
+  const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -38,8 +40,8 @@ export default function CustomEdge({
       return updatedEdges;
     });
   }, [id, setEdges]);
-  
-  
+
+
 
 
   return (
@@ -56,7 +58,7 @@ export default function CustomEdge({
           className="nodrag nopan"
         >
           <button className="edgebutton" onClick={deleteEdge}>
-            x
+            <IoIosCloseCircle style={{ color: '#000 !important' }} />
           </button>
         </div>
       </EdgeLabelRenderer>
