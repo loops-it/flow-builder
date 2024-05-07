@@ -19,7 +19,8 @@ export default memo(({ id }) => {
       <div className="wrapper gradient">
         <div className="inner">{label || 'no node connected'}</div>
       </div>
-      <Handle type="target" position={Position.Bottom} />
+      <Handle type="target" position={Position.Top} />
+      <Handle type="source" position={Position.Bottom} />
     </>
   );
 });

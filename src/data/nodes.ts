@@ -25,7 +25,7 @@ export default [
     },
     {
       id: '2',
-      type: 'output',
+      type: 'circle',
       data: { label: 'Output Node 1' },
       position: { x: 200, y: 150 },
     },
