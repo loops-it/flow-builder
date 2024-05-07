@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -17,8 +17,8 @@ export default function CustomEdge({
   style = {},
   markerEnd,
 }) {
-  const { setEdges } = useReactFlow();
-  const [edgePath, labelX, labelY] = getBezierPath({
+  const { setEdges, getEdgeById } = useReactFlow();
+    const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -30,6 +30,17 @@ export default function CustomEdge({
   const onEdgeClick = () => {
     setEdges((edges) => edges.filter((edge) => edge.id !== id));
   };
+
+  const deleteEdge = useCallback(() => {
+    setEdges(edges => {
+      const updatedEdges = edges.filter(edge => edge.id !== id);
+      console.log('Updated Edge List (delete):', updatedEdges);
+      return updatedEdges;
+    });
+  }, [id, setEdges]);
+  
+  
+
 
   return (
     <>
@@ -44,7 +55,7 @@ export default function CustomEdge({
           }}
           className="nodrag nopan"
         >
-          <button className="edgebutton" onClick={onEdgeClick}>
+          <button className="edgebutton" onClick={deleteEdge}>
             x
           </button>
         </div>
