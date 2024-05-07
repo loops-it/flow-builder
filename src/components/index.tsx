@@ -10,6 +10,7 @@ import ReactFlow, {
   Connection,
   Edge,
   updateEdge,
+  Position,
 } from "reactflow";
 
 import initialNodes from "../data/nodes";
@@ -27,6 +28,9 @@ import { MdSimCard } from "react-icons/md";
 import ButtonNode from "./ButtonNode";
 import TextImageNode from "./TextImageNode";
 import CardGroupNode from "./CardGroupNode";
+
+import { IoAddCircle } from "react-icons/io5";
+
 
 
 
@@ -72,8 +76,8 @@ const generateGroupId = () => `group_${uuidv4()}`;
 const FlowPanel = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [groups, setGroups] = useState([]); // State to store the groups
-
+  const [groups, setGroups] = useState([]); 
+  const [groupId, setGroupId] = useState(null);
 
   useEffect(() => {
     console.log("node list : ",nodes )
@@ -246,6 +250,7 @@ const FlowPanel = () => {
 
   const addGroup = () => {
     const groupId = generateGroupId();
+    setGroupId(groupId);
   
     const group = {
       id: groupId,
@@ -254,7 +259,9 @@ const FlowPanel = () => {
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '248px',
-        height: '300px',
+        minHeight: '300px',
+        maxHeight: '450px',
+        height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999'
       },
@@ -289,7 +296,9 @@ const FlowPanel = () => {
         y: 0,
       },
       type: 'cardHeader',
-      style: processNode,
+      style: {
+        position: 'relative !important' 
+      },
       parentId: groupId, 
       extent: 'parent', 
     };
@@ -302,6 +311,14 @@ const FlowPanel = () => {
   };
   
   const addGroupButtonNode = (groupId) => {
+
+    const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
+
+  if (buttonsCount >= 3) {
+    console.log('Maximum button limit reached for this group');
+    return;
+  }
+
     const newNodeId = generateNodeId();
   
     const newNode = {
@@ -309,10 +326,12 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10,
-        y: 220,
+        y: 220 + (buttonsCount * 70),
       },
       type: 'button',
-      style: processNode,
+      style: {
+        position: 'relative !important' 
+      },
       parentId: groupId,
       extent: 'parent', 
     };
@@ -324,14 +343,20 @@ const FlowPanel = () => {
     });
   };
   
-  
+  const addFloatingButton = () => {
+    if (!groupId) {
+      console.error("Group ID is not defined");
+      return;
+    }
+    addGroupButtonNode(groupId);
+  };
 
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
         <button onClick={addCircleNode} >start</button>
         {/* <button onClick={addTextNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
-        {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button> */}
+        <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button>
         <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
           button
         </button>
@@ -341,7 +366,21 @@ const FlowPanel = () => {
         {/* <button onClick={addCardViewNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
 
         <button onClick={addGroup} style={{ marginTop: '10px' }}>card</button>
+        {groupId && (
+        <button
+          style={{
+            position: "relative",
+            bottom: "0px",
+            right: "0px",
+            zIndex: "1000",
+            marginTop: '10px'
+          }}
+          onClick={addFloatingButton}
+        >
+          <IoAddCircle />
 
+        </button>
+      )}
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
