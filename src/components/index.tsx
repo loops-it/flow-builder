@@ -37,7 +37,7 @@ const edgeTypes = {
 };
 
 const processNode = {
-  color: '#872341',
+  color: '#fff',
   borderColor: '#872341',
 };
 
