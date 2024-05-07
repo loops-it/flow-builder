@@ -103,7 +103,7 @@ export default memo(({ id, type, data, position }) => {
             </div>
             {popupOpen && (
                 <div className="popup">
-                    <div className="popupInner">
+                    <div className="popupInner" style={{padding: '10px'}}>
                         <label>Text</label>
                         <input
                             type="text"
@@ -115,9 +115,10 @@ export default memo(({ id, type, data, position }) => {
                             type="text"
                             value={link}
                             onChange={handleLinkChange}
+                            style={{ marginBottom: '10px'}}
                         />
                         <button onClick={savePopup}>Save</button>
-                        <button onClick={closePopup}>Cancel</button>
+                        <button onClick={closePopup} style={{ marginLeft: '10px'}}>Cancel</button>
                     </div>
                 </div>
             )}
