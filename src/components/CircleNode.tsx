@@ -16,7 +16,7 @@ export default memo(({ id }) => {
 
   return (
     <>
-      <div className="wrapper gradient">
+      <div className="wrapper plainColor">
         {/* <div className="inner">{label || 'no node connected'}</div> */}
         <div className="inner">Start</div>
       </div>
