@@ -123,13 +123,13 @@ export default memo(({ id, type, data, position }) => {
                             onChange={handleTitleChange}
                             className="nodrag"
                         />
-                        <label>Description</label>
+                        <label style={{marginTop: '8px'}}>Description</label>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
-                        <label>Image</label>
+                        <label style={{marginTop: '8px'}}>Image</label>
                         <input
                             type="file"
                             accept="image/*"

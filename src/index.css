@@ -107,6 +107,9 @@ label{
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
+  color: #333 !important;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
 }
 .saveButton{
   width: 100%;
@@ -140,4 +143,10 @@ label{
   border-radius: 10px;
   box-shadow: 0 0 2em #c2c2c2;
   color: #333
+}
+
+p{
+  color: #333 !important;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
 }
