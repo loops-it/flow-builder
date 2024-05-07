@@ -9,6 +9,7 @@ export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
     const [title, setTitle] = useState(data.label || '');
     const [description, setDescription] = useState(data.description || '');
+    const [image, setImage] = useState(null);
 
     // Update title state when props change
     useEffect(() => {
@@ -36,24 +37,59 @@ export default memo(({ id, type, data, position }) => {
 
 
     // add data from node to node list
+    // const saveNode = () => {
+    //     setNodes((prevNodes) => {
+    //         const updatedNodes = prevNodes.map(node => {
+    //             if (node.id === id) {
+    //                 return {
+    //                     ...node,
+    //                     data: {
+    //                         ...node.data,
+    //                         title,
+    //                         description
+    //                     }
+    //                 };
+    //             }
+    //             return node;
+    //         });
+    //         console.log('Updated Node List:', updatedNodes);
+    //         return updatedNodes;
+    //     });
+    // };
+
+    // handle image upload
+    const handleImageChange = (event: { target: { files: any[]; }; }) => {
+        const file = event.target.files[0];
+        console.log('Selected File:', file); // Log the selected file
+        setImage(file);
+    };
+
+    useEffect(() => {
+        if (image) {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('image', image || ''); // Make sure image is appended properly
+
+            console.log('Form Data:', formData);
+        }
+    }, [image]);
+
+    // add data from node to node list
     const saveNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.map(node => {
-                if (node.id === id) {
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            title,
-                            description
-                        }
-                    };
-                }
-                return node;
-            });
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('image', image || '');
+
+        console.log('Form Data:', formData);
+        const formDataObject = {};
+        for (const pair of formData.entries()) {
+            formDataObject[pair[0]] = pair[1];
+        }
+        console.log('Form Data:', formDataObject);
     };
 
     // delete node from list
@@ -67,12 +103,13 @@ export default memo(({ id, type, data, position }) => {
     };
 
 
-    
+
 
     return (
         <>
             <div className='elementWrap'>
-                <div className="wrapper gradient elementWrap">
+                {/* gradient */}
+                <div className="wrapper plainColor elementWrap">
 
                     <div className="inner">
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
@@ -93,6 +130,13 @@ export default memo(({ id, type, data, position }) => {
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
+                        <label>Image</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="nodrag"
+                        />
                         <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 
