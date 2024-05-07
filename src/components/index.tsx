@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -26,6 +26,7 @@ import { FaFirstdraft, FaRegObjectGroup, FaTools } from "react-icons/fa";
 import { MdSimCard } from "react-icons/md";
 import ButtonNode from "./ButtonNode";
 import TextImageNode from "./TextImageNode";
+import CardGroupNode from "./CardGroupNode";
 
 
 
@@ -38,7 +39,8 @@ const nodeTypes = {
   start: CircleNode,
   annotation: AnotationNode,
   button: ButtonNode,
-  cardHeader: TextImageNode
+  cardHeader: TextImageNode,
+  cardView: CardGroupNode
 };
 
 
@@ -62,11 +64,20 @@ const generateNodeId = () => `node_${uuidv4()}`;
 // const generateEdgeId = () => `edge_${Math.random().toString(36).substr(2, 9)}`;
 const generateEdgeId = () => `edge_${uuidv4()}`;
 
+// group id
+const generateGroupId = () => `group_${uuidv4()}`;
+
 
 
 const FlowPanel = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [groups, setGroups] = useState([]); // State to store the groups
+
+
+  useEffect(() => {
+    console.log("node list : ",nodes )
+  }, [])
 
   const addTextNode = () => {
     const newNodeId = generateNodeId();
@@ -118,6 +129,25 @@ const FlowPanel = () => {
         y: Math.random() * window.innerHeight,
       },
       type: 'start',
+      style: processNode,
+    };
+
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, newNode];
+      console.log('Updated Node List:', updatedNodes);
+      return updatedNodes;
+    });
+  };
+  const addCardViewNode = () => {
+    const newNodeId = generateNodeId();
+    const newNode = {
+      id: newNodeId,
+      data: { label: `Node ${newNodeId}` },
+      position: {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+      },
+      type: 'cardView',
       style: processNode,
     };
 
@@ -214,19 +244,103 @@ const FlowPanel = () => {
     [nodes, setNodes]
   );
 
+  const addGroup = () => {
+    const groupId = generateGroupId();
+  
+    const group = {
+      id: groupId,
+      type: 'group',
+      data: { label: 'Group' },
+      position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
+      style: {
+        width: '248px',
+        height: '300px',
+        backgroundColor: 'rgba(208, 192, 247, 0.2)',
+      },
+    };
+  
+    setGroups([...groups, group]);
+  
+    // Add group card header node
+    addGroupCardHeaderNode(groupId);
+  
+    // Add group button node
+    addGroupButtonNode(groupId);
+  
+    console.log("group : ", group);
+  
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, group];
+      console.log("Updated Node List with group:", updatedNodes);
+      return updatedNodes;
+    });
+  };
+  
+
+  const addGroupCardHeaderNode = (groupId) => {
+    const newNodeId = generateNodeId();
+  
+    const newNode = {
+      id: newNodeId,
+      data: { label: `Node ${newNodeId}` },
+      position: {
+        x: 0,
+        y: 0,
+      },
+      type: 'cardHeader',
+      style: processNode,
+      parentId: groupId, 
+      extent: 'parent', 
+    };
+  
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, newNode];
+      console.log('Updated Node List:', updatedNodes);
+      return updatedNodes;
+    });
+  };
+  
+  const addGroupButtonNode = (groupId) => {
+    const newNodeId = generateNodeId();
+  
+    const newNode = {
+      id: newNodeId,
+      data: { label: `Node ${newNodeId}` },
+      position: {
+        x: 10,
+        y: 220,
+      },
+      type: 'button',
+      style: processNode,
+      parentId: groupId,
+      extent: 'parent', 
+    };
+  
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, newNode];
+      console.log('Updated Node List:', updatedNodes);
+      return updatedNodes;
+    });
+  };
+  
+  
 
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
         <button onClick={addCircleNode} ><FaFirstdraft /></button>
-        <button onClick={addTextNode} style={{ marginTop: '10px' }}><MdSimCard /></button>
-        <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button>
-        <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
+        {/* <button onClick={addTextNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
+        {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button> */}
+        {/* <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
           <FaRegObjectGroup />
-        </button>
-        <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
+        </button> */}
+        {/* <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
           <FaRegObjectGroup />
-        </button>
+        </button> */}
+        {/* <button onClick={addCardViewNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
+
+        <button onClick={addGroup} style={{ marginTop: '10px' }}><FaRegObjectGroup /></button>
+
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
