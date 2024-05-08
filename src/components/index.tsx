@@ -33,11 +33,6 @@ import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 
 
-
-
-
-
-
 const nodeTypes = {
   textinput: TextInputNode,
   tools: ToolBarNode,
@@ -73,7 +68,6 @@ const FlowPanel = () => {
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
-  const [groupHeight, setGroupHeight] = useState(320);
 
   useEffect(() => {
     console.log("node list : ", nodes)
@@ -163,17 +157,11 @@ const FlowPanel = () => {
     [nodes, setNodes]
   );
 
- 
 
 
-  const calculateGroupStyle = () => ({
-    width: '248px',
-    minHeight: '320px !important',
-    maxHeight: '450px',
-    height: 'auto !important',
-    backgroundColor: 'rgba(208, 192, 247, 0.2)',
-    zIndex: '999'
-  });
+
+
+
   
   
   // card style 2 group
@@ -188,8 +176,7 @@ const FlowPanel = () => {
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '300px',
-        minHeight: '320px',
-        maxHeight: '450px',
+        minHeight: '400px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999',
@@ -214,16 +201,7 @@ const FlowPanel = () => {
     });
   };
 
-
-  useEffect(() => {
-    console.log("min height: ", groupHeight)
-    console.log("styles : ",calculateGroupStyle)
-  }, [groupHeight])
-
-
-  
-
-  const addGroupCardHeaderNode = (groupId: any) => {
+  const addGroupCardHeaderNode = (groupId) => {
     const newNodeId = generateNodeId();
 
     const newNode = {
@@ -248,7 +226,7 @@ const FlowPanel = () => {
     });
   };
 
-  const addGroupButtonNode = (groupId: string | undefined) => {
+  const addGroupButtonNode = (groupId) => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
@@ -257,9 +235,6 @@ const FlowPanel = () => {
       return;
     }
 
-    const minHeight = 320 + buttonsCount * 70; // Update the minimum height based on the number of buttons
-    setGroupHeight(minHeight);
-
     const newNodeId = generateNodeId();
 
     const newNode = {
@@ -267,7 +242,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 240 ,
+        y: 325 ,
       },
       type: 'button',
       style: {
@@ -283,6 +258,7 @@ const FlowPanel = () => {
       return updatedNodes;
     });
   };
+  
 
   const addFloatingButton = () => {
     if (!groupId) {
@@ -313,9 +289,8 @@ const FlowPanel = () => {
       data: { label: 'Group' },
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
-        width: '248px',
-        minHeight: '320px',
-        maxHeight: '450px',
+        width: '300px',
+        minHeight: '100px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999'
@@ -351,8 +326,8 @@ const FlowPanel = () => {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
       position: {
-        x: 10,
-        y: 10 + (buttonsCount * 70),
+        x: 10 + (buttonsCount * 95),
+        y: 10 ,
       },
       type: 'button',
       style: {
@@ -386,7 +361,7 @@ const FlowPanel = () => {
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
         <button onClick={addCircleNode} >start</button>
         <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
-        <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button>
+        {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button> */}
         <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
           Buttons
         </button>

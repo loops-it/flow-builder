@@ -29,7 +29,7 @@ export default memo(({ id, data }) => {
         setDescription(event.target.value);
     };
 
-    
+
 
     // console.log the node data
     const logUserInput = () => {
@@ -67,7 +67,7 @@ export default memo(({ id, data }) => {
         setImage(file);
     };
 
-    
+
 
     // useEffect(() => {
     //     if (image) {
@@ -133,19 +133,40 @@ export default memo(({ id, data }) => {
 
     return (
         <>
-            <div className='elementWrap' style={{zIndex: '99998 !important'}}>
+            <div className='elementWrap' style={{ zIndex: '99998 !important' }}>
                 {/* gradient */}
-                <div className="wrapper plainColor  elementWrap" style={{borderRadius: '10px',margin: '10px'}}>
+                <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
-                    <div className="inner" style={{display: 'flex' ,flexDirection: 'column', padding: '10px', borderRadius: '10px'}}>
+                    <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
-                        {imageUrl && (
-                            <img src={imageUrl} alt="Uploaded Image" style={{ maxWidth: '100%', marginBottom: '8px' }} />
-                        )}
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <img src='/images/Slide 06.png' alt="Uploaded Image" style={{ width: '150px', marginBottom: '8px' }} />
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center'
+                            }}>
+                                <label style={{ marginTop: '8px' }}>Image</label>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="nodrag"
+                                />
+                            </div>
+                        </div>
+                        {/* {imageUrl && ( */}
+
+                        {/* )} */}
                         <label>Title</label>
                         <input
                             type="text"
@@ -153,19 +174,13 @@ export default memo(({ id, data }) => {
                             onChange={handleTitleChange}
                             className="nodrag"
                         />
-                        <label style={{marginTop: '8px'}}>Description</label>
+                        <label style={{ marginTop: '8px' }}>Description</label>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
-                        <label style={{marginTop: '8px'}}>Image</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="nodrag"
-                        />
+
                         {/* <button onClick={saveNode} className='saveButton'>Save</button> */}
                     </div>
 
