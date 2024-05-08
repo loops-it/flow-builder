@@ -374,7 +374,7 @@ const FlowPanel = () => {
               bottom: "0px",
               right: "0px",
               zIndex: "1000",
-              marginTop: '10px'
+              marginTop: '50px'
             }}
             onClick={addFloatingButton}
           >
