@@ -1,76 +1,87 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
-import { RiCloseCircleFill } from 'react-icons/ri';
+import { RiCloseCircleFill } from "react-icons/ri";
 
-const GroupingNode = ({ id, type, data, position }) => {
-  const { setElements } = useReactFlow();
-  const [groupName, setGroupName] = useState('');
-  const [grouping, setGrouping] = useState(false);
 
-  const handleGroupNameChange = (event) => {
-    setGroupName(event.target.value);
-  };
+// const dimensionAttrs = ['width', 'height'];
 
-  const createGroup = () => {
-    setGrouping(true);
-  };
+export default memo(({ id,  data }) => {
+    const { setNodes } = useReactFlow();
+    const [description, setDescription] = useState(data.description || '');
 
-  const confirmGroup = () => {
-    const group = {
-      id: `group-${id}`,
-      type: 'group',
-      data: { label: groupName },
-      position: { x: position.x - 50, y: position.y - 50 }, // Adjust position as needed
-      style: {
-        width: '200px', // Adjust dimensions as needed
-        height: '200px',
-      },
-      isGroup: true,
-      children: [id], // Add the current node as a child
+    // Update title state when props change
+    useEffect(() => {
+        setDescription(data.description || '');
+    }, [data]);
+
+    // node text area input
+    const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+        setDescription(event.target.value);
     };
 
-    setElements((prevElements) => [...prevElements, group]);
-    setGrouping(false);
-    setGroupName('');
-  };
+    
 
-  const cancelGroup = () => {
-    setGrouping(false);
-    setGroupName('');
-  };
+    // add data from node to node list
+    const saveNode = () => {
+        setNodes((prevNodes) => {
+            const updatedNodes = prevNodes.map(node => {
+                if (node.id === id) {
+                    return {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            description
+                        }
+                    };
+                }
+                return node;
+            });
+            console.log('Updated Node List:', updatedNodes);
+            return updatedNodes;
+        });
+    };
 
-  return (
-    <>
-      <div className="elementWrap">
-        <div className="wrapper plainColor elementWrap">
-          <div className="inner">
-            <div style={{ display: 'flex', justifyContent: 'end' }}>
-              <button className="nodeCloseButton" onClick={() => console.log('Node deleted:', id)}>
-                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
-              </button>
+    // delete node from list
+    const deleteNode = () => {
+        setNodes((prevNodes) => {
+            const updatedNodes = prevNodes.filter(node => node.id !== id);
+            console.log('Updated Node List:', updatedNodes);
+            return updatedNodes;
+        });
+        console.log('Node deleted:', id);
+    };
+
+
+
+
+    return (
+        <>
+            <div className='elementWrap' style={{zIndex: '99998 !important'}}>
+                {/* gradient */}
+                <div className="wrapper plainColor  elementWrap" style={{borderRadius: '10px',margin: '10px'}}>
+
+                    <div className="inner" style={{display: 'flex' ,flexDirection: 'column', padding: '10px', borderRadius: '10px'}}>
+                        <div style={{ display: 'flex', justifyContent: 'end' }}>
+                            <button className='nodeCloseButton' onClick={deleteNode}>
+                                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                            </button>
+                        </div>
+                        <label style={{marginBottom: '10px'}}>Add your text here</label>
+                        <textarea
+                            value={description}
+                            onChange={handleDescriptionChange}
+                            className="nodrag"
+                            style={{marginBottom: '10px'}}
+                        ></textarea>
+                        <button onClick={saveNode} className='saveButton'>Save</button>
+                    </div>
+
+
+                </div>
+
+
             </div>
-            <label>Name</label>
-            <input type="text" value={groupName} onChange={handleGroupNameChange} className="nodrag" />
-            {!grouping ? (
-              <button onClick={createGroup} className="saveButton">
-                Create Group
-              </button>
-            ) : (
-              <>
-                <button onClick={confirmGroup} className="saveButton">
-                  Confirm
-                </button>
-                <button onClick={cancelGroup} className="saveButton">
-                  Cancel
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-      <Handle type="target" position={Position.Top} />
-    </>
-  );
-};
-
-export default memo(GroupingNode);
+            <Handle type="target" position={Position.Top} />
+        </>
+    );
+});

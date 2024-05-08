@@ -135,8 +135,9 @@ export default memo(({ id, data }) => {
                             accept="image/*"
                             onChange={handleImageChange}
                             className="nodrag"
+                            style={{marginBottom: '10px'}}
                         />
-                        {/* <button onClick={saveNode} className='saveButton'>Save</button> */}
+                        <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 
 

@@ -10,7 +10,6 @@ import ReactFlow, {
   Connection,
   Edge,
   updateEdge,
-  Position,
 } from "reactflow";
 
 import initialNodes from "../data/nodes";
@@ -20,16 +19,17 @@ import TextInputNode from "./TextInputNode";
 
 import '../styles/overview.css';
 import ToolBarNode from "./ToolBarNode";
-import { v4 as uuidv4 } from 'uuid';
 import CircleNode from "./CircleNode";
 import AnotationNode from "./AnotationNode";
-import { FaFirstdraft, FaRegObjectGroup, FaTools } from "react-icons/fa";
-import { MdSimCard } from "react-icons/md";
 import ButtonNode from "./ButtonNode";
 import TextImageNode from "./TextImageNode";
 import CardGroupNode from "./CardGroupNode";
 
 import { IoAddCircle } from "react-icons/io5";
+import { addNode } from "../service/nodeFunction";
+import { generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
+import TwoWayButton from "./TwoWayButton";
+import CardStyleOne from "./CardStyleOne";
 
 
 
@@ -42,9 +42,11 @@ const nodeTypes = {
   tools: ToolBarNode,
   start: CircleNode,
   annotation: AnotationNode,
-  button: ButtonNode,
+  button: TwoWayButton,
   cardHeader: TextImageNode,
-  cardView: CardGroupNode
+  cardStyleOne: CardStyleOne,
+  textOnly: CardGroupNode
+
 };
 
 
@@ -60,151 +62,62 @@ const processNode = {
 const nodeClassName = (node: { type: any; }) => node.type;
 
 
-// node id generate
-// const generateNodeId = () => `node_${Math.random().toString(36).substr(2, 9)}`;
-const generateNodeId = () => `node_${uuidv4()}`;
 
-// edge id generate
-// const generateEdgeId = () => `edge_${Math.random().toString(36).substr(2, 9)}`;
-const generateEdgeId = () => `edge_${uuidv4()}`;
-
-// group id
-const generateGroupId = () => `group_${uuidv4()}`;
 
 
 
 const FlowPanel = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [groups, setGroups] = useState([]); 
+  const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
+  const [buttonGroupId, setButtonGroupId] = useState(null);
 
   useEffect(() => {
-    console.log("node list : ",nodes )
+    console.log("node list : ", nodes)
   }, [])
 
-  const addTextNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'textinput',
-      style: processNode,
-    };
 
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
-  };
-
-  const addToolNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'tools',
-      style: processNode,
-    };
-
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
-  };
-
+  // add start circle node
   const addCircleNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'start',
-      style: processNode,
-    };
-
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
+    addNode('start', setNodes);
   };
+
+  // add text imput node
+  const addTextNode = () => {
+    addNode('textinput', setNodes);
+  };
+
+  // add tool node
+  const addToolNode = () => {
+    addNode('tools', setNodes);
+  };
+
+  // test group - change this ----------------------
   const addCardViewNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'cardView',
-      style: processNode,
-    };
-
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
+    addNode('cardView', setNodes);
   };
 
-
+  // add button node
   const addButtonNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'button',
-      style: processNode,
-    };
-
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
+    addNode('button', setNodes);
   };
 
-
+  // add card header node - need to change this also ----------
   const addCardHeaderNode = () => {
-    const newNodeId = generateNodeId();
-    const newNode = {
-      id: newNodeId,
-      data: { label: `Node ${newNodeId}` },
-      position: {
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      },
-      type: 'cardHeader',
-      style: processNode,
-    };
+    addNode('cardStyleOne', setNodes);
+  };
 
-    setNodes((prevNodes) => {
-      const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
+  // text only node
+  const addTextOnlyNode = () => {
+    addNode('textOnly', setNodes);
   };
 
 
+
+
+
+  
   const onEdgeUpdate = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       const updatedEdge = updateEdge(oldEdge, newConnection, edges);
@@ -234,9 +147,9 @@ const FlowPanel = () => {
     },
     [setEdges]
   );
-
+  
   const onNodeDragStop = useCallback(
-    (event, node) => {
+    (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
       const { x, y } = node.position;
       setNodes((prevNodes) =>
         prevNodes.map((n) =>
@@ -248,10 +161,13 @@ const FlowPanel = () => {
     [nodes, setNodes]
   );
 
+
+
+  // card style 2 group
   const addGroup = () => {
     const groupId = generateGroupId();
     setGroupId(groupId);
-  
+
     const group = {
       id: groupId,
       type: 'group',
@@ -266,28 +182,27 @@ const FlowPanel = () => {
         zIndex: '999'
       },
     };
-  
+
     setGroups([...groups, group]);
-  
+
     // Add group card header node
     addGroupCardHeaderNode(groupId);
-  
+
     // Add group button node
     addGroupButtonNode(groupId);
-  
+
     console.log("group : ", group);
-  
+
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
       console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
   };
-  
 
-  const addGroupCardHeaderNode = (groupId) => {
+  const addGroupCardHeaderNode = (groupId: any) => {
     const newNodeId = generateNodeId();
-  
+
     const newNode = {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
@@ -297,30 +212,30 @@ const FlowPanel = () => {
       },
       type: 'cardHeader',
       style: {
-        position: 'relative !important' 
+        position: 'relative !important'
       },
-      parentId: groupId, 
-      extent: 'parent', 
+      parentId: groupId,
+      extent: 'parent',
     };
-  
+
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
   };
-  
-  const addGroupButtonNode = (groupId) => {
+
+  const addGroupButtonNode = (groupId: string | undefined) => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
-  if (buttonsCount >= 3) {
-    console.log('Maximum button limit reached for this group');
-    return;
-  }
+    if (buttonsCount >= 3) {
+      console.log('Maximum button limit reached for this group');
+      return;
+    }
 
     const newNodeId = generateNodeId();
-  
+
     const newNode = {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
@@ -330,19 +245,19 @@ const FlowPanel = () => {
       },
       type: 'button',
       style: {
-        position: 'relative !important' 
+        position: 'relative !important'
       },
       parentId: groupId,
-      extent: 'parent', 
+      extent: 'parent',
     };
-  
+
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
   };
-  
+
   const addFloatingButton = () => {
     if (!groupId) {
       console.error("Group ID is not defined");
@@ -351,36 +266,137 @@ const FlowPanel = () => {
     addGroupButtonNode(groupId);
   };
 
+
+
+
+
+
+
+  
+  // button group 
+  const addButtonGroup = () => {
+    const buttonGroupId = generateGroupId();
+    setButtonGroupId(buttonGroupId);
+
+    const group = {
+      id: buttonGroupId,
+      type: 'group',
+      data: { label: 'Group' },
+      position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
+      style: {
+        width: '248px',
+        minHeight: '320px',
+        maxHeight: '450px',
+        height: 'auto !important',
+        backgroundColor: 'rgba(208, 192, 247, 0.2)',
+        zIndex: '999'
+      },
+    };
+
+    setGroups([...groups, group]);
+
+    // Add group button node
+    addGroupButtonsNodes(buttonGroupId);
+
+    console.log("group : ", group);
+
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, group];
+      console.log("Updated Node List with group:", updatedNodes);
+      return updatedNodes;
+    });
+  };
+
+  const addGroupButtonsNodes = (buttonGroupId: string | undefined) => {
+
+    const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === buttonGroupId).length;
+
+    if (buttonsCount >= 3) {
+      console.log('Maximum button limit reached for this group');
+      return;
+    }
+
+    const newNodeId = generateNodeId();
+
+    const newNode = {
+      id: newNodeId,
+      data: { label: `Node ${newNodeId}` },
+      position: {
+        x: 10,
+        y: 10 + (buttonsCount * 70),
+      },
+      type: 'button',
+      style: {
+        position: 'relative !important'
+      },
+      parentId: buttonGroupId,
+      extent: 'parent',
+    };
+
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, newNode];
+      console.log('Updated Node List:', updatedNodes);
+      return updatedNodes;
+    });
+  };
+
+  const addFloatingButtonForButtonGroup = () => {
+    if (!buttonGroupId) {
+      console.error("Group ID is not defined");
+      return;
+    }
+    addGroupButtonsNodes(buttonGroupId);
+  };
+
+
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
         <button onClick={addCircleNode} >start</button>
-        {/* <button onClick={addTextNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
-        <button onClick={addToolNode} style={{ marginTop: '10px' }}><FaTools /></button>
-        <button onClick={addButtonNode} style={{ marginTop: '10px' }}>
-          button
+        <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
+        <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button>
+        <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
+          Buttons
         </button>
-        {/* <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
-          <MdSimCard />
-        </button> */}
-        {/* <button onClick={addCardViewNode} style={{ marginTop: '10px' }}><MdSimCard /></button> */}
+        <button onClick={addTextOnlyNode} style={{ marginTop: '10px' }}>Text</button>
+        <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
+          Card style 1 
+        </button>
+        <button onClick={addGroup} style={{ marginTop: '10px' }}>Card style 2</button>
 
-        <button onClick={addGroup} style={{ marginTop: '10px' }}>card</button>
+
+
+
         {groupId && (
-        <button
-          style={{
-            position: "relative",
-            bottom: "0px",
-            right: "0px",
-            zIndex: "1000",
-            marginTop: '10px'
-          }}
-          onClick={addFloatingButton}
-        >
-          <IoAddCircle />
+          <button
+            style={{
+              position: "relative",
+              bottom: "0px",
+              right: "0px",
+              zIndex: "1000",
+              marginTop: '10px'
+            }}
+            onClick={addFloatingButton}
+          >
+            <IoAddCircle /> Card Buttons
 
-        </button>
-      )}
+          </button>
+        )}
+        {buttonGroupId && (
+          <button
+            style={{
+              position: "relative",
+              bottom: "0px",
+              right: "0px",
+              zIndex: "1000",
+              marginTop: '10px'
+            }}
+            onClick={addFloatingButtonForButtonGroup}
+          >
+           <IoAddCircle /> Buttons Group
+
+          </button>
+        )}
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
