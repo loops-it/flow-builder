@@ -93,14 +93,14 @@ input{
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
-  width: 200px !important;
+  width: 250px !important;
   color: #fff !important;
 }
 textarea{
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
-  width: 200px !important;
+  width: 250px !important;
   color: #fff !important;
 }
 label{
@@ -112,7 +112,7 @@ label{
   font-family: "Poppins", sans-serif;
 }
 .saveButton{
-  width: 100%;
+  width: 100% !important;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;

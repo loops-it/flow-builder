@@ -187,7 +187,7 @@ const FlowPanel = () => {
       data: { label: 'Group' },
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
-        width: '248px',
+        width: '300px',
         minHeight: '320px',
         maxHeight: '450px',
         height: 'auto !important',
@@ -266,8 +266,8 @@ const FlowPanel = () => {
       id: newNodeId,
       data: { label: `Node ${newNodeId}` },
       position: {
-        x: 10,
-        y: 240 + (buttonsCount * 70),
+        x: 10 + (buttonsCount * 95),
+        y: 240 ,
       },
       type: 'button',
       style: {
