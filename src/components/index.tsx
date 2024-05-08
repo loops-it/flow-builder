@@ -31,6 +31,7 @@ import { addNode } from "../service/nodeFunction";
 import { generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
 import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
+import EndCircleNode from "./EndCircleNode";
 
 
 const nodeTypes = {
@@ -41,8 +42,8 @@ const nodeTypes = {
   button: TwoWayButton,
   cardHeader: TextImageNode,
   cardStyleOne: CardStyleOne,
-  textOnly: CardGroupNode
-
+  textOnly: CardGroupNode,
+  end: EndCircleNode
 };
 
 
@@ -109,6 +110,10 @@ const FlowPanel = () => {
     addNode('textOnly', setNodes);
   };
 
+  // add start circle node
+  const addEndNode = () => {
+    addNode('end', setNodes);
+  };
 
 
 
@@ -360,6 +365,7 @@ const FlowPanel = () => {
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
         <button onClick={addCircleNode} >start</button>
+        <button onClick={addEndNode} style={{ marginTop: '10px' }}>End</button>
         <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
         {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button> */}
         <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
