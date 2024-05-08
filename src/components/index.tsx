@@ -11,6 +11,8 @@ import ReactFlow, {
   Edge,
   updateEdge,
   Position,
+  ControlButton,
+  NodeResizeControl,
 } from "reactflow";
 
 import initialNodes from "../data/nodes";
@@ -167,8 +169,8 @@ const FlowPanel = () => {
 
 
 
-  
-  
+
+
   // card style 2 group
   const addGroup = () => {
     const groupId = generateGroupId();
@@ -247,7 +249,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 325 ,
+        y: 325,
       },
       type: 'button',
       style: {
@@ -263,7 +265,7 @@ const FlowPanel = () => {
       return updatedNodes;
     });
   };
-  
+
 
   const addFloatingButton = () => {
     if (!groupId) {
@@ -275,7 +277,7 @@ const FlowPanel = () => {
   };
 
 
-  
+
 
 
 
@@ -332,7 +334,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 10 ,
+        y: 10,
       },
       type: 'button',
       style: {
@@ -424,9 +426,15 @@ const FlowPanel = () => {
           edgeTypes={edgeTypes}
         >
           <Controls />
+          {/* <Controls>
+            <ControlButton onClick={() => alert('Something magical just happened. ✨')}>
+              <IoAddCircle style={{ color: '#000' }} />
+            </ControlButton>
+          </Controls> */}
           <MiniMap />
           <Background variant="dots" gap={12} size={1} />
           <NodeToolbar />
+          <NodeResizeControl />
         </ReactFlow>
       </div>
     </>

@@ -123,6 +123,7 @@ export default memo(({ id, type, data, position }) => {
                 </div>
             )}
             <Handle type="source" position={Position.Right} />
+            <Handle type="source" position={Position.Bottom} />
             <Handle type="target" position={Position.Left} />
         </>
     );
