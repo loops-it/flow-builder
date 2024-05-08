@@ -72,7 +72,7 @@
   .react-flow__node-start .react-flow__handle,
   .react-flow__node-end .react-flow__handle,
   .react-flow__node-textinput .react-flow__handle {
-    background: #bbb;
+    background: #868686;
     border-radius: 0;
     width: 8px;
     height: 4px;
