@@ -82,6 +82,7 @@ export default memo(({ id,  data }) => {
 
             </div>
             <Handle type="target" position={Position.Top} />
+            <Handle type="source" position={Position.Bottom} />
         </>
     );
 });

@@ -130,13 +130,13 @@ export default memo(({ id, type, data, position }) => {
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
-                        <label>Image</label>
+                        {/* <label>Image</label>
                         <input
                             type="file"
                             accept="image/*"
                             onChange={handleImageChange}
                             className="nodrag"
-                        />
+                        /> */}
                         <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 
@@ -146,6 +146,7 @@ export default memo(({ id, type, data, position }) => {
 
             </div>
             <Handle type="target" position={Position.Top} />
+            <Handle type="source" position={Position.Bottom} />
         </>
     );
 });
