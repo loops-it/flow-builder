@@ -20,7 +20,7 @@ export default memo(({ id }) => {
         {/* <div className="inner">{label || 'no node connected'}</div> */}
         <div className="inner" style={{color: '#333 !important'}}>
           <p style={{color: '#333 !important'}}>
-          Start
+          End
           </p>
         </div>
       </div>
