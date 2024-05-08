@@ -95,11 +95,7 @@ export default memo(({ id, type, data, position }) => {
                         </div>
                         <button onClick={openPopup} className='saveButton'>{text}</button>
                     </div>
-
-
                 </div>
-
-
             </div>
             {popupOpen && (
                 <div className="popup">

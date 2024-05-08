@@ -10,6 +10,7 @@ export default memo(({ id, data }) => {
     const [title, setTitle] = useState(data.label || '');
     const [description, setDescription] = useState(data.description || '');
     const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
 
     // Update title state when props change
     useEffect(() => {
@@ -27,6 +28,8 @@ export default memo(({ id, data }) => {
     const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setDescription(event.target.value);
     };
+
+    
 
     // console.log the node data
     const logUserInput = () => {
@@ -64,16 +67,40 @@ export default memo(({ id, data }) => {
         setImage(file);
     };
 
+    
+
+    // useEffect(() => {
+    //     if (image) {
+    //         const formData = new FormData();
+    //         formData.append('id', id);
+    //         formData.append('title', title);
+    //         formData.append('description', description);
+    //         formData.append('image', image || ''); 
+    //         console.log('Form Data:', formData);
+    //     }
+    // }, [image]);
+
+
     useEffect(() => {
         if (image) {
             const formData = new FormData();
             formData.append('id', id);
             formData.append('title', title);
             formData.append('description', description);
-            formData.append('image', image || ''); 
-            console.log('Form Data:', formData);
+            formData.append('image', image || '');
+
+            // fetch('uploadImage', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     setImageUrl(data.imageUrl);
+            // })
+            // .catch(error => console.error('Error uploading image:', error));
         }
     }, [image]);
+
 
     // add data from node to node list
     const saveNode = () => {
@@ -116,6 +143,9 @@ export default memo(({ id, data }) => {
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
+                        {imageUrl && (
+                            <img src={imageUrl} alt="Uploaded Image" style={{ maxWidth: '100%', marginBottom: '8px' }} />
+                        )}
                         <label>Title</label>
                         <input
                             type="text"

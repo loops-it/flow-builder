@@ -10,6 +10,7 @@ import ReactFlow, {
   Connection,
   Edge,
   updateEdge,
+  Position,
 } from "reactflow";
 
 import initialNodes from "../data/nodes";
@@ -72,6 +73,7 @@ const FlowPanel = () => {
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
+  const [groupHeight, setGroupHeight] = useState(320);
 
   useEffect(() => {
     console.log("node list : ", nodes)
@@ -117,7 +119,7 @@ const FlowPanel = () => {
 
 
 
-  
+
   const onEdgeUpdate = useCallback(
     (oldEdge: Edge, newConnection: Connection) => {
       const updatedEdge = updateEdge(oldEdge, newConnection, edges);
@@ -147,7 +149,7 @@ const FlowPanel = () => {
     },
     [setEdges]
   );
-  
+
   const onNodeDragStop = useCallback(
     (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
       const { x, y } = node.position;
@@ -161,8 +163,19 @@ const FlowPanel = () => {
     [nodes, setNodes]
   );
 
+ 
 
 
+  const calculateGroupStyle = () => ({
+    width: '248px',
+    minHeight: '320px !important',
+    maxHeight: '450px',
+    height: 'auto !important',
+    backgroundColor: 'rgba(208, 192, 247, 0.2)',
+    zIndex: '999'
+  });
+  
+  
   // card style 2 group
   const addGroup = () => {
     const groupId = generateGroupId();
@@ -179,7 +192,8 @@ const FlowPanel = () => {
         maxHeight: '450px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999'
+        zIndex: '999',
+        position: 'relative !important'
       },
     };
 
@@ -200,6 +214,15 @@ const FlowPanel = () => {
     });
   };
 
+
+  useEffect(() => {
+    console.log("min height: ", groupHeight)
+    console.log("styles : ",calculateGroupStyle)
+  }, [groupHeight])
+
+
+  
+
   const addGroupCardHeaderNode = (groupId: any) => {
     const newNodeId = generateNodeId();
 
@@ -212,7 +235,7 @@ const FlowPanel = () => {
       },
       type: 'cardHeader',
       style: {
-        position: 'relative !important'
+        position: 'absolute !important'
       },
       parentId: groupId,
       extent: 'parent',
@@ -234,6 +257,9 @@ const FlowPanel = () => {
       return;
     }
 
+    const minHeight = 320 + buttonsCount * 70; // Update the minimum height based on the number of buttons
+    setGroupHeight(minHeight);
+
     const newNodeId = generateNodeId();
 
     const newNode = {
@@ -245,7 +271,7 @@ const FlowPanel = () => {
       },
       type: 'button',
       style: {
-        position: 'relative !important'
+        position: 'absolute !important'
       },
       parentId: groupId,
       extent: 'parent',
@@ -263,16 +289,19 @@ const FlowPanel = () => {
       console.error("Group ID is not defined");
       return;
     }
+
     addGroupButtonNode(groupId);
   };
 
 
-
-
-
-
-
   
+
+
+
+
+
+
+
   // button group 
   const addButtonGroup = () => {
     const buttonGroupId = generateGroupId();
@@ -349,6 +378,9 @@ const FlowPanel = () => {
   };
 
 
+
+
+
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
@@ -360,7 +392,7 @@ const FlowPanel = () => {
         </button>
         <button onClick={addTextOnlyNode} style={{ marginTop: '10px' }}>Text</button>
         <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
-          Card style 1 
+          Card style 1
         </button>
         <button onClick={addGroup} style={{ marginTop: '10px' }}>Card style 2</button>
 
@@ -393,7 +425,7 @@ const FlowPanel = () => {
             }}
             onClick={addFloatingButtonForButtonGroup}
           >
-           <IoAddCircle /> Buttons Group
+            <IoAddCircle /> Buttons Group
 
           </button>
         )}
