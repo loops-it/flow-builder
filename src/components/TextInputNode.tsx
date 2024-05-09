@@ -7,8 +7,8 @@ import { RiCloseCircleFill } from "react-icons/ri";
 
 export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
-    const [title, setTitle] = useState(data.label || '');
-    const [description, setDescription] = useState(data.description || '');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
 
     const apiUrl = 'https://dfcc-chat-bot.vercel.app';

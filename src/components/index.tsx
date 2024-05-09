@@ -34,6 +34,7 @@ import { generateEdgeId, generateGroupId, generateNodeId } from "../service/idGe
 import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
+import GroupView from "./GroupView";
 
 
 const nodeTypes = {
@@ -45,7 +46,8 @@ const nodeTypes = {
   cardHeader: TextImageNode,
   cardStyleOne: CardStyleOne,
   textOnly: CardGroupNode,
-  end: EndCircleNode
+  end: EndCircleNode,
+  buttonGroup: GroupView
 };
 
 
@@ -108,14 +110,42 @@ const FlowPanel = () => {
               const positionObj = JSON.parse(node[key]);
               // Assign x and y to the filteredNode under position
               filteredNode.position = { x: positionObj.x, y: positionObj.y };
-            } else if (node[key] !== null) {
+            } else if (key !== 'style' && node[key] !== null) {
               // For other attributes, copy non-null values directly
               filteredNode[key] = node[key];
             }
           }
+
+          // Add style for group nodes
+          if (filteredNode.type === 'group') {
+            filteredNode.style = {
+              width: '300px',
+              minHeight: '400px',
+              height: 'auto !important',
+              backgroundColor: 'rgba(208, 192, 247, 0.2)',
+              zIndex: '999',
+              position: 'relative !important'
+            };
+          }
+          else if (filteredNode.type === 'buttonGroup') {
+            filteredNode.style = {
+              position: 'relative !important',
+              width: '300px',
+              minHeight: '100px',
+              height: 'auto !important',
+              backgroundColor: 'rgba(208, 192, 247, 0.2)',
+              zIndex: '999'
+            };
+          }
+          else {
+            filteredNode.style = {
+              position: 'absolute !important'
+            };
+          }
+
           return filteredNode;
         });
-        
+
 
 
 
@@ -542,7 +572,7 @@ const FlowPanel = () => {
 
     const group = {
       id: buttonGroupId,
-      type: 'group',
+      type: 'buttonGroup',
       data: { label: 'Group' },
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {

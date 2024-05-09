@@ -37,6 +37,7 @@ export default function CustomEdge({
 
 
   const deleteEdge = useCallback(async (id: string) => {
+    console.log("edge id : ", id)
     try {
       // Make API call to delete the edge
       const response = await fetch(`${apiUrl}/data-flow-delete-edge`, {

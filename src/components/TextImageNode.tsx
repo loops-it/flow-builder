@@ -7,8 +7,8 @@ import { RiCloseCircleFill } from "react-icons/ri";
 
 export default memo(({ id, data }) => {
     const { setNodes } = useReactFlow();
-    const [title, setTitle] = useState(data.label || '');
-    const [description, setDescription] = useState(data.description || '');
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
 
@@ -17,8 +17,8 @@ export default memo(({ id, data }) => {
 
     // Update title state when props change
     useEffect(() => {
-        setTitle(data.title || '');
-        setDescription(data.description || '');
+        // setTitle(data.title || '');
+        // setDescription(data.description || '');
     }, [data]);
 
 
