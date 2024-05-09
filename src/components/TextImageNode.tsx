@@ -12,6 +12,9 @@ export default memo(({ id, data }) => {
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
 
+    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
+
     // Update title state when props change
     useEffect(() => {
         setTitle(data.title || '');
@@ -118,14 +121,33 @@ export default memo(({ id, data }) => {
         console.log('Form Data:', formDataObject);
     };
 
+
     // delete node from list
-    const deleteNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-        console.log('Node deleted:', id);
+    const deleteNode = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({id}),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to delete node');
+            }
+      
+            setNodes((prevNodes) => {
+              const updatedNodes = prevNodes.filter(node => node.id !== id);
+              console.log('Updated Node List:', updatedNodes);
+              return updatedNodes;
+            });
+            console.log('Node deleted:', id);
+            
+          } catch (error) {
+            console.error('Error deleting node:', error);
+            // Handle error as needed
+          }
     };
 
 

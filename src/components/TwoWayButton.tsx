@@ -12,6 +12,8 @@ export default memo(({ id, type, data, position }) => {
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
 
+    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
     const openPopup = () => {
         setPopupOpen(true);
     };
@@ -69,13 +71,30 @@ export default memo(({ id, type, data, position }) => {
 
 
     // delete node from list
-    const deleteNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-        console.log('Node deleted:', id);
+    const deleteNode = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({id}), 
+              });
+        
+            if (!response.ok) {
+              throw new Error('Failed to delete node');
+            }
+        
+            setNodes((prevNodes) => {
+              const updatedNodes = prevNodes.filter(node => node.id !== id);
+              console.log('Updated Node List:', updatedNodes);
+              return updatedNodes;
+            });
+            console.log('Node deleted:', id);
+          } catch (error) {
+            console.error('Error deleting node:', error);
+            // Handle error as needed
+          }
     };
 
 
@@ -122,7 +141,7 @@ export default memo(({ id, type, data, position }) => {
                     </div>
                 </div>
             )}
-            <Handle type="source" position={Position.Right} />
+            {/* <Handle type="source" position={Position.Right} /> */}
             <Handle type="source" position={Position.Bottom} />
             <Handle type="target" position={Position.Left} />
         </>

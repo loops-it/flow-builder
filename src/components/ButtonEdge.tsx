@@ -33,13 +33,34 @@ export default function CustomEdge({
     setEdges((edges) => edges.filter((edge) => edge.id !== id));
   };
 
-  const deleteEdge = useCallback(() => {
-    setEdges(edges => {
-      const updatedEdges = edges.filter(edge => edge.id !== id);
-      console.log('Updated Edge List (delete):', updatedEdges);
-      return updatedEdges;
-    });
-  }, [id, setEdges]);
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
+
+  const deleteEdge = useCallback(async (id: string) => {
+    try {
+      // Make API call to delete the edge
+      const response = await fetch(`${apiUrl}/data-flow-delete-edge`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(id), 
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete edge');
+      }
+  
+      setEdges(edges => {
+        const updatedEdges = edges.filter(edge => edge.id !== id);
+        console.log('Updated Edge List (delete):', updatedEdges);
+        return updatedEdges;
+      });
+
+    } catch (error) {
+      console.error('Error deleting edge:', error);
+    }
+  }, [ setEdges]);
 
 
 
