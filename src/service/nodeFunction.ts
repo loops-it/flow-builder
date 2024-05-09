@@ -6,7 +6,9 @@ const processNode = {
   };
 
   
-export const addNode = (type, setNodes) => {
+export const addNode = async (type, setNodes) => {
+
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
   const newNodeId = generateNodeId();
   const newNode = {
     id: newNodeId,
@@ -19,11 +21,37 @@ export const addNode = (type, setNodes) => {
     style: processNode,
   };
 
-  setNodes((prevNodes) => {
-    const updatedNodes = [...prevNodes, newNode];
-    console.log('Updated Node List:', updatedNodes);
-    return updatedNodes;
-  });
+  // setNodes((prevNodes) => {
+  //   const updatedNodes = [...prevNodes, newNode];
+  //   console.log('Updated Node List:', updatedNodes);
+  //   return updatedNodes;
+  // });
+
+  try {
+    // Make API call to post the new node data
+
+    console.log("new node data : ", newNode)
+    const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newNode), 
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to add node');
+    }
+
+    setNodes((prevNodes) => {
+      const updatedNodes = [...prevNodes, newNode];
+      console.log('Updated Node List:', updatedNodes);
+      return updatedNodes;
+    });
+  } catch (error) {
+    console.error('Error adding node:', error);
+    // Handle error as needed
+  }
 };
 
 

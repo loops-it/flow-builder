@@ -189,6 +189,10 @@ const FlowPanel = () => {
         zIndex: '999',
         position: 'relative !important'
       },
+      buttons: [{
+        label: 'Delete',
+        onClick: () => handleDeleteGroup(groupId)
+      }]
     };
 
     setGroups([...groups, group]);
@@ -266,6 +270,18 @@ const FlowPanel = () => {
     });
   };
 
+
+  const deleteGroup = (groupId) => {
+    const filteredNodes = nodes.filter(node => node.parentId !== groupId && node.id !== groupId);
+    setNodes(filteredNodes);
+    // Remove group from groups state
+    setGroups(groups.filter(group => group.id !== groupId));
+  };
+  
+  // Add this function to handle the click event of the delete button
+  const handleDeleteGroup = (groupId) => {
+    deleteGroup(groupId);
+  };
 
   const addFloatingButton = () => {
     if (!groupId) {
