@@ -136,20 +136,20 @@ const FlowPanel = () => {
     [edges, setEdges]
   );
 
-  const onConnect = useCallback(
-    (params: Edge | Connection) => {
-      if (!('id' in params)) {
-        params.id = generateEdgeId();
-      }
-      params.type = 'button';
-      setEdges((prevEdges) => {
-        const newEdges = addEdge(params, prevEdges);
-        console.log('Updated Edges List:', newEdges);
-        return newEdges;
-      });
-    },
-    [setEdges]
-  );
+  // const onConnect = useCallback(
+  //   (params: Edge | Connection) => {
+  //     if (!('id' in params)) {
+  //       params.id = generateEdgeId();
+  //     }
+  //     params.type = 'button';
+  //     setEdges((prevEdges) => {
+  //       const newEdges = addEdge(params, prevEdges);
+  //       console.log('Updated Edges List:', newEdges);
+  //       return newEdges;
+  //     });
+  //   },
+  //   [setEdges]
+  // );
 
   const onNodeDragStop = useCallback(
     (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
@@ -164,7 +164,105 @@ const FlowPanel = () => {
     [nodes, setNodes]
   );
 
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
+
+  // const onEdgeUpdate = useCallback(
+  //   async (oldEdge: Edge, newConnection: Connection) => {
+  //     const updatedEdge = updateEdge(oldEdge, newConnection, edges);
+  //     updatedEdge.type = 'button';
+  
+  //     try {
+  //       const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify(updatedEdge),
+  //       });
+  
+  //       if (!response.ok) {
+  //         throw new Error('Failed to update edge');
+  //       }
+  
+  //       setEdges((prevEdges) => {
+  //         const updatedEdges = prevEdges.map((edge) =>
+  //           edge.id === updatedEdge.id ? updatedEdge : edge
+  //         );
+  //         console.log('Updated Edges List:', updatedEdges);
+  //         return updatedEdges;
+  //       });
+  //     } catch (error) {
+  //       console.error('Error updating edge:', error);
+  //       // Handle error as needed
+  //     }
+  //   },
+  //   [edges, setEdges]
+  // );
+  
+  const onConnect = useCallback(
+    async (params: Edge | Connection) => {
+      if (!('id' in params)) {
+        params.id = generateEdgeId();
+      }
+      params.type = 'button';
+  
+      try {
+        console.log("new edge data : ", params)
+        const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(params),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to add edge');
+        }
+        console.log('response : ',response )
+  
+        setEdges((prevEdges) => {
+          const newEdges = addEdge(params, prevEdges);
+          console.log('Updated Edges List:', newEdges);
+          return newEdges;
+        });
+      } catch (error) {
+        console.error('Error adding edge:', error);
+        // Handle error as needed
+      }
+    },
+    [setEdges]
+  );
+  
+  // const onNodeDragStop = useCallback(
+  //   async (event: any, node: { position: { x: any; y: any }; id: string }) => {
+  //     const { x, y } = node.position;
+  //     try {
+  //       const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({ id: node.id, position: { x, y } }),
+  //       });
+  
+  //       if (!response.ok) {
+  //         throw new Error('Failed to update node position');
+  //       }
+  
+  //       setNodes((prevNodes) =>
+  //         prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
+  //       );
+  //       console.log('Updated Node List:', nodes);
+  //     } catch (error) {
+  //       console.error('Error updating node position:', error);
+  //       // Handle error as needed
+  //     }
+  //   },
+  //   [nodes, setNodes]
+  // );
+  
 
 
 

@@ -43,6 +43,8 @@ export const addNode = async (type, setNodes) => {
       throw new Error('Failed to add node');
     }
 
+    console.log('response : ',response )
+
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
       console.log('Updated Node List:', updatedNodes);
@@ -50,7 +52,6 @@ export const addNode = async (type, setNodes) => {
     });
   } catch (error) {
     console.error('Error adding node:', error);
-    // Handle error as needed
   }
 };
 
