@@ -121,10 +121,63 @@ const FlowPanel = () => {
 
 
 
+  // const onEdgeUpdate = useCallback(
+  //   (oldEdge: Edge, newConnection: Connection) => {
+  //     const updatedEdge = updateEdge(oldEdge, newConnection, edges);
+  //     updatedEdge.type = 'button';
+  //     setEdges((prevEdges) => {
+  //       const updatedEdges = prevEdges.map((edge) =>
+  //         edge.id === updatedEdge.id ? updatedEdge : edge
+  //       );
+  //       console.log('Updated Edges List:', updatedEdges);
+  //       return updatedEdges;
+  //     });
+  //   },
+  //   [edges, setEdges]
+  // );
+
+  // const onNodeDragStop = useCallback(
+  //   (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
+  //     const { x, y } = node.position;
+  //     setNodes((prevNodes) =>
+  //       prevNodes.map((n) =>
+  //         n.id === node.id ? { ...n, position: { x, y } } : n
+  //       )
+  //     );
+  //     console.log('Updated Node List:', nodes);
+  //   },
+  //   [nodes, setNodes]
+  // );
+
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
+
   const onEdgeUpdate = useCallback(
-    (oldEdge: Edge, newConnection: Connection) => {
+    async (oldEdge: Edge, newConnection: Connection) => {
       const updatedEdge = updateEdge(oldEdge, newConnection, edges);
       updatedEdge.type = 'button';
+  
+      try {
+        console.log("update edge : ", updatedEdge)
+        const response = await fetch(`${apiUrl}/data-flow-update-edge`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedEdge),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to update edge');
+        }
+        console.log("update response : ", response)
+
+
+      } catch (error) {
+        console.error('Error updating edge:', error);
+        // Handle error as needed
+      }
+
       setEdges((prevEdges) => {
         const updatedEdges = prevEdges.map((edge) =>
           edge.id === updatedEdge.id ? updatedEdge : edge
@@ -135,70 +188,6 @@ const FlowPanel = () => {
     },
     [edges, setEdges]
   );
-
-  // const onConnect = useCallback(
-  //   (params: Edge | Connection) => {
-  //     if (!('id' in params)) {
-  //       params.id = generateEdgeId();
-  //     }
-  //     params.type = 'button';
-  //     setEdges((prevEdges) => {
-  //       const newEdges = addEdge(params, prevEdges);
-  //       console.log('Updated Edges List:', newEdges);
-  //       return newEdges;
-  //     });
-  //   },
-  //   [setEdges]
-  // );
-
-  const onNodeDragStop = useCallback(
-    (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
-      const { x, y } = node.position;
-      setNodes((prevNodes) =>
-        prevNodes.map((n) =>
-          n.id === node.id ? { ...n, position: { x, y } } : n
-        )
-      );
-      console.log('Updated Node List:', nodes);
-    },
-    [nodes, setNodes]
-  );
-
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
-
-
-  // const onEdgeUpdate = useCallback(
-  //   async (oldEdge: Edge, newConnection: Connection) => {
-  //     const updatedEdge = updateEdge(oldEdge, newConnection, edges);
-  //     updatedEdge.type = 'button';
-  
-  //     try {
-  //       const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify(updatedEdge),
-  //       });
-  
-  //       if (!response.ok) {
-  //         throw new Error('Failed to update edge');
-  //       }
-  
-  //       setEdges((prevEdges) => {
-  //         const updatedEdges = prevEdges.map((edge) =>
-  //           edge.id === updatedEdge.id ? updatedEdge : edge
-  //         );
-  //         console.log('Updated Edges List:', updatedEdges);
-  //         return updatedEdges;
-  //       });
-  //     } catch (error) {
-  //       console.error('Error updating edge:', error);
-  //       // Handle error as needed
-  //     }
-  //   },
-  //   [edges, setEdges]
-  // );
   
   const onConnect = useCallback(
     async (params: Edge | Connection) => {
@@ -235,33 +224,36 @@ const FlowPanel = () => {
     [setEdges]
   );
   
-  // const onNodeDragStop = useCallback(
-  //   async (event: any, node: { position: { x: any; y: any }; id: string }) => {
-  //     const { x, y } = node.position;
-  //     try {
-  //       const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({ id: node.id, position: { x, y } }),
-  //       });
+  const onNodeDragStop = useCallback(
+    async (event: any, node: { position: { x: any; y: any }; id: string }) => {
+      const { x, y } = node.position;
+      try {
+        console.log("update node : ", {id: node.id, position: { x, y }})
+        const response = await fetch(`${apiUrl}/data-flow-update-node`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: node.id, position: { x, y } }),
+        });
   
-  //       if (!response.ok) {
-  //         throw new Error('Failed to update node position');
-  //       }
+        if (!response.ok) {
+          throw new Error('Failed to update node position');
+        }
+
+        console.log("response update node : ", response)
   
-  //       setNodes((prevNodes) =>
-  //         prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
-  //       );
-  //       console.log('Updated Node List:', nodes);
-  //     } catch (error) {
-  //       console.error('Error updating node position:', error);
-  //       // Handle error as needed
-  //     }
-  //   },
-  //   [nodes, setNodes]
-  // );
+        setNodes((prevNodes) =>
+          prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
+        );
+        console.log('Updated Node List:', nodes);
+      } catch (error) {
+        console.error('Error updating node position:', error);
+        // Handle error as needed
+      }
+    },
+    [nodes, setNodes]
+  );
   
 
 
