@@ -72,9 +72,84 @@ const FlowPanel = () => {
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
 
+  const [loadData, setLoadData] = useState(null)
+
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
+  const fetchDataFlowData = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/data-flow-retrieve-data`);
+      if (!response.ok) {
+        throw new Error('Failed to retrieve data');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
-    console.log("node list : ", nodes)
-  }, [])
+    const loadDataOnMount = async () => {
+      try {
+        const data = await fetchDataFlowData();
+        console.log('Retrieved data:', data);
+
+        const filteredNodes = data.nodes.map(node => {
+          const filteredNode = {};
+          for (const key in node) {
+            if (key === 'id') {
+              continue; // Skip the id attribute
+            } else if (key === 'node_id') {
+              filteredNode['id'] = node[key]; // Rename node_id to id
+            } else if (key === 'position' && node[key] !== null) {
+              // Parse the position string into an object
+              const positionObj = JSON.parse(node[key]);
+              // Assign x and y to the filteredNode under position
+              filteredNode.position = { x: positionObj.x, y: positionObj.y };
+            } else if (node[key] !== null) {
+              // For other attributes, copy non-null values directly
+              filteredNode[key] = node[key];
+            }
+          }
+          return filteredNode;
+        });
+        
+
+
+
+        // Remove null attributes from edges
+        const filteredEdges = data.edges.map(edge => {
+          const filteredEdge = {};
+          for (const key in edge) {
+            if (edge[key] !== null) {
+              filteredEdge[key] = edge[key];
+            }
+          }
+          return filteredEdge;
+        });
+
+        console.log('Retrieved filteredNodes:', filteredNodes);
+        console.log('Retrieved filteredEdges:', filteredEdges);
+
+        setNodes(filteredNodes);
+        setEdges(filteredEdges);
+
+        console.log('State filteredNodes:', filteredNodes);
+        console.log('State filteredEdges:', filteredEdges);
+
+
+      } catch (error) {
+        console.error('Failed to fetch data on mount:', error);
+      }
+    };
+
+    loadDataOnMount();
+  }, []);
+
+
+
 
 
   // add start circle node
@@ -149,14 +224,14 @@ const FlowPanel = () => {
   //   [nodes, setNodes]
   // );
 
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
 
 
   const onEdgeUpdate = useCallback(
     async (oldEdge: Edge, newConnection: Connection) => {
       const updatedEdge = updateEdge(oldEdge, newConnection, edges);
       updatedEdge.type = 'button';
-  
+
       try {
         console.log("update edge : ", updatedEdge)
         const response = await fetch(`${apiUrl}/data-flow-update-edge`, {
@@ -166,7 +241,7 @@ const FlowPanel = () => {
           },
           body: JSON.stringify(updatedEdge),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to update edge');
         }
@@ -188,14 +263,14 @@ const FlowPanel = () => {
     },
     [edges, setEdges]
   );
-  
+
   const onConnect = useCallback(
     async (params: Edge | Connection) => {
       if (!('id' in params)) {
         params.id = generateEdgeId();
       }
       params.type = 'button';
-  
+
       try {
         console.log("new edge data : ", params)
         const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
@@ -205,12 +280,12 @@ const FlowPanel = () => {
           },
           body: JSON.stringify(params),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to add edge');
         }
-        console.log('response : ',response )
-  
+        console.log('response : ', response)
+
         setEdges((prevEdges) => {
           const newEdges = addEdge(params, prevEdges);
           console.log('Updated Edges List:', newEdges);
@@ -223,12 +298,12 @@ const FlowPanel = () => {
     },
     [setEdges]
   );
-  
+
   const onNodeDragStop = useCallback(
     async (event: any, node: { position: { x: any; y: any }; id: string }) => {
       const { x, y } = node.position;
       try {
-        console.log("update node : ", {id: node.id, position: { x, y }})
+        console.log("update node : ", { id: node.id, position: { x, y } })
         const response = await fetch(`${apiUrl}/data-flow-update-node`, {
           method: 'POST',
           headers: {
@@ -236,13 +311,13 @@ const FlowPanel = () => {
           },
           body: JSON.stringify({ id: node.id, position: { x, y } }),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to update node position');
         }
 
         console.log("response update node : ", response)
-  
+
         setNodes((prevNodes) =>
           prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
         );
@@ -254,7 +329,7 @@ const FlowPanel = () => {
     },
     [nodes, setNodes]
   );
-  
+
 
 
 
@@ -301,21 +376,21 @@ const FlowPanel = () => {
         },
         body: JSON.stringify(group),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create group');
       }
 
-      console.log('response : ',response )
-  
+      console.log('response : ', response)
+
       setGroups([...groups, group]);
-  
+
       // Add group card header node
       await addGroupCardHeaderNode(groupId);
-  
+
       // Add group button node
-      await addGroupButtonNode(groupId);  
-      
+      await addGroupButtonNode(groupId);
+
     } catch (error) {
       console.error('Error creating group:', error);
       // Handle error as needed
@@ -355,14 +430,14 @@ const FlowPanel = () => {
         },
         body: JSON.stringify(newNode),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create group card header node');
       }
 
-      console.log('response : ',response )
-  
-      
+      console.log('response : ', response)
+
+
     } catch (error) {
       console.error('Error creating group card header node:', error);
     }
@@ -410,13 +485,13 @@ const FlowPanel = () => {
         },
         body: JSON.stringify(newNode),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create group button node');
       }
 
-      console.log('response : ',response )
-  
+      console.log('response : ', response)
+
     } catch (error) {
       console.error('Error creating group button node:', error);
     }
@@ -436,7 +511,7 @@ const FlowPanel = () => {
     // Remove group from groups state
     setGroups(groups.filter(group => group.id !== groupId));
   };
-  
+
   // Add this function to handle the click event of the delete button
   const handleDeleteGroup = (groupId) => {
     deleteGroup(groupId);
@@ -484,7 +559,7 @@ const FlowPanel = () => {
       console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
-    
+
     try {
 
       console.log("new group node data : ", group)
@@ -495,20 +570,20 @@ const FlowPanel = () => {
         },
         body: JSON.stringify(group),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create group');
       }
 
-      console.log('response : ',response )
-  
+      console.log('response : ', response)
+
       setGroups([...groups, group]);
 
-    // Add group button node
-    addGroupButtonsNodes(buttonGroupId);
+      // Add group button node
+      addGroupButtonsNodes(buttonGroupId);
 
-    console.log("group : ", group);  
-      
+      console.log("group : ", group);
+
     } catch (error) {
       console.error('Error creating group:', error);
       // Handle error as needed
@@ -557,18 +632,18 @@ const FlowPanel = () => {
         },
         body: JSON.stringify(newNode),
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to create group button node');
       }
 
-      console.log('response : ',response )
-  
+      console.log('response : ', response)
+
     } catch (error) {
       console.error('Error creating group button node:', error);
     }
 
-    
+
   };
 
   const addFloatingButtonForButtonGroup = () => {
