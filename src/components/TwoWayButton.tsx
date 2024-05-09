@@ -7,8 +7,8 @@ import { RiCloseCircleFill } from "react-icons/ri";
 
 export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
-    const [text, setText] = useState(data.text || 'Button');
-    const [link, setLink] = useState(data.link || '');
+    const [text, setText] = useState('Button');
+    const [link, setLink] = useState('#');
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
 

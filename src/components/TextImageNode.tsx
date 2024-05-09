@@ -123,32 +123,32 @@ export default memo(({ id, data }) => {
 
 
     // delete node from list
-    const deleteNode = async () => {
-        try {
-            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({id}),
-            });
+    // const deleteNode = async () => {
+    //     try {
+    //         const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+    //           method: 'POST',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //           body: JSON.stringify({id}),
+    //         });
       
-            if (!response.ok) {
-              throw new Error('Failed to delete node');
-            }
+    //         if (!response.ok) {
+    //           throw new Error('Failed to delete node');
+    //         }
       
-            setNodes((prevNodes) => {
-              const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
-              return updatedNodes;
-            });
-            console.log('Node deleted:', id);
+    //         setNodes((prevNodes) => {
+    //           const updatedNodes = prevNodes.filter(node => node.id !== id);
+    //           console.log('Updated Node List:', updatedNodes);
+    //           return updatedNodes;
+    //         });
+    //         console.log('Node deleted:', id);
             
-          } catch (error) {
-            console.error('Error deleting node:', error);
-            // Handle error as needed
-          }
-    };
+    //       } catch (error) {
+    //         console.error('Error deleting node:', error);
+    //         // Handle error as needed
+    //       }
+    // };
 
 
 
@@ -160,11 +160,11 @@ export default memo(({ id, data }) => {
                 <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
                     <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'end' }}>
+                        {/* <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
-                        </div>
+                        </div> */}
                         <div style={{
                             display: 'flex',
                             flexDirection: 'column',
