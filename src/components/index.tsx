@@ -270,7 +270,7 @@ const FlowPanel = () => {
 
 
   // card style 2 group
-  const addGroup = () => {
+  const addGroup = async () => {
     const groupId = generateGroupId();
     setGroupId(groupId);
 
@@ -293,24 +293,44 @@ const FlowPanel = () => {
       }]
     };
 
-    setGroups([...groups, group]);
-
-    // Add group card header node
-    addGroupCardHeaderNode(groupId);
-
-    // Add group button node
-    addGroupButtonNode(groupId);
-
-    console.log("group : ", group);
-
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
       console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
+
+    try {
+
+      console.log("new group node data : ", group)
+      const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(group),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create group');
+      }
+
+      console.log('response : ',response )
+  
+      setGroups([...groups, group]);
+  
+      // Add group card header node
+      await addGroupCardHeaderNode(groupId);
+  
+      // Add group button node
+      await addGroupButtonNode(groupId);  
+      
+    } catch (error) {
+      console.error('Error creating group:', error);
+      // Handle error as needed
+    }
   };
 
-  const addGroupCardHeaderNode = (groupId) => {
+  const addGroupCardHeaderNode = async (groupId) => {
     const newNodeId = generateNodeId();
 
     const newNode = {
@@ -333,9 +353,30 @@ const FlowPanel = () => {
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
+
+    try {
+      console.log("new group header node data : ", newNode)
+      const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newNode),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create group card header node');
+      }
+
+      console.log('response : ',response )
+  
+      
+    } catch (error) {
+      console.error('Error creating group card header node:', error);
+    }
   };
 
-  const addGroupButtonNode = (groupId) => {
+  const addGroupButtonNode = async (groupId) => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
@@ -366,7 +407,35 @@ const FlowPanel = () => {
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
+
+    try {
+
+      console.log("new group button node data : ", newNode)
+      const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newNode),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create group button node');
+      }
+
+      console.log('response : ',response )
+  
+    } catch (error) {
+      console.error('Error creating group button node:', error);
+    }
   };
+
+
+
+
+
+
+
 
 
   const deleteGroup = (groupId) => {
@@ -400,7 +469,7 @@ const FlowPanel = () => {
 
 
   // button group 
-  const addButtonGroup = () => {
+  const addButtonGroup = async () => {
     const buttonGroupId = generateGroupId();
     setButtonGroupId(buttonGroupId);
 
@@ -418,21 +487,43 @@ const FlowPanel = () => {
       },
     };
 
-    setGroups([...groups, group]);
-
-    // Add group button node
-    addGroupButtonsNodes(buttonGroupId);
-
-    console.log("group : ", group);
-
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
       console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
+    
+    try {
+
+      console.log("new group node data : ", group)
+      const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(group),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create group');
+      }
+
+      console.log('response : ',response )
+  
+      setGroups([...groups, group]);
+
+    // Add group button node
+    addGroupButtonsNodes(buttonGroupId);
+
+    console.log("group : ", group);  
+      
+    } catch (error) {
+      console.error('Error creating group:', error);
+      // Handle error as needed
+    }
   };
 
-  const addGroupButtonsNodes = (buttonGroupId: string | undefined) => {
+  const addGroupButtonsNodes = async (buttonGroupId: string | undefined) => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === buttonGroupId).length;
 
@@ -463,6 +554,29 @@ const FlowPanel = () => {
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
+
+    try {
+
+      console.log("new group button node data : ", newNode)
+      const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newNode),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create group button node');
+      }
+
+      console.log('response : ',response )
+  
+    } catch (error) {
+      console.error('Error creating group button node:', error);
+    }
+
+    
   };
 
   const addFloatingButtonForButtonGroup = () => {
