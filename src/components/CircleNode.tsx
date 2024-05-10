@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { RiCloseCircleFill } from 'react-icons/ri';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { deleteNodeCall } from '../service/deleteFunctions';
 
 export default memo(({ id, data }) => {
   const { setNodes } = useReactFlow();
@@ -20,33 +21,15 @@ export default memo(({ id, data }) => {
 
 
   const deleteNode = async () => {
-    try {
-      const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({id}),
-      });
 
-      if (!response.ok) {
-        throw new Error('Failed to delete node');
-      }
-
-      setNodes((prevNodes) => {
+    deleteNodeCall(id, "start")
+    setNodes((prevNodes) => {
         const updatedNodes = prevNodes.filter(node => node.id !== id);
-        // console.log('Updated Node List:', updatedNodes);
+        //   console.log('Updated Node List:', updatedNodes);
         return updatedNodes;
-      });
-      console.log('Node deleted:', id);
-      
-    } catch (error) {
-      console.error('Error deleting node:', error);
-      // Handle error as needed
-    }
-
-    
-  };
+    });
+    console.log('Node deleted:', id);
+};
 
   return (
     <>

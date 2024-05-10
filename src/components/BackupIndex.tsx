@@ -26,7 +26,7 @@ import CircleNode from "./CircleNode";
 import AnotationNode from "./AnotationNode";
 import ButtonNode from "./ButtonNode";
 import TextImageNode from "./TextImageNode";
-import CardGroupNode from "./CardGroupNode";
+import CardGroupNode from "./TextOnlyNodeStyle";
 
 import { IoAddCircle } from "react-icons/io5";
 import { addNode } from "../service/nodeFunction";

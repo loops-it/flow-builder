@@ -9,9 +9,6 @@ import ReactFlow, {
   NodeToolbar,
   Connection,
   Edge,
-  updateEdge,
-  Position,
-  ControlButton,
   NodeResizeControl,
 } from "reactflow";
 
@@ -24,9 +21,7 @@ import '../styles/overview.css';
 import ToolBarNode from "./ToolBarNode";
 import CircleNode from "./CircleNode";
 import AnotationNode from "./AnotationNode";
-import ButtonNode from "./ButtonNode";
 import TextImageNode from "./TextImageNode";
-import CardGroupNode from "./CardGroupNode";
 
 import { IoAddCircle } from "react-icons/io5";
 import { addNode } from "../service/nodeFunction";
@@ -37,6 +32,8 @@ import EndCircleNode from "./EndCircleNode";
 import GroupView from "./GroupView";
 import GroupViewLarge from "./GroupViewLarge";
 import { loadDataOnMount } from "../service/getData";
+import { onConnectEdge } from "../service/edgeFunctions";
+import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
 
 
 const nodeTypes = {
@@ -47,7 +44,7 @@ const nodeTypes = {
   button: TwoWayButton,
   cardHeader: TextImageNode,
   cardStyleOne: CardStyleOne,
-  textOnly: CardGroupNode,
+  textOnly: TextOnlyNodeStyle,
   end: EndCircleNode,
   buttonGroup: GroupView,
   cardGroup: GroupViewLarge
@@ -80,6 +77,9 @@ const FlowPanel = () => {
   const [loadData, setLoadData] = useState(null)
 
   const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+
+  console.log("edges : ", edges)
+    console.log("nodes : ", nodes)
 
   // load data on page load
   useEffect(() => {
@@ -131,41 +131,37 @@ const FlowPanel = () => {
     addNode('end', setNodes);
   };
 
-
+  // edge connect
   const onConnect = useCallback(
     async (params: Edge | Connection) => {
       if (!('id' in params)) {
         params.id = generateEdgeId();
       }
       params.type = 'button';
+      onConnectEdge(params)
+      console.log('Updated params:', params);
 
-      try {
-        // console.log("new edge data : ", params)
-        const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(params),
-        });
+      setEdges((prevEdges) => {
+        const newEdges = addEdge(params, prevEdges);
+        return newEdges;
+      });
 
-        if (!response.ok) {
-          throw new Error('Failed to add edge');
-        }
-        // console.log('response : ', response)
-
-        setEdges((prevEdges) => {
-          const newEdges = addEdge(params, prevEdges);
-          // console.log('Updated Edges List:', newEdges);
-          return newEdges;
-        });
-      } catch (error) {
-        console.error('Error adding edge:', error);
-        // Handle error as needed
-      }
     },
     [setEdges]
   );
+
+  // const onNodeDragStop = useCallback(
+  //   async (event: any, node: { position: { x: any; y: any }; id: string }) => {
+  //     const { x, y } = node.position;
+      
+  //     onNodeDragStopCall()
+  //       setNodes((prevNodes) =>
+  //         prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
+  //       );
+      
+  //   },
+  //   [nodes, setNodes]
+  // );
 
   const onNodeDragStop = useCallback(
     async (event: any, node: { position: { x: any; y: any }; id: string }) => {
@@ -197,8 +193,6 @@ const FlowPanel = () => {
     },
     [nodes, setNodes]
   );
-
-
 
 
 
@@ -273,7 +267,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 0,
-        y: 0,
+        y: 10,
       },
       type: 'cardHeader',
       style: {
@@ -327,7 +321,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 325,
+        y: 340,
       },
       type: 'button',
       style: {

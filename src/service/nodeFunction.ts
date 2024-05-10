@@ -1,14 +1,17 @@
+import { SetStateAction, useCallback } from "react";
 import { generateNodeId } from "./idGenerateFunctions";
+import { Node } from "reactflow";
 
 const processNode = {
     color: '#fff',
     borderColor: '#872341',
   };
 
-  
-export const addNode = async (type, setNodes) => {
-
   const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+  
+export const addNode = async (type: string, setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: (prevNodes: any) => any[]): void; }) => {
+
+
   const newNodeId = generateNodeId();
   const newNode = {
     id: newNodeId,
@@ -45,7 +48,7 @@ export const addNode = async (type, setNodes) => {
 
     console.log('response : ',response )
 
-    setNodes((prevNodes) => {
+    setNodes((prevNodes: any) => {
       const updatedNodes = [...prevNodes, newNode];
       console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
@@ -56,3 +59,26 @@ export const addNode = async (type, setNodes) => {
 };
 
 
+
+// export const onNodeDragStopCall = async (id: undefined, position: undefined) =>{
+//     try {
+//       // console.log("update node : ", { id: node.id, position: { x, y } })
+//       const response = await fetch(`${apiUrl}/data-flow-update-node`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ id: node.id, position: { x, y } }),
+//       });
+
+//       if (!response.ok) {
+//         throw new Error('Failed to update node position');
+//       }
+
+//       // console.log("response update node : ", response)
+
+//     } catch (error) {
+//       console.error('Error updating node position:', error);
+//       // Handle error as needed
+//     }
+//   }

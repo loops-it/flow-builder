@@ -1,73 +1,62 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { deleteNodeCall } from '../service/deleteFunctions';
+import { apiUrl } from '../service/idGenerateFunctions';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
 export default memo(({ id,  data }) => {
     const { setNodes } = useReactFlow();
-    const [description, setDescription] = useState('');
+    const [text, setText] = useState('');
+    console.log("text only data: ", data)
 
-    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
     // Update title state when props change
     useEffect(() => {
-        setDescription(data.description || '');
+
     }, [data]);
 
     // node text area input
     const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setDescription(event.target.value);
+        setText(event.target.value);
     };
 
     
 
     // add data from node to node list
-    const saveNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.map(node => {
-                if (node.id === id) {
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            description
-                        }
-                    };
-                }
-                return node;
-            });
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-    };
-
-    // delete node from list
-    const deleteNode = async () => {
+    const saveNode = async () => {
         try {
-            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+            console.log(" text id : ", id)
+            console.log(" text text : ", text)
+            const response = await fetch(`${apiUrl}/data-flow-text`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id}), 
+                body: JSON.stringify({ id: id, text: text}), 
               });
         
             if (!response.ok) {
               throw new Error('Failed to delete node');
             }
+            console.log("text : ",response)
+        } catch (error) {
+            
+        }
+    };
+
+    // delete node from list
+    const deleteNode = async () => {
         
+        deleteNodeCall(id, "textOnly")
             setNodes((prevNodes) => {
               const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
+            //   console.log('Updated Node List:', updatedNodes);
               return updatedNodes;
             });
             console.log('Node deleted:', id);
-          } catch (error) {
-            console.error('Error deleting node:', error);
-            // Handle error as needed
-          }
     };
 
 
@@ -87,7 +76,7 @@ export default memo(({ id,  data }) => {
                         </div>
                         <label style={{marginBottom: '10px'}}>Add your text here</label>
                         <textarea
-                            value={description}
+                            value={text}
                             onChange={handleDescriptionChange}
                             className="nodrag"
                             style={{marginBottom: '10px'}}

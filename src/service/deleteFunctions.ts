@@ -23,3 +23,24 @@ export const edgeDelete = async (edge_id: any) => {
 
     }
 }
+
+
+export const deleteNodeCall = async (id: any , type: string) => {
+    try {
+        const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id, type: "textOnly"}), 
+          });
+    
+        if (!response.ok) {
+          throw new Error('Failed to delete node');
+        }
+        // console.log('Node deleted:', id);
+      } catch (error) {
+        console.error('Error deleting node:', error);
+        // Handle error as needed
+      }
+};

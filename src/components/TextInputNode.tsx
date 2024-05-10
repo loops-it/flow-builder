@@ -1,25 +1,17 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { deleteNodeCall } from '../service/deleteFunctions';
+import { apiUrl } from '../service/idGenerateFunctions';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
 export default memo(({ id, type, data, position }) => {
+
     const { setNodes } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState(null);
-
-    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
-
-
-    // Update title state when props change
-    useEffect(() => {
-        setTitle(data.title || '');
-        setDescription(data.description || '');
-    }, [data]);
-
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -31,95 +23,37 @@ export default memo(({ id, type, data, position }) => {
         setDescription(event.target.value);
     };
 
-    // console.log the node data
-    const logUserInput = () => {
-        console.log('node id :', id)
-        console.log('Title:', title);
-        console.log('Description:', description);
-    };
-
-
     // add data from node to node list
-    // const saveNode = () => {
-    //     setNodes((prevNodes) => {
-    //         const updatedNodes = prevNodes.map(node => {
-    //             if (node.id === id) {
-    //                 return {
-    //                     ...node,
-    //                     data: {
-    //                         ...node.data,
-    //                         title,
-    //                         description
-    //                     }
-    //                 };
-    //             }
-    //             return node;
-    //         });
-    //         console.log('Updated Node List:', updatedNodes);
-    //         return updatedNodes;
-    //     });
-    // };
-
-    // handle image upload
-    const handleImageChange = (event: { target: { files: any[]; }; }) => {
-        const file = event.target.files[0];
-        console.log('Selected File:', file); // Log the selected file
-        setImage(file);
-    };
-
-    useEffect(() => {
-        if (image) {
-            const formData = new FormData();
-            formData.append('id', id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('image', image || ''); // Make sure image is appended properly
-
-            console.log('Form Data:', formData);
-        }
-    }, [image]);
-
-    // add data from node to node list
-    const saveNode = () => {
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('image', image || '');
-
-        console.log('Form Data:', formData);
-        const formDataObject = {};
-        for (const pair of formData.entries()) {
-            formDataObject[pair[0]] = pair[1];
-        }
-        console.log('Form Data:', formDataObject);
-    };
-
-    // delete node from list
-    const deleteNode = async () => {
+    const saveNode = async () => {
         try {
-            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+            // console.log(" text data : ", id, "-", description)
+            const response = await fetch(`${apiUrl}/data-flow-text-box`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id}), 
+                body: JSON.stringify({id: id, title: title, description: description}), 
               });
         
             if (!response.ok) {
               throw new Error('Failed to delete node');
             }
-        
+            console.log("title , description : ",response)
+        } catch (error) {
+            
+        }
+    };
+
+
+    // delete node from list
+    const deleteNode = async () => {
+        deleteNodeCall(id, "textinput")
             setNodes((prevNodes) => {
               const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
+            //   console.log('Updated Node List:', updatedNodes);
               return updatedNodes;
             });
             console.log('Node deleted:', id);
-          } catch (error) {
-            console.error('Error deleting node:', error);
-            // Handle error as needed
-          }
     };
 
 
@@ -150,13 +84,6 @@ export default memo(({ id, type, data, position }) => {
                             onChange={handleDescriptionChange}
                             className="nodrag"
                         ></textarea>
-                        {/* <label>Image</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="nodrag"
-                        /> */}
                         <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 

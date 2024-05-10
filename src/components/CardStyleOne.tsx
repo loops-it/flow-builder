@@ -1,26 +1,17 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { deleteNodeCall } from '../service/deleteFunctions';
+import { apiUrl } from '../service/idGenerateFunctions';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id, data }) => {
+export default memo(({ id }) => {
     const { setNodes } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
-
-
-    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
-
-
-    // Update title state when props change
-    useEffect(() => {
-        setTitle(data.title || '');
-        setDescription(data.description || '');
-    }, [data]);
-
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -33,33 +24,12 @@ export default memo(({ id, data }) => {
     };
 
     // console.log the node data
-    const logUserInput = () => {
-        console.log('node id :', id)
-        console.log('Title:', title);
-        console.log('Description:', description);
-    };
-
-
-    // add data from node to node list
-    // const saveNode = () => {
-    //     setNodes((prevNodes) => {
-    //         const updatedNodes = prevNodes.map(node => {
-    //             if (node.id === id) {
-    //                 return {
-    //                     ...node,
-    //                     data: {
-    //                         ...node.data,
-    //                         title,
-    //                         description
-    //                     }
-    //                 };
-    //             }
-    //             return node;
-    //         });
-    //         console.log('Updated Node List:', updatedNodes);
-    //         return updatedNodes;
-    //     });
+    // const logUserInput = () => {
+    //     console.log('node id :', id)
+    //     console.log('Title:', title);
+    //     console.log('Description:', description);
     // };
+
 
     // handle image upload
     const handleImageChange = (event: { target: { files: any[]; }; }) => {
@@ -74,52 +44,66 @@ export default memo(({ id, data }) => {
             formData.append('id', id);
             formData.append('title', title);
             formData.append('description', description);
-            formData.append('image', image || ''); 
+            formData.append('image', image || '');
             console.log('Form Data:', formData);
         }
     }, [image]);
 
     // add data from node to node list
-    const saveNode = () => {
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('image', image || '');
-
-        console.log('Form Data:', formData);
-        const formDataObject = {};
-        for (const pair of formData.entries()) {
-            formDataObject[pair[0]] = pair[1];
-        }
-        console.log('Form Data:', formDataObject);
-    };
-
-    // delete node from list
-    const deleteNode = async () => {
+    const saveNode = async () => {
         try {
-            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+            const formData = new FormData();
+            formData.append('id', id);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('image', image || '');
+
+            // Convert FormData to plain object for logging
+            // const formDataObject = {};
+            // for (const pair of formData.entries()) {
+            //     formDataObject[pair[0]] = pair[1];
+            // }
+            // console.log('Form Data:', formDataObject);
+
+            // const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+            //     method: 'POST',
+            //     body: formDataObject,
+            // });
+
+            // if (!response.ok) {
+            //     throw new Error('Failed to save node');
+            // }
+
+            // console.log('Node saved successfully:', response);
+
+            const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id}), 
+                body: JSON.stringify({ id: id, title: title, description: description, image: '/image1'}), 
               });
         
             if (!response.ok) {
               throw new Error('Failed to delete node');
             }
-        
-            setNodes((prevNodes) => {
-              const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
-              return updatedNodes;
-            });
-            console.log('Node deleted:', id);
-          } catch (error) {
-            console.error('Error deleting node:', error);
-            // Handle error as needed
-          }
+            console.log("card 1 : ",response)
+
+        } catch (error) {
+            console.error('Error saving node:', error);
+        }
+    };
+
+    // delete node from list
+    const deleteNode = async () => {
+
+        deleteNodeCall(id, "cardStyleOne")
+        setNodes((prevNodes) => {
+            const updatedNodes = prevNodes.filter(node => node.id !== id);
+            //   console.log('Updated Node List:', updatedNodes);
+            return updatedNodes;
+        });
+        console.log('Node deleted:', id);
     };
 
 
@@ -127,11 +111,11 @@ export default memo(({ id, data }) => {
 
     return (
         <>
-            <div className='elementWrap' style={{zIndex: '99998 !important'}}>
+            <div className='elementWrap' style={{ zIndex: '99998 !important' }}>
                 {/* gradient */}
-                <div className="wrapper plainColor  elementWrap" style={{borderRadius: '10px',margin: '10px'}}>
+                <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
-                    <div className="inner" style={{display: 'flex' ,flexDirection: 'column', padding: '10px', borderRadius: '10px'}}>
+                    <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
@@ -165,20 +149,14 @@ export default memo(({ id, data }) => {
                             onChange={handleTitleChange}
                             className="nodrag"
                         />
-                        <label style={{marginTop: '8px'}}>Description</label>
+                        <label style={{ marginTop: '8px' }}>Description</label>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
                             className="nodrag"
+                            style={{ marginBottom: '5px' }}
                         ></textarea>
-                        <label style={{marginTop: '8px'}}>Image</label>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="nodrag"
-                            style={{marginBottom: '10px'}}
-                        />
+
                         <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
 

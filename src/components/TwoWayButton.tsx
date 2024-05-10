@@ -1,18 +1,20 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { apiUrl } from '../service/idGenerateFunctions';
+import { deleteNodeCall } from '../service/deleteFunctions';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id, type, data, position }) => {
+export default memo(({ id }) => {
     const { setNodes } = useReactFlow();
     const [text, setText] = useState('Button');
     const [link, setLink] = useState('#');
+    const [buttonId, setButtonId] = useState('')
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
 
-    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -38,6 +40,7 @@ export default memo(({ id, type, data, position }) => {
         setButtonText(text);
         setLink(link);
         closePopup();
+        // saveNode();
     };
 
     // console.log the node data
@@ -49,52 +52,47 @@ export default memo(({ id, type, data, position }) => {
 
 
     // add data from node to node list
-    const saveNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.map(node => {
-                if (node.id === id) {
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            text,
-                            link
-                        }
-                    };
-                }
-                return node;
-            });
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-    };
-
-
-    // delete node from list
-    const deleteNode = async () => {
+    const saveNode = async () => {
+        console.log('button id :', id)
+        setButtonId(id)
+        setButtonText(text);
+        setLink(link);
+        
         try {
-            const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+            console.log(" id : ", id)
+            console.log(" text : ", text)
+            console.log(" link : ", link)
+
+            const response = await fetch(`${apiUrl}/data-flow-button-data`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id}), 
+                body: JSON.stringify({ id: id, text: text, link: link}), 
               });
         
             if (!response.ok) {
               throw new Error('Failed to delete node');
             }
+            console.log("text : ",response)
+
+        } catch (error) {
+            
+        }
+        closePopup();
+    };
+
+
+    // delete node from list
+    const deleteNode = async () => {
         
+        deleteNodeCall(id, "button")
             setNodes((prevNodes) => {
               const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
+            //   console.log('Updated Node List:', updatedNodes);
               return updatedNodes;
             });
             console.log('Node deleted:', id);
-          } catch (error) {
-            console.error('Error deleting node:', error);
-            // Handle error as needed
-          }
     };
 
 
@@ -136,7 +134,7 @@ export default memo(({ id, type, data, position }) => {
                             onChange={handleLinkChange}
                             style={{ marginBottom: '10px'}}
                         />
-                        <button onClick={savePopup}>Save</button>
+                        <button onClick={saveNode}>Save</button>
                         <button onClick={closePopup} style={{ marginLeft: '10px'}}>Cancel</button>
                     </div>
                 </div>
