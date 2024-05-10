@@ -1,3 +1,5 @@
+import { SetStateAction } from "react";
+import { Node, Edge } from "reactflow";
 
 const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
@@ -15,11 +17,11 @@ const fetchDataFlowData = async () => {
     }
   };
 
-export const loadDataOnMount = async (setNodes,setEdges) => {
+export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: any): void; },setEdges: { (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (arg0: any): void; }) => {
     try {
       const data = await fetchDataFlowData();
   
-      const filteredNodes = data.nodes.map(node => {
+      const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
         const filteredNode = {};
         for (const key in node) {
           if (key === 'id') {
@@ -67,7 +69,7 @@ export const loadDataOnMount = async (setNodes,setEdges) => {
         return filteredNode;
       });
   
-      const filteredEdges = data.edges.map(edge => {
+      const filteredEdges = data.edges.map((edge: { [x: string]: any; }) => {
         const filteredEdge = {};
         for (const key in edge) {
           if (key === 'id') {

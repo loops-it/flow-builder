@@ -81,16 +81,15 @@ const FlowPanel = () => {
 
   const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
-  
-
-  
-
+  // load data on page load
   useEffect(() => {
-    loadDataOnMount( setNodes , setEdges )
+    loadDataOnMount(setNodes, setEdges)
+    console.log("edges : ", edges)
+    console.log("nodes : ", nodes)
   }, []);
 
 
-  console.log( "edges : ", edges)
+
 
   // add start circle node
   const addCircleNode = () => {
@@ -132,44 +131,6 @@ const FlowPanel = () => {
     addNode('end', setNodes);
   };
 
-
-
-
-
-  const onEdgeUpdate = useCallback(
-    async (oldEdge: Edge<any>, newConnection: Connection) => {
-      const updatedEdge = updateEdge(oldEdge, newConnection, edges);
-      updatedEdge.type = 'button';
-  
-      console.log("edge : ", updatedEdge)
-
-      try {
-        const response = await fetch(`${apiUrl}/data-flow-update-edge`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(updatedEdge),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to update edge');
-        }
-      } catch (error) {
-        console.error('Error updating edge:', error);
-        // Handle error as needed
-      }
-  
-      setEdges((prevEdges: Edge<any>[]) => {
-        const updatedEdges = prevEdges.map((edge) =>
-          edge.id === updatedEdge.id ? updatedEdge : edge
-        );
-        return updatedEdges;
-      });
-    },
-    [edges, setEdges]
-  );
-  
 
   const onConnect = useCallback(
     async (params: Edge | Connection) => {
@@ -622,7 +583,7 @@ const FlowPanel = () => {
           onNodeDragStop={onNodeDragStop}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          onEdgeUpdate={onEdgeUpdate}
+          // onEdgeUpdate={onEdgeUpdate}
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
