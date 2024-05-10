@@ -89,9 +89,6 @@ const FlowPanel = () => {
     loadDataOnMount( setNodes , setEdges )
   }, []);
 
-
-  console.log( "edges : ", edges)
-
   // add start circle node
   const addCircleNode = () => {
     addNode('start', setNodes);
@@ -136,14 +133,44 @@ const FlowPanel = () => {
 
 
 
+  // const onEdgeUpdate = useCallback(
+  //   (oldEdge: Edge, newConnection: Connection) => {
+  //     const updatedEdge = updateEdge(oldEdge, newConnection, edges);
+  //     updatedEdge.type = 'button';
+  //     setEdges((prevEdges) => {
+  //       const updatedEdges = prevEdges.map((edge) =>
+  //         edge.id === updatedEdge.id ? updatedEdge : edge
+  //       );
+  //       console.log('Updated Edges List:', updatedEdges);
+  //       return updatedEdges;
+  //     });
+  //   },
+  //   [edges, setEdges]
+  // );
+
+  // const onNodeDragStop = useCallback(
+  //   (event: any, node: { position: { x: any; y: any; }; id: string; }) => {
+  //     const { x, y } = node.position;
+  //     setNodes((prevNodes) =>
+  //       prevNodes.map((n) =>
+  //         n.id === node.id ? { ...n, position: { x, y } } : n
+  //       )
+  //     );
+  //     console.log('Updated Node List:', nodes);
+  //   },
+  //   [nodes, setNodes]
+  // );
+
+
+
+
   const onEdgeUpdate = useCallback(
-    async (oldEdge: Edge<any>, newConnection: Connection) => {
+    async (oldEdge: Edge, newConnection: Connection) => {
       const updatedEdge = updateEdge(oldEdge, newConnection, edges);
       updatedEdge.type = 'button';
-  
-      console.log("edge : ", updatedEdge)
 
       try {
+        // console.log("update edge : ", updatedEdge)
         const response = await fetch(`${apiUrl}/data-flow-update-edge`, {
           method: 'POST',
           headers: {
@@ -151,25 +178,28 @@ const FlowPanel = () => {
           },
           body: JSON.stringify(updatedEdge),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to update edge');
         }
+        // console.log("update response : ", response)
+
+
       } catch (error) {
         console.error('Error updating edge:', error);
         // Handle error as needed
       }
-  
-      setEdges((prevEdges: Edge<any>[]) => {
+
+      setEdges((prevEdges) => {
         const updatedEdges = prevEdges.map((edge) =>
           edge.id === updatedEdge.id ? updatedEdge : edge
         );
+        // console.log('Updated Edges List:', updatedEdges);
         return updatedEdges;
       });
     },
     [edges, setEdges]
   );
-  
 
   const onConnect = useCallback(
     async (params: Edge | Connection) => {

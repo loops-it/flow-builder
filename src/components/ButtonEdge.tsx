@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
   BaseEdge,
   EdgeLabelRenderer,
@@ -6,6 +6,7 @@ import {
   useReactFlow,
 } from 'reactflow';
 import { IoIosCloseCircle } from "react-icons/io";
+import { edgeDelete } from '../service/deleteFunctions';
 
 
 export default function CustomEdge({
@@ -19,7 +20,7 @@ export default function CustomEdge({
   style = {},
   markerEnd,
 }) {
-  const { setEdges, getEdgeById } = useReactFlow();
+  const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -29,42 +30,11 @@ export default function CustomEdge({
     targetPosition,
   });
 
+
   const onEdgeClick = () => {
-    setEdges((edges) => edges.filter((edge) => edge.id !== id));
+    setEdges((edges: any[]) => edges.filter((edge: { id: any; }) => edge.id !== id));
+    edgeDelete(id)
   };
-
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
-
-
-  const deleteEdge = useCallback(async (id: string) => {
-    console.log("edge id : ", id)
-    try {
-      // Make API call to delete the edge
-      // const response = await fetch(`${apiUrl}/data-flow-delete-edge`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(id), 
-      // });
-  
-      // if (!response.ok) {
-      //   throw new Error('Failed to delete edge');
-      // }
-  
-      setEdges(edges => {
-        const updatedEdges = edges.filter(edge => edge.id !== id);
-        // console.log('Updated Edge List (delete):', updatedEdges);
-        return updatedEdges;
-      });
-
-    } catch (error) {
-      console.error('Error deleting edge:', error);
-    }
-  }, [ setEdges]);
-
-
-
 
   return (
     <>
@@ -79,7 +49,7 @@ export default function CustomEdge({
           }}
           className="nodrag nopan"
         >
-          <button className="edgebutton" onClick={deleteEdge}>
+          <button className="edgebutton" onClick={onEdgeClick}>
             <IoIosCloseCircle style={{ color: '#000 !important' }} />
           </button>
         </div>
