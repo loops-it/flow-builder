@@ -113,7 +113,7 @@ export default memo(({ id, data }) => {
         formData.append('description', description);
         formData.append('image', image || '');
 
-        console.log('Form Data:', formData);
+        // console.log('Form Data:', formData);
         const formDataObject = {};
         for (const pair of formData.entries()) {
             formDataObject[pair[0]] = pair[1];

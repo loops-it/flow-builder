@@ -150,3 +150,8 @@ p{
   font-weight: 600;
   font-family: "Poppins", sans-serif;
 }
+
+.groupColor{
+  background-color: #00000018;
+  border: solid 1px #0000005e ;
+}

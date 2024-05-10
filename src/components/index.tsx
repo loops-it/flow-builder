@@ -35,6 +35,7 @@ import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
 import GroupView from "./GroupView";
+import GroupViewLarge from "./GroupViewLarge";
 
 
 const nodeTypes = {
@@ -47,7 +48,8 @@ const nodeTypes = {
   cardStyleOne: CardStyleOne,
   textOnly: CardGroupNode,
   end: EndCircleNode,
-  buttonGroup: GroupView
+  buttonGroup: GroupView,
+  cardGroup: GroupViewLarge
 };
 
 
@@ -153,21 +155,26 @@ const FlowPanel = () => {
         const filteredEdges = data.edges.map(edge => {
           const filteredEdge = {};
           for (const key in edge) {
-            if (edge[key] !== null) {
+            if (key === 'id') {
+              continue; // Skip the id attribute
+            } else if (key === 'edge_id') {
+              filteredEdge['id'] = edge[key]; // Rename edge_id to id
+            } else if (edge[key] !== null) {
               filteredEdge[key] = edge[key];
             }
           }
           return filteredEdge;
         });
+        
 
-        console.log('Retrieved filteredNodes:', filteredNodes);
-        console.log('Retrieved filteredEdges:', filteredEdges);
+        // console.log('Retrieved filteredNodes:', filteredNodes);
+        // console.log('Retrieved filteredEdges:', filteredEdges);
 
         setNodes(filteredNodes);
         setEdges(filteredEdges);
 
-        console.log('State filteredNodes:', filteredNodes);
-        console.log('State filteredEdges:', filteredEdges);
+        // console.log('State filteredNodes:', filteredNodes);
+        // console.log('State filteredEdges:', filteredEdges);
 
 
       } catch (error) {
@@ -263,7 +270,7 @@ const FlowPanel = () => {
       updatedEdge.type = 'button';
 
       try {
-        console.log("update edge : ", updatedEdge)
+        // console.log("update edge : ", updatedEdge)
         const response = await fetch(`${apiUrl}/data-flow-update-edge`, {
           method: 'POST',
           headers: {
@@ -275,7 +282,7 @@ const FlowPanel = () => {
         if (!response.ok) {
           throw new Error('Failed to update edge');
         }
-        console.log("update response : ", response)
+        // console.log("update response : ", response)
 
 
       } catch (error) {
@@ -287,7 +294,7 @@ const FlowPanel = () => {
         const updatedEdges = prevEdges.map((edge) =>
           edge.id === updatedEdge.id ? updatedEdge : edge
         );
-        console.log('Updated Edges List:', updatedEdges);
+        // console.log('Updated Edges List:', updatedEdges);
         return updatedEdges;
       });
     },
@@ -302,7 +309,7 @@ const FlowPanel = () => {
       params.type = 'button';
 
       try {
-        console.log("new edge data : ", params)
+        // console.log("new edge data : ", params)
         const response = await fetch(`${apiUrl}/data-flow-insert-edge`, {
           method: 'POST',
           headers: {
@@ -314,11 +321,11 @@ const FlowPanel = () => {
         if (!response.ok) {
           throw new Error('Failed to add edge');
         }
-        console.log('response : ', response)
+        // console.log('response : ', response)
 
         setEdges((prevEdges) => {
           const newEdges = addEdge(params, prevEdges);
-          console.log('Updated Edges List:', newEdges);
+          // console.log('Updated Edges List:', newEdges);
           return newEdges;
         });
       } catch (error) {
@@ -333,7 +340,7 @@ const FlowPanel = () => {
     async (event: any, node: { position: { x: any; y: any }; id: string }) => {
       const { x, y } = node.position;
       try {
-        console.log("update node : ", { id: node.id, position: { x, y } })
+        // console.log("update node : ", { id: node.id, position: { x, y } })
         const response = await fetch(`${apiUrl}/data-flow-update-node`, {
           method: 'POST',
           headers: {
@@ -346,12 +353,12 @@ const FlowPanel = () => {
           throw new Error('Failed to update node position');
         }
 
-        console.log("response update node : ", response)
+        // console.log("response update node : ", response)
 
         setNodes((prevNodes) =>
           prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
         );
-        console.log('Updated Node List:', nodes);
+        // console.log('Updated Node List:', nodes);
       } catch (error) {
         console.error('Error updating node position:', error);
         // Handle error as needed
@@ -373,7 +380,7 @@ const FlowPanel = () => {
 
     const group = {
       id: groupId,
-      type: 'group',
+      type: 'cardGroup',
       data: { label: 'Group' },
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
@@ -392,13 +399,13 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
-      console.log("Updated Node List with group:", updatedNodes);
+      // console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
 
     try {
 
-      console.log("new group node data : ", group)
+      // console.log("new group node data : ", group)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -411,7 +418,7 @@ const FlowPanel = () => {
         throw new Error('Failed to create group');
       }
 
-      console.log('response : ', response)
+      // console.log('response : ', response)
 
       setGroups([...groups, group]);
 
@@ -447,12 +454,12 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
+      // console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
 
     try {
-      console.log("new group header node data : ", newNode)
+      // console.log("new group header node data : ", newNode)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -465,7 +472,7 @@ const FlowPanel = () => {
         throw new Error('Failed to create group card header node');
       }
 
-      console.log('response : ', response)
+      // console.log('response : ', response)
 
 
     } catch (error) {
@@ -478,7 +485,7 @@ const FlowPanel = () => {
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
     if (buttonsCount >= 3) {
-      console.log('Maximum button limit reached for this group');
+      alert('Maximum button limit reached for this group');
       return;
     }
 
@@ -501,13 +508,13 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
+      // console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
 
     try {
 
-      console.log("new group button node data : ", newNode)
+      // console.log("new group button node data : ", newNode)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -520,7 +527,7 @@ const FlowPanel = () => {
         throw new Error('Failed to create group button node');
       }
 
-      console.log('response : ', response)
+      // console.log('response : ', response)
 
     } catch (error) {
       console.error('Error creating group button node:', error);
@@ -586,13 +593,13 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
-      console.log("Updated Node List with group:", updatedNodes);
+      // console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
 
     try {
 
-      console.log("new group node data : ", group)
+      // console.log("new group node data : ", group)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -605,14 +612,14 @@ const FlowPanel = () => {
         throw new Error('Failed to create group');
       }
 
-      console.log('response : ', response)
+      // console.log('response : ', response)
 
       setGroups([...groups, group]);
 
       // Add group button node
       addGroupButtonsNodes(buttonGroupId);
 
-      console.log("group : ", group);
+      // console.log("group : ", group);
 
     } catch (error) {
       console.error('Error creating group:', error);
@@ -625,7 +632,7 @@ const FlowPanel = () => {
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === buttonGroupId).length;
 
     if (buttonsCount >= 3) {
-      console.log('Maximum button limit reached for this group');
+      alert('Maximum button limit reached for this group');
       return;
     }
 
@@ -648,13 +655,13 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, newNode];
-      console.log('Updated Node List:', updatedNodes);
+      // console.log('Updated Node List:', updatedNodes);
       return updatedNodes;
     });
 
     try {
 
-      console.log("new group button node data : ", newNode)
+      // console.log("new group button node data : ", newNode)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -667,7 +674,7 @@ const FlowPanel = () => {
         throw new Error('Failed to create group button node');
       }
 
-      console.log('response : ', response)
+      // console.log('response : ', response)
 
     } catch (error) {
       console.error('Error creating group button node:', error);

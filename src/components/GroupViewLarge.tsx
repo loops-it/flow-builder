@@ -28,7 +28,7 @@ export default memo(({ id }) => {
         
             setNodes((prevNodes) => {
               const updatedNodes = prevNodes.filter(node => node.id !== id);
-              console.log('Updated Node List:', updatedNodes);
+              // console.log('Updated Node List:', updatedNodes);
               return updatedNodes;
             });
             console.log('Node deleted:', id);
@@ -47,7 +47,7 @@ export default memo(({ id }) => {
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px'}}>
 
-                    <div className="inner" style={{height: '100px'}}>
+                    <div className="inner" style={{height: '400px', width: '300px'}}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />

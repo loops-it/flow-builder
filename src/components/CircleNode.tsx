@@ -35,7 +35,7 @@ export default memo(({ id, data }) => {
 
       setNodes((prevNodes) => {
         const updatedNodes = prevNodes.filter(node => node.id !== id);
-        console.log('Updated Node List:', updatedNodes);
+        // console.log('Updated Node List:', updatedNodes);
         return updatedNodes;
       });
       console.log('Node deleted:', id);
