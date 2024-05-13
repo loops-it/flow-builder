@@ -20,16 +20,16 @@ export default memo(({ id, data }) => {
   const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
 
-  const deleteNode = async () => {
+//   const deleteNode = async () => {
 
-    deleteNodeCall(id, "start")
-    setNodes((prevNodes) => {
-        const updatedNodes = prevNodes.filter(node => node.id !== id);
-        //   console.log('Updated Node List:', updatedNodes);
-        return updatedNodes;
-    });
-    console.log('Node deleted:', id);
-};
+//     deleteNodeCall(id, "start")
+//     setNodes((prevNodes) => {
+//         const updatedNodes = prevNodes.filter(node => node.id !== id);
+//         //   console.log('Updated Node List:', updatedNodes);
+//         return updatedNodes;
+//     });
+//     console.log('Node deleted:', id);
+// };
 
   return (
     <>
@@ -37,11 +37,11 @@ export default memo(({ id, data }) => {
       <div className="wrapper plainColor" style={{ overflow: 'visible' }}>
         {/* <div className="inner">{label || 'no node connected'}</div> */}
         <div className="inner" style={{ color: '#333 !important', overflow: 'visible' }}>
-          <div style={{ display: 'flex', justifyContent: 'end', position: 'absolute', top: -15, right: -5 }}>
+            {/*<div style={{ display: 'flex', justifyContent: 'end', position: 'absolute', top: -15, right: -5 }}>
             <button className='nodeCloseButton' onClick={deleteNode}>
               <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
             </button>
-          </div>
+          </div>*/}
           <p style={{ color: '#333 !important' }}>
             Start
           </p>

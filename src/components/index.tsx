@@ -73,12 +73,13 @@ const FlowPanel = () => {
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
+  const [startNode, setStartNode] = useState(true);
 
   const [loadData, setLoadData] = useState(null)
 
 
   // console.log("edges : ", edges)
-    // console.log("nodes : ", nodes)
+    console.log("nodes : ", nodes)
 
   // load data on page load
   // useEffect(() => {
@@ -536,7 +537,7 @@ const FlowPanel = () => {
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        <button onClick={addCircleNode} >start</button>
+        {/* <button onClick={addCircleNode} >start</button> */}
         <button onClick={addEndNode} style={{ marginTop: '10px' }}>End</button>
         <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
         {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button> */}
