@@ -3,6 +3,7 @@ import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { apiUrl } from '../service/idGenerateFunctions';
 import { deleteNodeCall } from '../service/deleteFunctions';
+import { getNodeData } from '../service/getData';
 
 
 // const dimensionAttrs = ['width', 'height'];
@@ -15,6 +16,33 @@ export default memo(({ id }) => {
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // console.log("node id here : ", id);
+                const nodeData = await getNodeData();
+    
+                // console.log("Text Button Data:", nodeData.buttonData);
+    
+                const desiredNodeId = id; 
+                const node = nodeData.buttonData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+    
+                if (node) {
+                    // console.log("Text:", node.text);
+                    setText(node.text);
+                    setLink(node.link);
+                    setButtonText(node.text);
+                } else {
+                    console.log("Node not found");
+                }
+    
+          } catch (error) {
+            console.error("Error fetching node data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const openPopup = () => {
         setPopupOpen(true);

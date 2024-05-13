@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
 import { Node, Edge } from "reactflow";
+import { apiUrl } from "./idGenerateFunctions";
 
-const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
 const fetchDataFlowData = async () => {
     try {
@@ -92,3 +92,24 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
     }
   };
   
+
+
+  export const getNodeData = async () => {
+    try {
+        const response = await fetch(`${apiUrl}/data-flow-retrieve-data`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            }
+          });
+          const data = await response.json();
+          // console.log('Node Data:', data); 
+        if (!response.ok) {
+          throw new Error('Failed to get node data');
+        }
+        return data;
+      } catch (error) {
+        console.error('Error deleting node:', error);
+        // Handle error as needed
+      }
+};

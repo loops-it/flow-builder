@@ -3,6 +3,7 @@ import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
+import { getNodeData } from '../service/getData';
 
 
 // const dimensionAttrs = ['width', 'height'];
@@ -12,6 +13,35 @@ export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // console.log("node id here : ", id);
+                const nodeData = await getNodeData();
+    
+                // console.log("Text Only Data:", nodeData.textBox);
+    
+                const desiredNodeId = id; 
+                const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+    
+                if (node) {
+                    // console.log("Text:", node.text);
+                    setTitle(node.title);
+                    setDescription(node.description);
+                } else {
+                    console.log("Node not found");
+                }
+    
+          } catch (error) {
+            console.error("Error fetching node data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {

@@ -25,7 +25,7 @@ import TextImageNode from "./TextImageNode";
 
 import { IoAddCircle } from "react-icons/io5";
 import { addNode } from "../service/nodeFunction";
-import { generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
+import { apiUrl, generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
 import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
@@ -76,17 +76,30 @@ const FlowPanel = () => {
 
   const [loadData, setLoadData] = useState(null)
 
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
-  console.log("edges : ", edges)
-    console.log("nodes : ", nodes)
+  // console.log("edges : ", edges)
+    // console.log("nodes : ", nodes)
 
   // load data on page load
+  // useEffect(() => {
+  //   loadDataOnMount(setNodes, setEdges)
+  //   console.log("edges : ", edges)
+  //   console.log("nodes : ", nodes)
+  // }, []);
+
   useEffect(() => {
-    loadDataOnMount(setNodes, setEdges)
-    console.log("edges : ", edges)
-    console.log("nodes : ", nodes)
-  }, []);
+  const loadDataInterval = setInterval(() => {
+    loadDataOnMount(setNodes, setEdges);
+  }, 3000); // Run every 3 seconds
+
+  // Load data initially
+  loadDataOnMount(setNodes, setEdges);
+
+  return () => {
+    clearInterval(loadDataInterval); // Clean up interval on unmount
+  };
+}, []); 
+
 
 
 
