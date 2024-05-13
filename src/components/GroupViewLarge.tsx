@@ -17,7 +17,7 @@ export default memo(({ id, data }) => {
     // delete node from list
     const deleteNode = async () => {
 
-      deleteNodeCall(id, "buttonGroup")
+      deleteNodeCall(id, "cardGroup")
       setNodes((prevNodes) => {
           const updatedNodes = prevNodes.filter(node => node.id !== id);
           //   console.log('Updated Node List:', updatedNodes);
