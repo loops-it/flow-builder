@@ -89,16 +89,16 @@ const FlowPanel = () => {
   // }, []);
 
   useEffect(() => {
-  const loadDataInterval = setInterval(() => {
-    loadDataOnMount(setNodes, setEdges);
-  }, 3000); // Run every 3 seconds
+  // const loadDataInterval = setInterval(() => {
+  //   loadDataOnMount(setNodes, setEdges);
+  // }, 3000); // Run every 3 seconds
 
   // Load data initially
   loadDataOnMount(setNodes, setEdges);
 
-  return () => {
-    clearInterval(loadDataInterval); // Clean up interval on unmount
-  };
+  // return () => {
+  //   clearInterval(loadDataInterval); // Clean up interval on unmount
+  // };
 }, []); 
 
 
