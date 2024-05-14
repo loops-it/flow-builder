@@ -25,7 +25,7 @@ export default memo((id: any) => {
 
     return (
         <>
-            <div className='elementWrap'>
+            <div className='elementWrap' id={nodeId}>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
 

@@ -75,11 +75,14 @@ const FlowPanel = () => {
   const [buttonGroupId, setButtonGroupId] = useState(null);
 
   useEffect(() => {
-  loadDataOnMount(setNodes, setEdges);
-  console.log("nodes : ", nodes)
-}, []); 
+    loadDataOnMount(setNodes, setEdges);
+    console.log("nodes : ", nodes)
+  }, []);
 
 
+  useEffect(() => {
+
+  }, [groupId])
 
 
 
@@ -191,10 +194,7 @@ const FlowPanel = () => {
         zIndex: '999',
         position: 'relative !important'
       },
-      buttons: [{
-        label: 'Delete',
-        onClick: () => handleDeleteGroup(groupId)
-      }]
+      selectable: true,
     };
 
     setNodes((prevNodes) => {
@@ -280,7 +280,7 @@ const FlowPanel = () => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
-    if (buttonsCount >= 3) {
+    if (buttonsCount >= 5) {
       alert('Maximum button limit reached for this group');
       return;
     }
@@ -377,6 +377,7 @@ const FlowPanel = () => {
       id: buttonGroupId,
       type: 'buttonGroup',
       data: { label: 'Group' },
+      selectable: true,
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '300px',
@@ -510,36 +511,36 @@ const FlowPanel = () => {
 
 
 
-        {groupId && (
-          <button
-            style={{
-              position: "relative",
-              bottom: "0px",
-              right: "0px",
-              zIndex: "1000",
-              marginTop: '50px'
-            }}
-            onClick={addFloatingButton}
-          >
-            <IoAddCircle /> Card Buttons
+        {/* {groupId && ( */}
+        <button
+          style={{
+            position: "relative",
+            bottom: "0px",
+            right: "0px",
+            zIndex: "1000",
+            marginTop: '50px'
+          }}
+          onClick={addFloatingButton}
+        >
+          <IoAddCircle /> Card Buttons
 
-          </button>
-        )}
-        {buttonGroupId && (
-          <button
-            style={{
-              position: "relative",
-              bottom: "0px",
-              right: "0px",
-              zIndex: "1000",
-              marginTop: '10px'
-            }}
-            onClick={addFloatingButtonForButtonGroup}
-          >
-            <IoAddCircle /> Buttons Group
+        </button>
+        {/* // )} */}
+        {/* {buttonGroupId && ( */}
+        <button
+          style={{
+            position: "relative",
+            bottom: "0px",
+            right: "0px",
+            zIndex: "1000",
+            marginTop: '10px'
+          }}
+          onClick={addFloatingButtonForButtonGroup}
+        >
+          <IoAddCircle /> Buttons Group
 
-          </button>
-        )}
+        </button>
+        {/* )} */}
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow

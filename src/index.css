@@ -95,8 +95,9 @@ input{
   font-weight: 300;
   width: 250px !important;
   color: #2d373e !important;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
+  border-bottom: solid 1px #2d373e;
 }
 textarea{
   font-family: "Poppins", sans-serif;
@@ -104,8 +105,9 @@ textarea{
   font-weight: 300;
   width: 250px !important;
   color: #2d373e !important;
-  background-color: #fff;
+  background-color: transparent;
   border: none;
+  border-bottom: solid 1px #2d373e;
 }
 label{
   font-family: "Poppins", sans-serif;
