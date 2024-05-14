@@ -1,14 +1,18 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { Handle, useStore, Position, useReactFlow, useEdgesState, useNodesState } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
+import { getNodeData, loadDataOnMount } from '../service/getData';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
 export default memo(({ id }) => {
     const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
+
+
 
     useEffect(() => {
         console.log("node id : ", nodeId)
@@ -18,14 +22,12 @@ export default memo(({ id }) => {
 
     // delete node from list
     const deleteNode = async () => {
-      deleteNodeCall(nodeId, "buttonGroup")
+      deleteNodeCall(nodeId, "buttonGroup", setNodes, setEdges)
       console.log("node id : ", nodeId)
-          setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-          //   console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-          });
-          console.log('Node deleted:', id);
+        //   setNodes((prevNodes) => {
+        //     const updatedNodes = prevNodes.filter(node => node.id !== id);
+        //     return updatedNodes;
+        //   });
   };
 
 

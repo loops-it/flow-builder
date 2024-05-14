@@ -1,18 +1,20 @@
 import React, { memo, useEffect, useState } from "react";
-import { Handle, useStore, Position, useReactFlow } from "reactflow";
+import { Handle, useStore, Position, useReactFlow, useEdgesState, useNodesState } from "reactflow";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from "../service/deleteFunctions";
 import { apiUrl } from "../service/idGenerateFunctions";
 import { getNodeData } from "../service/getData";
+import initialNodes from "../data/nodes";
+import initialEdges from "../data/edges";
 
 // const dimensionAttrs = ['width', 'height'];
 
 export default memo(({ id, data }) => {
   const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
   const [text, setText] = useState("");
   const [nodeId, setNodeId] = useState('');
-  console.log("text only data: ", data);
-
+  // console.log("text only data: ", data);
   // Update title state when props change
   // useEffect(() => {
 
@@ -81,14 +83,14 @@ export default memo(({ id, data }) => {
 }, [nodeId])
   // delete node from list
   const deleteNode = async () => {
-    deleteNodeCall(nodeId, "textOnly");
-    console.log("node id : ", nodeId)
-    setNodes((prevNodes) => {
-      const updatedNodes = prevNodes.filter((node) => node.id !== id);
-      //   console.log('Updated Node List:', updatedNodes);
-      return updatedNodes;
-    });
-    console.log("Node deleted:", id);
+    deleteNodeCall(nodeId, "textOnly", setNodes, setEdges);
+    // console.log("node id : ", nodeId)
+    // setNodes((prevNodes) => {
+    //   const updatedNodes = prevNodes.filter((node) => node.id !== id);
+    //   //   console.log('Updated Node List:', updatedNodes);
+    //   return updatedNodes;
+    // });
+    // console.log("Node deleted:", id);
   };
 
   return (

@@ -1,9 +1,12 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { Handle, useStore, Position, useReactFlow, useEdgesState, useNodesState } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
+import initialNodes from "../data/nodes";
+import initialEdges from "../data/edges";
+
 
 
 // const dimensionAttrs = ['width', 'height'];
@@ -11,9 +14,11 @@ import { getNodeData } from '../service/getData';
 export default memo(({ id, type, data, position }) => {
 
     const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [nodeId, setNodeId] = useState('');
+
 
 
     useEffect(() => {
@@ -86,14 +91,13 @@ export default memo(({ id, type, data, position }) => {
     const deleteNode = async () => {
         
         console.log("-------------- nodeId ------- : ", nodeId)
-        deleteNodeCall(nodeId, "textinput")
+        deleteNodeCall(nodeId, "textinput", setNodes, setEdges)
         console.log("-------------- nodeId ------- : ", nodeId)
 
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== nodeId);
-            //   console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
+        // setNodes((prevNodes) => {
+        //     const updatedNodes = prevNodes.filter(node => node.id !== nodeId);
+        //     return updatedNodes;
+        // });
     };
 
 

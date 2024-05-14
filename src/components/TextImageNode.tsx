@@ -1,15 +1,18 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { Handle, useStore, Position, useReactFlow, useNodesState, useEdgesState } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
+import initialNodes from "../data/nodes";
+import initialEdges from "../data/edges";
 
 
 // const dimensionAttrs = ['width', 'height'];
 
 export default memo(({ id, data }) => {
     const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
@@ -127,19 +130,19 @@ export default memo(({ id, data }) => {
 
 
     useEffect(() => {
-        console.log("node id : ", nodeId)
+        // console.log("node id : ", nodeId)
         setNodeId(id)
     }, [nodeId])
 
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "cardHeader")
-        console.log("node id : ", nodeId)
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-            //   console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-        console.log('Node deleted:', id);
+        deleteNodeCall(nodeId, "cardHeader", setNodes, setEdges)
+        // console.log("node id : ", nodeId)
+        // setNodes((prevNodes) => {
+        //     const updatedNodes = prevNodes.filter(node => node.id !== id);
+        //     //   console.log('Updated Node List:', updatedNodes);
+        //     return updatedNodes;
+        // });
+        // console.log('Node deleted:', id);
     };
 
 

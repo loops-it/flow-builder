@@ -8,6 +8,7 @@ import { deleteNodeCall } from '../service/deleteFunctions';
 
 export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
     const [text, setText] = useState('Button');
     const [link, setLink] = useState('');
     const [popupOpen, setPopupOpen] = useState(false);
@@ -77,14 +78,7 @@ export default memo(({ id, type, data, position }) => {
 
     // delete node from list
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "buttonNode")
-        console.log("node id : ", nodeId)
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-            //   console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-        console.log('Node deleted:', id);
+        deleteNodeCall(nodeId, "buttonNode", setNodes, setEdges)
     };
 
 
