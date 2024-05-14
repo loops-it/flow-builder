@@ -4,14 +4,10 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
-import initialNodes from "../data/nodes";
-import initialEdges from "../data/edges";
 
 
 
-// const dimensionAttrs = ['width', 'height'];
-
-export default memo(({ id }) => {
+export default memo((id: any) => {
 
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
@@ -27,7 +23,7 @@ export default memo(({ id }) => {
             try {
                 const nodeData = await getNodeData();
 
-                const desiredNodeId = id;
+                const desiredNodeId = id.id;
                 const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
                 console.log("intent data node : ", node)
@@ -70,7 +66,7 @@ export default memo(({ id }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id, title: title, description: description, intent: intent }),
+                body: JSON.stringify({ id: id.id, title: title, description: description, intent: intent }),
             });
 
             if (!response.ok) {
@@ -83,7 +79,7 @@ export default memo(({ id }) => {
     };
 
     useEffect(() => {
-        setNodeId(id)
+        setNodeId(id.id)
     }, [nodeId])
 
 
