@@ -27,7 +27,6 @@ export default memo((id:any) => {
                     setDescription(node.description);
                     setImage(node.image);
                 } else {
-                    console.log("Node not found");
                 }
     
           } catch (error) {

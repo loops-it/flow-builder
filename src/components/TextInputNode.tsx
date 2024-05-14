@@ -11,12 +11,13 @@ import initialEdges from "../data/edges";
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo((id : any ) => {
+export default memo(({ id }) => {
 
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [intent, setIntent] = useState('');
     const [nodeId, setNodeId] = useState('');
 
 
@@ -26,14 +27,15 @@ export default memo((id : any ) => {
             try {
                 const nodeData = await getNodeData();
 
-                const desiredNodeId = id.id;
+                const desiredNodeId = id;
                 const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
+                console.log("intent data node : ", node)
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
+                    setIntent(node.intent)
                 } else {
-                    console.log("Node not found");
                 }
 
             } catch (error) {
@@ -44,6 +46,10 @@ export default memo((id : any ) => {
         fetchData();
     }, []);
 
+    // node intent input
+    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIntent(event.target.value);
+    };
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -58,12 +64,13 @@ export default memo((id : any ) => {
     // add data from node to node list
     const saveNode = async () => {
         try {
+            console.log("intent : ", intent)
             const response = await fetch(`${apiUrl}/data-flow-text-box`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, title: title, description: description }),
+                body: JSON.stringify({ id: id, title: title, description: description, intent: intent }),
             });
 
             if (!response.ok) {
@@ -76,7 +83,7 @@ export default memo((id : any ) => {
     };
 
     useEffect(() => {
-        setNodeId(id.id)
+        setNodeId(id)
     }, [nodeId])
 
 
@@ -101,6 +108,14 @@ export default memo((id : any ) => {
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
+                        <label>Intent</label>
+                        <input
+                            type="text"
+                            value={intent || ''}
+                            onChange={handleIntentChange}
+                            className="nodrag"
+                        />
+
                         <label>Title</label>
                         <input
                             type="text"

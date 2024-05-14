@@ -29,8 +29,8 @@ import { apiUrl, generateEdgeId, generateGroupId, generateNodeId } from "../serv
 import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
-import GroupView from "./GroupView";
-import GroupViewLarge from "./GroupViewLarge";
+import ButtonGroupView from "./ButtonGroupView";
+import CardGroupView from "./CardGroupView";
 import { loadDataOnMount } from "../service/getData";
 import { onConnectEdge } from "../service/edgeFunctions";
 import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
@@ -46,8 +46,8 @@ const nodeTypes = {
   cardStyleOne: CardStyleOne,
   textOnly: TextOnlyNodeStyle,
   end: EndCircleNode,
-  buttonGroup: GroupView,
-  cardGroup: GroupViewLarge
+  buttonGroup: ButtonGroupView,
+  cardGroup: CardGroupView
 };
 
 
@@ -73,32 +73,10 @@ const FlowPanel = () => {
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
-  const [startNode, setStartNode] = useState(true);
-
-  const [loadData, setLoadData] = useState(null)
-
-
-  // console.log("edges : ", edges)
-    console.log("nodes : ", nodes)
-
-  // load data on page load
-  // useEffect(() => {
-  //   loadDataOnMount(setNodes, setEdges)
-  //   console.log("edges : ", edges)
-  //   console.log("nodes : ", nodes)
-  // }, []);
 
   useEffect(() => {
-  // const loadDataInterval = setInterval(() => {
-  //   loadDataOnMount(setNodes, setEdges);
-  // }, 3000); // Run every 3 seconds
-
-  // Load data initially
   loadDataOnMount(setNodes, setEdges);
-
-  // return () => {
-  //   clearInterval(loadDataInterval); // Clean up interval on unmount
-  // };
+  console.log("nodes : ", nodes)
 }, []); 
 
 
@@ -164,24 +142,11 @@ const FlowPanel = () => {
     [setEdges]
   );
 
-  // const onNodeDragStop = useCallback(
-  //   async (event: any, node: { position: { x: any; y: any }; id: string }) => {
-  //     const { x, y } = node.position;
-      
-  //     onNodeDragStopCall()
-  //       setNodes((prevNodes) =>
-  //         prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
-  //       );
-      
-  //   },
-  //   [nodes, setNodes]
-  // );
 
   const onNodeDragStop = useCallback(
     async (event: any, node: { position: { x: any; y: any }; id: string }) => {
       const { x, y } = node.position;
       try {
-        // console.log("update node : ", { id: node.id, position: { x, y } })
         const response = await fetch(`${apiUrl}/data-flow-update-node`, {
           method: 'POST',
           headers: {
@@ -194,15 +159,11 @@ const FlowPanel = () => {
           throw new Error('Failed to update node position');
         }
 
-        // console.log("response update node : ", response)
-
         setNodes((prevNodes) =>
           prevNodes.map((n) => (n.id === node.id ? { ...n, position: { x, y } } : n))
         );
-        // console.log('Updated Node List:', nodes);
       } catch (error) {
         console.error('Error updating node position:', error);
-        // Handle error as needed
       }
     },
     [nodes, setNodes]
@@ -238,7 +199,6 @@ const FlowPanel = () => {
 
     setNodes((prevNodes) => {
       const updatedNodes = [...prevNodes, group];
-      // console.log("Updated Node List with group:", updatedNodes);
       return updatedNodes;
     });
 
@@ -273,7 +233,7 @@ const FlowPanel = () => {
     }
   };
 
-  const addGroupCardHeaderNode = async (groupId) => {
+  const addGroupCardHeaderNode = async (groupId: string) => {
     const newNodeId = generateNodeId();
 
     const newNode = {
@@ -319,7 +279,7 @@ const FlowPanel = () => {
     }
   };
 
-  const addGroupButtonNode = async (groupId) => {
+  const addGroupButtonNode = async (groupId: string | undefined) => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
@@ -381,7 +341,7 @@ const FlowPanel = () => {
 
 
 
-  const deleteGroup = (groupId) => {
+  const deleteGroup = (groupId: string | undefined) => {
     const filteredNodes = nodes.filter(node => node.parentId !== groupId && node.id !== groupId);
     setNodes(filteredNodes);
     // Remove group from groups state
@@ -389,7 +349,7 @@ const FlowPanel = () => {
   };
 
   // Add this function to handle the click event of the delete button
-  const handleDeleteGroup = (groupId) => {
+  const handleDeleteGroup = (groupId: string) => {
     deleteGroup(groupId);
   };
 

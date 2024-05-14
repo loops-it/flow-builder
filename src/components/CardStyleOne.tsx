@@ -14,6 +14,7 @@ export default memo((id: any) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [nodeId, setNodeId] = useState('');
+    const [intent, setIntent] = useState('');
 
 
     useEffect(() => {
@@ -29,8 +30,8 @@ export default memo((id: any) => {
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
+                    setIntent(node.intent)
                 } else {
-                    console.log("Node not found");
                 }
 
             } catch (error) {
@@ -40,6 +41,11 @@ export default memo((id: any) => {
 
         fetchData();
     }, []);
+
+    // node intent input
+    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIntent(event.target.value);
+    };
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -84,7 +90,7 @@ export default memo((id: any) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1' }),
+                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent }),
             });
 
             if (!response.ok) {
@@ -143,6 +149,13 @@ export default memo((id: any) => {
                                 />
                             </div>
                         </div>
+                        <label>Intent</label>
+                        <input
+                            type="text"
+                            value={intent || ''}
+                            onChange={handleIntentChange}
+                            className="nodrag"
+                        />
                         <label>Title</label>
                         <input
                             type="text"

@@ -36,7 +36,6 @@ export default memo((id: any) => {
                     setLink(node.link);
                     setButtonText(node.text);
                 } else {
-                    console.log("Node not found");
                 }
     
           } catch (error) {

@@ -34,8 +34,8 @@ import { generateEdgeId, generateGroupId, generateNodeId } from "../service/idGe
 import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
-import GroupView from "./GroupView";
-import GroupViewLarge from "./GroupViewLarge";
+import GroupView from "./ButtonGroupView";
+import GroupViewLarge from "./CardGroupView";
 import { loadDataOnMount } from "../service/getData";
 
 

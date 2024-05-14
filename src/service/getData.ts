@@ -103,7 +103,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             }
           });
           const data = await response.json();
-          // console.log('Node Data:', data); 
+          console.log('Node Data ---> :', data); 
         if (!response.ok) {
           throw new Error('Failed to get node data');
         }

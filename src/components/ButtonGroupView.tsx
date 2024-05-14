@@ -9,6 +9,7 @@ export default memo(( id: any) => {
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
+    const [intent, setIntent] = useState('');
 
 
     useEffect(() => {

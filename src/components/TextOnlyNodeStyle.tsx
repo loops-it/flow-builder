@@ -11,6 +11,7 @@ export default memo((id: any) => {
   const { setEdges } = useReactFlow();
   const [text, setText] = useState("");
   const [nodeId, setNodeId] = useState('');
+  const [intent, setIntent] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +23,8 @@ export default memo((id: any) => {
 
         if (node) {
           setText(node.text);
+          setIntent(node.intent)
         } else {
-          console.log("Node not found");
         }
 
       } catch (error) {
@@ -34,6 +35,10 @@ export default memo((id: any) => {
     fetchData();
   }, []);
 
+  // node intent input
+  const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIntent(event.target.value);
+};
   // node text area input
   const handleDescriptionChange = (event: {
     target: { value: React.SetStateAction<string> };
@@ -49,7 +54,7 @@ export default memo((id: any) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id.id, text: text }),
+        body: JSON.stringify({ id: id.id, text: text , intent: intent }),
       });
 
       if (!response.ok) {
@@ -94,6 +99,13 @@ export default memo((id: any) => {
                 />
               </button>
             </div>
+            <label>Intent</label>
+                        <input
+                            type="text"
+                            value={intent || ''}
+                            onChange={handleIntentChange}
+                            className="nodrag"
+                        />
             <label style={{ marginBottom: "10px" }}>Add your text here</label>
             <textarea
               value={text}
