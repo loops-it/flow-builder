@@ -274,3 +274,7 @@
   .react-flow__node-button{
     position: absolute !important;
   }
+
+  .intent_input{
+    width: 180px !important;
+  }

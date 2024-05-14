@@ -54,7 +54,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
           filteredNode.style = {
             position: 'relative !important',
             width: '300px',
-            minHeight: '100px',
+            minHeight: '150px',
             height: 'auto !important',
             backgroundColor: 'rgba(208, 192, 247, 0.2)',
             zIndex: '999'
@@ -103,7 +103,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             }
           });
           const data = await response.json();
-          console.log('Node Data ---> :', data); 
+          // console.log('Node Data ---> :', data); 
         if (!response.ok) {
           throw new Error('Failed to get node data');
         }

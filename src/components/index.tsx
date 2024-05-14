@@ -383,7 +383,7 @@ const FlowPanel = () => {
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '300px',
-        minHeight: '100px',
+        minHeight: '150px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999'
@@ -442,7 +442,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 10,
+        y: 80,
       },
       type: 'button',
       style: {
