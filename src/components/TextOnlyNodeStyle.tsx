@@ -20,10 +20,11 @@ export default memo((id: any) => {
 
         const desiredNodeId = id.id;
         const node = nodeData.textOnly.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+        const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
         if (node) {
           setText(node.text);
-          setIntent(node.intent)
+          setIntent(nodeIntent.intent)
         } else {
         }
 

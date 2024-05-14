@@ -15,6 +15,7 @@ export default memo((id: any) => {
     const [image, setImage] = useState(null);
     const [nodeId, setNodeId] = useState('');
     const [intent, setIntent] = useState('');
+    // const [nodeType, setType] = useState('card');
 
 
     useEffect(() => {
@@ -25,12 +26,12 @@ export default memo((id: any) => {
 
                 const desiredNodeId = id.id;
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
-                    setIntent(node.intent)
+                    setIntent(nodeIntent.intent)
                 } else {
                 }
 
@@ -90,7 +91,7 @@ export default memo((id: any) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent }),
+                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "card" }),
             });
 
             if (!response.ok) {

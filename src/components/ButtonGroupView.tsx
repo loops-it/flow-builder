@@ -3,6 +3,7 @@ import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
+import { getNodeData } from '../service/getData';
 
 
 
@@ -12,6 +13,27 @@ export default memo((id: any) => {
     const [nodeId, setNodeId] = useState('');
     const [intent, setIntent] = useState('');
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            
+                const nodeData = await getNodeData();
+                // console.log("child data ------> ", nodeData)
+                const desiredNodeId = id.id; 
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                
+                if (nodeIntent) {
+                    setIntent(nodeIntent.intent);
+                } else {
+                }
+    
+          } catch (error) {
+            console.error("Error fetching node data:", error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     useEffect(() => {
         setNodeId(id.id)
@@ -25,18 +47,18 @@ export default memo((id: any) => {
     const saveNode = async () => {
         try {
             console.log("intent : ", intent, id.id)
-            // const response = await fetch(`${apiUrl}/data-flow-text-box`, {   //group api call
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({ id: id, intent: intent }),
-            // });
+            const response = await fetch(`${apiUrl}/data-flow-button-group`, {   //group api call
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id.id, intent: intent }),
+            });
 
-            // if (!response.ok) {
-            //     throw new Error('Failed to delete node');
-            // }
-            // console.log("title , description : ", response)
+            if (!response.ok) {
+                throw new Error('Failed to delete node');
+            }
+            console.log("title , description : ", response)
         } catch (error) {
 
         }

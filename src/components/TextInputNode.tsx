@@ -25,12 +25,12 @@ export default memo((id: any) => {
 
                 const desiredNodeId = id.id;
                 const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
-                console.log("intent data node : ", node)
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
-                    setIntent(node.intent)
+                    setIntent(nodeIntent.intent)
                 } else {
                 }
 

@@ -13,19 +13,27 @@ export default memo((id:any) => {
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
     const [nodeId, setNodeId] = useState('');
+    const [nodeType, setType] = useState('group');
+    const [intent, setIntent] = useState('');
+    const [parentID, setParentID] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
           try {
+            
                 const nodeData = await getNodeData();
-        
+                // console.log("child data ------> ", nodeData)
                 const desiredNodeId = id.id; 
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-    
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                
+                setParentID(nodeIntent.parentId)
+
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
+                    setIntent(nodeIntent.intent);
                 } else {
                 }
     
@@ -36,6 +44,12 @@ export default memo((id:any) => {
     
         fetchData();
       }, []);
+
+      // node intent input
+    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIntent(event.target.value);
+    };
+
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -54,31 +68,31 @@ export default memo((id:any) => {
         setImage(file);
     };
 
-    useEffect(() => {
-        if (image) {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('image', image || '');
-        }
-    }, [image]);
+    // useEffect(() => {
+    //     if (image) {
+    //         const formData = new FormData();
+    //         formData.append('id', id.id);
+    //         formData.append('title', title);
+    //         formData.append('description', description);
+    //         formData.append('image', image || '');
+    //     }
+    // }, [image]);
 
 
     // add data from node to node list
     const saveNode = async () => {
         try {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
+            // const formData = new FormData();
+            // formData.append('id', id.id);
+            // formData.append('title', title);
+            // formData.append('description', description);
            
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1'}), 
+                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentId: parentID }), 
               });
         
             if (!response.ok) {
@@ -132,6 +146,13 @@ export default memo((id:any) => {
                                 />
                             </div>
                         </div>
+                        <label>Intent</label>
+                        <input
+                            type="text"
+                            value={intent || ''}
+                            onChange={handleIntentChange}
+                            className="nodrag"
+                        />
                         <label>Title</label>
                         <input
                             type="text"

@@ -36,6 +36,7 @@ export default memo((id: any) => {
                             </button>
                         </div>
                     </div>
+                    
 
 
                 </div>
