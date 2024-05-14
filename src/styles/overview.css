@@ -258,8 +258,8 @@
   background: conic-gradient(
     from -160deg at 50% 50%,
     rgba(233, 42, 103, 0.6) 0deg,
-    rgba(165, 0, 14, 0.6) 120deg,
-    rgba(206, 7, 7, 0.6) 240deg,
+    rgba(168, 83, 186, 0.6) 120deg,
+    rgba(39, 102, 50, 0.6) 240deg,
     rgba(233, 42, 103, 0.6) 360deg
   );
   }
@@ -276,5 +276,5 @@
   }
 
   .intent_input{
-    width: 180px !important;
+    width: 180px !im;
   }
