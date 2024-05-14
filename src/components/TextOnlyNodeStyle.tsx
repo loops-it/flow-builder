@@ -1,46 +1,30 @@
 import React, { memo, useEffect, useState } from "react";
-import { Handle, useStore, Position, useReactFlow, useEdgesState, useNodesState } from "reactflow";
+import { Handle, Position, useReactFlow } from "reactflow";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from "../service/deleteFunctions";
 import { apiUrl } from "../service/idGenerateFunctions";
 import { getNodeData } from "../service/getData";
-import initialNodes from "../data/nodes";
-import initialEdges from "../data/edges";
 
-// const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id, data }) => {
+export default memo((id: any) => {
   const { setNodes } = useReactFlow();
-    const { setEdges } = useReactFlow();
+  const { setEdges } = useReactFlow();
   const [text, setText] = useState("");
   const [nodeId, setNodeId] = useState('');
-  // console.log("text only data: ", data);
-  // Update title state when props change
-  // useEffect(() => {
-
-  //     getNodeData(id);
-
-  //     console.log(text)
-  //     setText('')
-  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // console.log("node id here : ", id);
-            const nodeData = await getNodeData();
+        const nodeData = await getNodeData();
 
-            console.log("Text Only Data:", nodeData.textOnly);
+        const desiredNodeId = id.id;
+        const node = nodeData.textOnly.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
-            const desiredNodeId = id; 
-            const node = nodeData.textOnly.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-
-            if (node) {
-                console.log("Text:", node.text);
-                setText(node.text);
-            } else {
-                console.log("Node not found");
-            }
+        if (node) {
+          setText(node.text);
+        } else {
+          console.log("Node not found");
+        }
 
       } catch (error) {
         console.error("Error fetching node data:", error);
@@ -60,37 +44,27 @@ export default memo(({ id, data }) => {
   // add data from node to node list
   const saveNode = async () => {
     try {
-      console.log(" text id : ", id);
-      console.log(" text text : ", text);
       const response = await fetch(`${apiUrl}/data-flow-text`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id, text: text }),
+        body: JSON.stringify({ id: id.id, text: text }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to delete node");
       }
-      console.log("text : ", response);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
-    // console.log("node id : ", nodeId)
-    setNodeId(id)
-}, [nodeId])
-  // delete node from list
+    setNodeId(id.id)
+  }, [nodeId])
+
+
   const deleteNode = async () => {
     deleteNodeCall(nodeId, "textOnly", setNodes, setEdges);
-    // console.log("node id : ", nodeId)
-    // setNodes((prevNodes) => {
-    //   const updatedNodes = prevNodes.filter((node) => node.id !== id);
-    //   //   console.log('Updated Node List:', updatedNodes);
-    //   return updatedNodes;
-    // });
-    // console.log("Node deleted:", id);
   };
 
   return (

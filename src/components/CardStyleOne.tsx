@@ -1,15 +1,15 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
 
 
-// const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id }) => {
+export default memo((id: any) => {
     const { setNodes } = useReactFlow();
+    const { setEdges } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
@@ -19,16 +19,13 @@ export default memo(({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // console.log("node id here : ", id);
                 const nodeData = await getNodeData();
 
-                // console.log("Text Only Data:", nodeData.cardData);
 
-                const desiredNodeId = id;
+                const desiredNodeId = id.id;
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
                 if (node) {
-                    // console.log("Text:", node.text);
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
@@ -54,13 +51,6 @@ export default memo(({ id }) => {
         setDescription(event.target.value);
     };
 
-    // console.log the node data
-    // const logUserInput = () => {
-    //     console.log('node id :', id)
-    //     console.log('Title:', title);
-    //     console.log('Description:', description);
-    // };
-
 
     // handle image upload
     const handleImageChange = (event: { target: { files: any[]; }; }) => {
@@ -72,7 +62,7 @@ export default memo(({ id }) => {
     useEffect(() => {
         if (image) {
             const formData = new FormData();
-            formData.append('id', id);
+            formData.append('id', id.id);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('image', image || '');
@@ -84,41 +74,22 @@ export default memo(({ id }) => {
     const saveNode = async () => {
         try {
             const formData = new FormData();
-            formData.append('id', id);
+            formData.append('id', id.id);
             formData.append('title', title);
             formData.append('description', description);
             formData.append('image', image || '');
-
-            // Convert FormData to plain object for logging
-            // const formDataObject = {};
-            // for (const pair of formData.entries()) {
-            //     formDataObject[pair[0]] = pair[1];
-            // }
-            // console.log('Form Data:', formDataObject);
-
-            // const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-            //     method: 'POST',
-            //     body: formDataObject,
-            // });
-
-            // if (!response.ok) {
-            //     throw new Error('Failed to save node');
-            // }
-
-            // console.log('Node saved successfully:', response);
 
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id, title: title, description: description, image: '/image1' }),
+                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1' }),
             });
 
             if (!response.ok) {
                 throw new Error('Failed to delete node');
             }
-            console.log("card 1 : ", response)
 
         } catch (error) {
             console.error('Error saving node:', error);
@@ -127,21 +98,13 @@ export default memo(({ id }) => {
 
 
     useEffect(() => {
-        console.log("node id : ", nodeId)
-        setNodeId(id)
+        setNodeId(id.id)
     }, [nodeId])
 
 
     // delete node from list
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "cardStyleOne")
-        console.log("node id : ", nodeId)
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.filter(node => node.id !== id);
-            //   console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-        console.log('Node deleted:', id);
+        deleteNodeCall(nodeId, "cardStyleOne", setNodes, setEdges)
     };
 
 

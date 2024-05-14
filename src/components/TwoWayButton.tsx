@@ -10,7 +10,7 @@ import initialEdges from "../data/edges";
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id }) => {
+export default memo((id: any) => {
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [text, setText] = useState('Button');
@@ -26,16 +26,12 @@ export default memo(({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            // console.log("node id here : ", id);
                 const nodeData = await getNodeData();
     
-                // console.log("Text Button Data:", nodeData.buttonData);
-    
-                const desiredNodeId = id; 
+                const desiredNodeId = id.id; 
                 const node = nodeData.buttonData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
     
                 if (node) {
-                    // console.log("Text:", node.text);
                     setText(node.text);
                     setLink(node.link);
                     setButtonText(node.text);
@@ -75,41 +71,26 @@ export default memo(({ id }) => {
         setButtonText(text);
         setLink(link);
         closePopup();
-        // saveNode();
     };
-
-    // console.log the node data
-    const logUserInput = () => {
-        console.log('node id :', id)
-        console.log('Text:', text);
-        console.log('Link:', link);
-    };
-
 
     // add data from node to node list
     const saveNode = async () => {
-        console.log('button id :', id)
-        setButtonId(id)
+        setButtonId(id.id)
         setButtonText(text);
         setLink(link);
         
         try {
-            console.log(" id : ", id)
-            console.log(" text : ", text)
-            console.log(" link : ", link)
-
             const response = await fetch(`${apiUrl}/data-flow-button-data`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id, text: text, link: link}), 
+                body: JSON.stringify({ id: id.id, text: text, link: link}), 
               });
         
             if (!response.ok) {
               throw new Error('Failed to delete node');
             }
-            console.log("text : ",response)
 
         } catch (error) {
             
@@ -118,20 +99,13 @@ export default memo(({ id }) => {
     };
 
     useEffect(() => {
-        console.log("node id : ", nodeId)
-        setNodeId(id)
+        setNodeId(id.id)
     }, [nodeId])
     
-    // delete node from list
+    
+
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "button", setNodes, setEdges)
-        // console.log("node id : ", nodeId)
-            // setNodes((prevNodes) => {
-            //   const updatedNodes = prevNodes.filter(node => node.id !== id);
-            // //   console.log('Updated Node List:', updatedNodes);
-            //   return updatedNodes;
-            // });
-            // console.log('Node deleted:', id);
     };
 
 

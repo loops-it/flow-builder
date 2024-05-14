@@ -11,7 +11,7 @@ import initialEdges from "../data/edges";
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id, type, data, position }) => {
+export default memo((id : any ) => {
 
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
@@ -24,16 +24,12 @@ export default memo(({ id, type, data, position }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // console.log("node id here : ", id);
                 const nodeData = await getNodeData();
 
-                // console.log("Text Only Data:", nodeData.textBox);
-
-                const desiredNodeId = id;
+                const desiredNodeId = id.id;
                 const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
                 if (node) {
-                    // console.log("Text:", node.text);
                     setTitle(node.title);
                     setDescription(node.description);
                 } else {
@@ -62,13 +58,12 @@ export default memo(({ id, type, data, position }) => {
     // add data from node to node list
     const saveNode = async () => {
         try {
-            // console.log(" text data : ", id, "-", description)
             const response = await fetch(`${apiUrl}/data-flow-text-box`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id, title: title, description: description }),
+                body: JSON.stringify({ id: id.id, title: title, description: description }),
             });
 
             if (!response.ok) {
@@ -81,23 +76,14 @@ export default memo(({ id, type, data, position }) => {
     };
 
     useEffect(() => {
-        console.log("node id useEffect : ", nodeId)
-        setNodeId(id)
+        setNodeId(id.id)
     }, [nodeId])
 
 
 
     // delete node from list
     const deleteNode = async () => {
-        
-        console.log("-------------- nodeId ------- : ", nodeId)
         deleteNodeCall(nodeId, "textinput", setNodes, setEdges)
-        console.log("-------------- nodeId ------- : ", nodeId)
-
-        // setNodes((prevNodes) => {
-        //     const updatedNodes = prevNodes.filter(node => node.id !== nodeId);
-        //     return updatedNodes;
-        // });
     };
 
 

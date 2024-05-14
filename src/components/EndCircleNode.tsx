@@ -3,31 +3,13 @@ import { RiCloseCircleFill } from 'react-icons/ri';
 import { Handle, useStore, Position, useReactFlow } from 'reactflow';
 import { deleteNodeCall } from '../service/deleteFunctions';
 
-export default memo(({ id, data }) => {
+export default memo((id: any) => {
   const { setNodes } = useReactFlow();
-  const label = useStore((s) => {
-    const node = s.nodeInternals.get(id);
-
-    if (!node) {
-      return null;
-    }
-
-    return `position x:${parseInt(node.position.x)} y:${parseInt(
-      node.position.y,
-    )}`;
-  });
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
-
+    const { setEdges } = useReactFlow();
+  
 
   const deleteNode = async () => {
-
-    deleteNodeCall(id, "end")
-    setNodes((prevNodes) => {
-        const updatedNodes = prevNodes.filter(node => node.id !== id);
-        //   console.log('Updated Node List:', updatedNodes);
-        return updatedNodes;
-    });
-    console.log('Node deleted:', id);
+    deleteNodeCall(id.id, "end", setNodes, setEdges)
 };
 
   return (

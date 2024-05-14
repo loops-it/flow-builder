@@ -1,12 +1,12 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Handle, useStore, Position, useReactFlow } from 'reactflow';
+import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 
 
 // const dimensionAttrs = ['width', 'height'];
 
-export default memo(({ id, type, data, position }) => {
+export default memo(( id:any) => {
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [text, setText] = useState('Button');
@@ -41,42 +41,12 @@ export default memo(({ id, type, data, position }) => {
         closePopup();
     };
 
-    // console.log the node data
-    const logUserInput = () => {
-        console.log('node id :', id)
-        console.log('Text:', text);
-        console.log('Link:', link);
-    };
-
-
-    // add data from node to node list
-    const saveNode = () => {
-        setNodes((prevNodes) => {
-            const updatedNodes = prevNodes.map(node => {
-                if (node.id === id) {
-                    return {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            text,
-                            link
-                        }
-                    };
-                }
-                return node;
-            });
-            console.log('Updated Node List:', updatedNodes);
-            return updatedNodes;
-        });
-    };
-
 
     useEffect(() => {
-        console.log("node id : ", nodeId)
-        setNodeId(id)
+        setNodeId(id.id)
     }, [nodeId])
 
-    // delete node from list
+
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "buttonNode", setNodes, setEdges)
     };
