@@ -29,7 +29,7 @@ export default memo((id: any) => {
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
 
-                    <div className="inner" style={{ height: '450px', width: '300px' }}>
+                    <div className="inner" style={{ height: '480px', width: '300px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />

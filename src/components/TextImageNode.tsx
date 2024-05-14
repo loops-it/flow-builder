@@ -22,12 +22,15 @@ export default memo((id:any) => {
           try {
             
                 const nodeData = await getNodeData();
-                // console.log("child data ------> ", nodeData)
+                
                 const desiredNodeId = id.id; 
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 
                 setParentID(nodeIntent.parentId)
+
+                // console.log("nodeIntent ------> ", nodeIntent)
+                // console.log("node ------> ", nodeData)
 
                 if (node) {
                     setTitle(node.title);
@@ -68,31 +71,33 @@ export default memo((id:any) => {
         setImage(file);
     };
 
-    // useEffect(() => {
-    //     if (image) {
-    //         const formData = new FormData();
-    //         formData.append('id', id.id);
-    //         formData.append('title', title);
-    //         formData.append('description', description);
-    //         formData.append('image', image || '');
-    //     }
-    // }, [image]);
+    useEffect(() => {
+        if (image) {
+            const formData = new FormData();
+            formData.append('id', id.id);
+            formData.append('title', title);
+            formData.append('description', description);
+            formData.append('image', image || '');
+        }
+    }, [image]);
 
 
     // add data from node to node list
     const saveNode = async () => {
         try {
-            // const formData = new FormData();
-            // formData.append('id', id.id);
-            // formData.append('title', title);
-            // formData.append('description', description);
+            const formData = new FormData();
+            formData.append('id', id.id);
+            formData.append('title', title);
+            formData.append('description', description);
+            console.log("intent : ",intent)
+            console.log("parentId : ",parentID)
            
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentId: parentID }), 
+                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentID: parentID }), 
               });
         
             if (!response.ok) {

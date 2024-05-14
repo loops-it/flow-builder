@@ -241,7 +241,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 0,
-        y: 10,
+        y: 15,
       },
       type: 'cardHeader',
       style: {
@@ -271,9 +271,6 @@ const FlowPanel = () => {
         throw new Error('Failed to create group card header node');
       }
 
-      // console.log('response : ', response)
-
-
     } catch (error) {
       console.error('Error creating group card header node:', error);
     }
@@ -295,7 +292,7 @@ const FlowPanel = () => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 340,
+        y: 380,
       },
       type: 'button',
       style: {
