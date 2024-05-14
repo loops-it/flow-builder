@@ -1,8 +1,7 @@
 import React from 'react';
 import { memo, useState } from 'react';
 import { RiCloseCircleFill } from 'react-icons/ri';
-import { Handle, Position, NodeToolbar, useReactFlow } from 'reactflow';
-import { deleteNodeCall } from '../service/deleteFunctions';
+import { Handle, Position, NodeToolbar } from 'reactflow';
 
 const labelStyle = {
   position: 'absolute' as Position,
@@ -18,20 +17,12 @@ interface ToolbarNodeProps {
   };
 }
 
-function ToolbarNode({ data, id }: ToolbarNodeProps) {
+function ToolbarNode({ data }: ToolbarNodeProps) {
   const [title, setTitle] = useState(() => 'Title 1');
-  const { setNodes } = useReactFlow();
 
   // delete node from list
   const deleteNode = async () => {
         
-    deleteNodeCall(id, "tools")
-        setNodes((prevNodes) => {
-          const updatedNodes = prevNodes.filter(node => node.id !== id);
-          console.log('Updated Node List:', updatedNodes);
-          return updatedNodes;
-        });
-        console.log('Node deleted:', id);
 };
 
   return (
@@ -52,8 +43,6 @@ function ToolbarNode({ data, id }: ToolbarNodeProps) {
       </div>
       <Handle type="target" position={Position.Left} />
       <Handle type="source" position={Position.Right} />
-
-      <div style={labelStyle}>{data.label}</div>
       </div>
     </>
   );
