@@ -128,10 +128,10 @@ export default memo(({ id, data }) => {
 
     useEffect(() => {
         console.log("node id : ", nodeId)
+        setNodeId(id)
     }, [nodeId])
 
     const deleteNode = async () => {
-        setNodeId(id)
         deleteNodeCall(nodeId, "cardHeader")
         console.log("node id : ", nodeId)
         setNodes((prevNodes) => {

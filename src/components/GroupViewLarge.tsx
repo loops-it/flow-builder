@@ -16,11 +16,11 @@ export default memo(({ id, data }) => {
 
     useEffect(() => {
         console.log("node id : ", nodeId)
+        setNodeId(id)
     }, [nodeId])
 
     // delete node from list
     const deleteNode = async () => {
-        setNodeId(id)
         console.log("node id : ", nodeId)
         deleteNodeCall(nodeId, "cardGroup")
         console.log("node id : ", nodeId)

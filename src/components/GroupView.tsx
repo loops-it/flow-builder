@@ -12,12 +12,12 @@ export default memo(({ id }) => {
 
     useEffect(() => {
         console.log("node id : ", nodeId)
+        setNodeId(id)
     }, [nodeId])
 
 
     // delete node from list
     const deleteNode = async () => {
-        setNodeId(id)
       deleteNodeCall(nodeId, "buttonGroup")
       console.log("node id : ", nodeId)
           setNodes((prevNodes) => {

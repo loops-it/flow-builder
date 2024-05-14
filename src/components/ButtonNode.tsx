@@ -72,11 +72,11 @@ export default memo(({ id, type, data, position }) => {
 
     useEffect(() => {
         console.log("node id : ", nodeId)
+        setNodeId(id)
     }, [nodeId])
 
     // delete node from list
     const deleteNode = async () => {
-        setNodeId(id)
         deleteNodeCall(nodeId, "buttonNode")
         console.log("node id : ", nodeId)
         setNodes((prevNodes) => {
