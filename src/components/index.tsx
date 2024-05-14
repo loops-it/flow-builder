@@ -55,12 +55,7 @@ const edgeTypes = {
   button: ButtonEdge,
 };
 
-const processNode = {
-  color: '#fff',
-  borderColor: '#872341',
-};
 
-const nodeClassName = (node: { type: any; }) => node.type;
 
 
 
@@ -86,29 +81,9 @@ const FlowPanel = () => {
 
 
 
-  // add start circle node
-  const addCircleNode = () => {
-    addNode('start', setNodes);
-  };
-
   // add text imput node
   const addTextNode = () => {
     addNode('textinput', setNodes);
-  };
-
-  // add tool node
-  const addToolNode = () => {
-    addNode('tools', setNodes);
-  };
-
-  // test group - change this ----------------------
-  const addCardViewNode = () => {
-    addNode('cardView', setNodes);
-  };
-
-  // add button node
-  const addButtonNode = () => {
-    addNode('button', setNodes);
   };
 
   // add card header node - need to change this also ----------
@@ -193,8 +168,7 @@ const FlowPanel = () => {
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999',
         position: 'relative !important'
-      },
-      selectable: true,
+      }
     };
 
     setNodes((prevNodes) => {
@@ -280,7 +254,7 @@ const FlowPanel = () => {
 
     const buttonsCount = nodes.filter(node => node.type === 'button' && node.parentId === groupId).length;
 
-    if (buttonsCount >= 5) {
+    if (buttonsCount >= 3) {
       alert('Maximum button limit reached for this group');
       return;
     }
@@ -338,18 +312,8 @@ const FlowPanel = () => {
 
 
 
-  const deleteGroup = (groupId: string | undefined) => {
-    const filteredNodes = nodes.filter(node => node.parentId !== groupId && node.id !== groupId);
-    setNodes(filteredNodes);
-    // Remove group from groups state
-    setGroups(groups.filter(group => group.id !== groupId));
-  };
 
   // Add this function to handle the click event of the delete button
-  const handleDeleteGroup = (groupId: string) => {
-    deleteGroup(groupId);
-  };
-
   const addFloatingButton = () => {
     if (!groupId) {
       console.error("Group ID is not defined");
