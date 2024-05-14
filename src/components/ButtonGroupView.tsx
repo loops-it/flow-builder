@@ -61,7 +61,7 @@ export default memo((id: any) => {
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px', alignItems: 'end' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label>Add Intent</label>
                                 <input
@@ -71,7 +71,7 @@ export default memo((id: any) => {
                                     className="nodrag intent_input"
                                 />
                             </div>
-                            <button onClick={saveNode} className='saveButton' style={{marginLeft: '10px'}}>Save</button>
+                            <button onClick={saveNode} className='saveIntentButton' style={{marginLeft: '10px'}}>Save</button>
                         </div>
                     </div>
 

@@ -155,3 +155,12 @@ p{
   background-color: #00000018;
   border: solid 1px #0000005e ;
 }
+
+.saveIntentButton{
+  width: 100% !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 0px 10px !important;
+  height: 30px !important;
+}
