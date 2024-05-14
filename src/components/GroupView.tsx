@@ -8,12 +8,18 @@ import { deleteNodeCall } from '../service/deleteFunctions';
 
 export default memo(({ id }) => {
     const { setNodes } = useReactFlow();
+    const [nodeId, setNodeId] = useState('');
+
+    useEffect(() => {
+        console.log("node id : ", nodeId)
+    }, [nodeId])
 
 
     // delete node from list
     const deleteNode = async () => {
-        
-      deleteNodeCall(id, "buttonGroup")
+        setNodeId(id)
+      deleteNodeCall(nodeId, "buttonGroup")
+      console.log("node id : ", nodeId)
           setNodes((prevNodes) => {
             const updatedNodes = prevNodes.filter(node => node.id !== id);
           //   console.log('Updated Node List:', updatedNodes);

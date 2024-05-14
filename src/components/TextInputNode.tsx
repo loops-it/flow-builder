@@ -13,19 +13,20 @@ export default memo(({ id, type, data, position }) => {
     const { setNodes } = useReactFlow();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [nodeId, setNodeId] = useState('');
 
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            // console.log("node id here : ", id);
+            try {
+                // console.log("node id here : ", id);
                 const nodeData = await getNodeData();
-    
+
                 // console.log("Text Only Data:", nodeData.textBox);
-    
-                const desiredNodeId = id; 
+
+                const desiredNodeId = id;
                 const node = nodeData.textBox.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-    
+
                 if (node) {
                     // console.log("Text:", node.text);
                     setTitle(node.title);
@@ -33,14 +34,14 @@ export default memo(({ id, type, data, position }) => {
                 } else {
                     console.log("Node not found");
                 }
-    
-          } catch (error) {
-            console.error("Error fetching node data:", error);
-          }
+
+            } catch (error) {
+                console.error("Error fetching node data:", error);
+            }
         };
-    
+
         fetchData();
-      }, []);
+    }, []);
 
 
     // node title input
@@ -60,30 +61,39 @@ export default memo(({ id, type, data, position }) => {
             const response = await fetch(`${apiUrl}/data-flow-text-box`, {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id: id, title: title, description: description}), 
-              });
-        
+                body: JSON.stringify({ id: id, title: title, description: description }),
+            });
+
             if (!response.ok) {
-              throw new Error('Failed to delete node');
+                throw new Error('Failed to delete node');
             }
-            console.log("title , description : ",response)
+            console.log("title , description : ", response)
         } catch (error) {
-            
+
         }
     };
+
+    useEffect(() => {
+        console.log("node id useEffect : ", nodeId)
+        setNodeId(id)
+    }, [nodeId])
+
 
 
     // delete node from list
     const deleteNode = async () => {
-        deleteNodeCall(id, "textinput")
-            setNodes((prevNodes) => {
-              const updatedNodes = prevNodes.filter(node => node.id !== id);
+        
+        console.log("-------------- nodeId ------- : ", nodeId)
+        deleteNodeCall(nodeId, "textinput")
+        console.log("-------------- nodeId ------- : ", nodeId)
+
+        setNodes((prevNodes) => {
+            const updatedNodes = prevNodes.filter(node => node.id !== nodeId);
             //   console.log('Updated Node List:', updatedNodes);
-              return updatedNodes;
-            });
-            console.log('Node deleted:', id);
+            return updatedNodes;
+        });
     };
 
 

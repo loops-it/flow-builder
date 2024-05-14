@@ -27,12 +27,13 @@ export const edgeDelete = async (edge_id: any) => {
 
 export const deleteNodeCall = async (id: any , type: string) => {
     try {
+      console.log("-------------- delete id api ------- : ", id)
         const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({id, type: "textOnly"}), 
+            body: JSON.stringify({id, type}), 
           });
     
         if (!response.ok) {

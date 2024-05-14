@@ -13,19 +13,20 @@ export default memo(({ id }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
+    const [nodeId, setNodeId] = useState('');
 
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            // console.log("node id here : ", id);
+            try {
+                // console.log("node id here : ", id);
                 const nodeData = await getNodeData();
-    
+
                 // console.log("Text Only Data:", nodeData.cardData);
-    
-                const desiredNodeId = id; 
+
+                const desiredNodeId = id;
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-    
+
                 if (node) {
                     // console.log("Text:", node.text);
                     setTitle(node.title);
@@ -34,14 +35,14 @@ export default memo(({ id }) => {
                 } else {
                     console.log("Node not found");
                 }
-    
-          } catch (error) {
-            console.error("Error fetching node data:", error);
-          }
+
+            } catch (error) {
+                console.error("Error fetching node data:", error);
+            }
         };
-    
+
         fetchData();
-      }, []);
+    }, []);
 
     // node title input
     const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -109,25 +110,32 @@ export default memo(({ id }) => {
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id, title: title, description: description, image: '/image1'}), 
-              });
-        
+                body: JSON.stringify({ id: id, title: title, description: description, image: '/image1' }),
+            });
+
             if (!response.ok) {
-              throw new Error('Failed to delete node');
+                throw new Error('Failed to delete node');
             }
-            console.log("card 1 : ",response)
+            console.log("card 1 : ", response)
 
         } catch (error) {
             console.error('Error saving node:', error);
         }
     };
 
+
+    useEffect(() => {
+        console.log("node id : ", nodeId)
+    }, [nodeId])
+
+
     // delete node from list
     const deleteNode = async () => {
-
-        deleteNodeCall(id, "cardStyleOne")
+        setNodeId(id)
+        deleteNodeCall(nodeId, "cardStyleOne")
+        console.log("node id : ", nodeId)
         setNodes((prevNodes) => {
             const updatedNodes = prevNodes.filter(node => node.id !== id);
             //   console.log('Updated Node List:', updatedNodes);

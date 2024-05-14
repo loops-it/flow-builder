@@ -12,7 +12,7 @@ export default memo(({ id, type, data, position }) => {
     const [link, setLink] = useState('');
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
-    const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+    const [nodeId, setNodeId] = useState('');
 
     const openPopup = () => {
         setPopupOpen(true);
@@ -70,10 +70,15 @@ export default memo(({ id, type, data, position }) => {
     };
 
 
+    useEffect(() => {
+        console.log("node id : ", nodeId)
+    }, [nodeId])
+
     // delete node from list
     const deleteNode = async () => {
-
-        deleteNodeCall(id, "buttonNode")
+        setNodeId(id)
+        deleteNodeCall(nodeId, "buttonNode")
+        console.log("node id : ", nodeId)
         setNodes((prevNodes) => {
             const updatedNodes = prevNodes.filter(node => node.id !== id);
             //   console.log('Updated Node List:', updatedNodes);

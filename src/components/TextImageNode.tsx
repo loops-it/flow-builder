@@ -14,6 +14,7 @@ export default memo(({ id, data }) => {
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
+    const [nodeId, setNodeId] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -125,10 +126,14 @@ export default memo(({ id, data }) => {
     };
 
 
+    useEffect(() => {
+        console.log("node id : ", nodeId)
+    }, [nodeId])
 
     const deleteNode = async () => {
-
-        deleteNodeCall(id, "cardHeader")
+        setNodeId(id)
+        deleteNodeCall(nodeId, "cardHeader")
+        console.log("node id : ", nodeId)
         setNodes((prevNodes) => {
             const updatedNodes = prevNodes.filter(node => node.id !== id);
             //   console.log('Updated Node List:', updatedNodes);

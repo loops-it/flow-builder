@@ -15,6 +15,7 @@ export default memo(({ id }) => {
     const [buttonId, setButtonId] = useState('')
     const [popupOpen, setPopupOpen] = useState(false);
     const [buttonText, setButtonText] = useState('Edit');
+    const [nodeId, setNodeId] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -110,11 +111,14 @@ export default memo(({ id }) => {
         closePopup();
     };
 
-
+    useEffect(() => {
+        console.log("node id : ", nodeId)
+    }, [nodeId])
     // delete node from list
     const deleteNode = async () => {
-        
-        deleteNodeCall(id, "button")
+        setNodeId(id)
+        deleteNodeCall(nodeId, "button")
+        console.log("node id : ", nodeId)
             setNodes((prevNodes) => {
               const updatedNodes = prevNodes.filter(node => node.id !== id);
             //   console.log('Updated Node List:', updatedNodes);

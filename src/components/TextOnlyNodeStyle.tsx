@@ -10,6 +10,7 @@ import { getNodeData } from "../service/getData";
 export default memo(({ id, data }) => {
   const { setNodes } = useReactFlow();
   const [text, setText] = useState("");
+  const [nodeId, setNodeId] = useState('');
   console.log("text only data: ", data);
 
   // Update title state when props change
@@ -74,9 +75,14 @@ export default memo(({ id, data }) => {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    // console.log("node id : ", nodeId)
+}, [nodeId])
   // delete node from list
   const deleteNode = async () => {
-    deleteNodeCall(id, "textOnly");
+    setNodeId(id)
+    deleteNodeCall(nodeId, "textOnly");
+    console.log("node id : ", nodeId)
     setNodes((prevNodes) => {
       const updatedNodes = prevNodes.filter((node) => node.id !== id);
       //   console.log('Updated Node List:', updatedNodes);
