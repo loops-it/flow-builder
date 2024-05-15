@@ -18,6 +18,11 @@ export default memo((id:any) => {
     const [parentID, setParentID] = useState('');
 
     useEffect(() => {
+      console.log("parentID : ", parentID)
+    }, [parentID])
+    
+
+    useEffect(() => {
         const fetchData = async () => {
           try {
             
@@ -25,12 +30,13 @@ export default memo((id:any) => {
                 
                 const desiredNodeId = id.id; 
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                const nodePatent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 
-                setParentID(nodeIntent.parentId)
+                setParentID(nodePatent.parentId)
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === nodePatent.parentId);
 
                 // console.log("nodeIntent ------> ", nodeIntent)
-                // console.log("node ------> ", nodeData)
+                // console.log("node ------> ", nodeIntent.intent)
 
                 if (node) {
                     setTitle(node.title);

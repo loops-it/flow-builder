@@ -8,6 +8,7 @@ export default memo((id: any) => {
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
+    const [isSelected, setIsSelected] = useState(false);
 
 
 
@@ -15,7 +16,10 @@ export default memo((id: any) => {
         setNodeId(id.id)
     }, [nodeId])
 
-
+    const toggleSelection = () => {
+        setIsSelected(!isSelected);
+    };
+    console.log("selected : ", isSelected)
     
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "cardGroup",setNodes, setEdges)
@@ -26,6 +30,7 @@ export default memo((id: any) => {
     return (
         <>
             <div className='elementWrap' id={nodeId}>
+            <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
 
