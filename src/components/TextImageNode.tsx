@@ -83,33 +83,66 @@ export default memo((id:any) => {
             formData.append('id', id.id);
             formData.append('title', title);
             formData.append('description', description);
-            formData.append('image', image || '');
+            formData.append('image', image);
+            formData.append('intent', intent);
+            formData.append('type', "group");
+            formData.append('parentID', parentID);
         }
     }, [image]);
 
 
     // add data from node to node list
+    // const saveNode = async () => {
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append('id', id.id);
+    //         formData.append('title', title);
+    //         formData.append('description', description);
+    //         console.log("intent : ",intent)
+    //         console.log("parentId : ",parentID)
+           
+    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+    //             method: 'POST',
+    //             headers: {
+    //               'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentID: parentID }), 
+    //           });
+        
+    //         if (!response.ok) {
+    //           throw new Error('Failed to delete node');
+    //         }
+            
+    //     } catch (error) {
+    //         console.error('Error saving node:', error);
+    //     }
+    // };
+
     const saveNode = async () => {
         try {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            console.log("intent : ",intent)
-            console.log("parentId : ",parentID)
-           
-            const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentID: parentID }), 
-              });
-        
-            if (!response.ok) {
-              throw new Error('Failed to delete node');
+            if (image) {
+                const formData = new FormData();
+                formData.append('id', id.id);
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('image', image);
+                formData.append('intent', intent);
+                formData.append('type', "group");
+                formData.append('parentID', parentID);
+    
+                const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+                    method: 'POST',
+                    body: formData,
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Failed to save node');
+                }
+    
+                // Handle successful response here if needed
+            } else {
+                throw new Error('Image not selected');
             }
-            
         } catch (error) {
             console.error('Error saving node:', error);
         }
