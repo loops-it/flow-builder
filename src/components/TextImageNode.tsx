@@ -5,7 +5,7 @@ import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
 
 
-export default memo((id:any) => {
+export default memo((id: any) => {
     const { setNodes } = useReactFlow();
     const { setEdges } = useReactFlow();
     const [title, setTitle] = useState('');
@@ -17,132 +17,104 @@ export default memo((id:any) => {
     const [intent, setIntent] = useState('');
     const [parentID, setParentID] = useState('');
 
+    const [formData, setFormData] = useState({
+        id: id.id,
+        title: '',
+        description: '',
+        image: null,
+        intent: '',
+        type: 'group',
+    });
+
     useEffect(() => {
-      console.log("parentID : ", parentID)
+        console.log("parentID : ", parentID)
     }, [parentID])
-    
+
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            
+            try {
+
                 const nodeData = await getNodeData();
-                
-                const desiredNodeId = id.id; 
+
+                const desiredNodeId = id.id;
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 const nodePatent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-                
-                setParentID(nodePatent.parentId)
-                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === nodePatent.parentId);
 
-                // console.log("nodeIntent ------> ", nodeIntent)
-                // console.log("node ------> ", nodeIntent.intent)
+                console.log("nodePatent:", nodePatent);
+                if (nodePatent) {
+                    console.log("Parent ID found:", nodePatent.parentId);
+                    setParentID(nodePatent.parentId);
+                } else {
+                    console.log("Parent node not found");
+                }
+                const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === nodePatent.parentId);
 
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
                     setIntent(nodeIntent.intent);
+                    setFormData({
+                        id: id.id,
+                        title: node.title,
+                        description: node.description,
+                        image: node.image,
+                        intent: nodeIntent.intent,
+                        type: 'group',
+                    });
                 } else {
+                    console.log("Node not found");
                 }
-    
-          } catch (error) {
-            console.error("Error fetching node data:", error);
-          }
+
+            } catch (error) {
+                console.error("Error fetching node data:", error);
+            }
         };
-    
+
         fetchData();
-      }, []);
+    }, []);
 
-      // node intent input
-    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setIntent(event.target.value);
+   
+    const handleChange = (event) => {
+        const { name, value, files } = event.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: files ? files[0] : value,
+        }));
     };
 
-
-    // node title input
-    const handleTitleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setTitle(event.target.value);
-    };
-
-    // node text area input
-    const handleDescriptionChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
-        setDescription(event.target.value);
-    };
-
-
-    // handle image upload
-    const handleImageChange = (event: { target: { files: any[]; }; }) => {
-        const file = event.target.files[0];
-        setImage(file);
-    };
 
     useEffect(() => {
-        if (image) {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('image', image);
-            formData.append('intent', intent);
-            formData.append('type', "group");
-            formData.append('parentID', parentID);
-        }
-    }, [image]);
+        console.log('Form Data:', formData);
+    }, [formData]);
 
-
-    // add data from node to node list
-    // const saveNode = async () => {
-    //     try {
-    //         const formData = new FormData();
-    //         formData.append('id', id.id);
-    //         formData.append('title', title);
-    //         formData.append('description', description);
-    //         console.log("intent : ",intent)
-    //         console.log("parentId : ",parentID)
-           
-    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-    //             method: 'POST',
-    //             headers: {
-    //               'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "group", parentID: parentID }), 
-    //           });
-        
-    //         if (!response.ok) {
-    //           throw new Error('Failed to delete node');
-    //         }
-            
-    //     } catch (error) {
-    //         console.error('Error saving node:', error);
-    //     }
-    // };
 
     const saveNode = async () => {
+        console.log("Parent ID found ============== :", parentID);
         try {
-            if (image) {
-                const formData = new FormData();
-                formData.append('id', id.id);
-                formData.append('title', title);
-                formData.append('description', description);
-                formData.append('image', image);
-                formData.append('intent', intent);
-                formData.append('type', "group");
-                formData.append('parentID', parentID);
-    
-                const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-                    method: 'POST',
-                    body: formData,
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Failed to save node');
-                }
-    
-                // Handle successful response here if needed
-            } else {
-                throw new Error('Image not selected');
+            console.log('Form Data 2:', formData);
+
+            if (parentID === null) {
+                throw new Error('Parent ID is null');
             }
+
+            const updatedFormData = { ...formData, parentID };
+            console.log('FormDataToSend Data:', updatedFormData);
+
+            const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+                method: 'POST',
+                body: JSON.stringify(updatedFormData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to save node');
+            }
+
+            console.log("card header response : ", response)
         } catch (error) {
             console.error('Error saving node:', error);
         }
@@ -184,8 +156,9 @@ export default memo((id:any) => {
                                 <label style={{ marginTop: '8px' }}>Image</label>
                                 <input
                                     type="file"
+                                    name="image"
                                     accept="image/*"
-                                    onChange={handleImageChange}
+                                    onChange={handleChange}
                                     className="nodrag"
                                 />
                             </div>
@@ -193,21 +166,24 @@ export default memo((id:any) => {
                         <label>Intent</label>
                         <input
                             type="text"
-                            value={intent || ''}
-                            onChange={handleIntentChange}
+                            name="intent"
+                            value={formData.intent || ''}
+                            onChange={handleChange}
                             className="nodrag"
                         />
                         <label>Title</label>
                         <input
                             type="text"
-                            value={title}
-                            onChange={handleTitleChange}
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
                             className="nodrag"
                         />
                         <label style={{ marginTop: '8px' }}>Description</label>
                         <textarea
-                            value={description}
-                            onChange={handleDescriptionChange}
+                            value={formData.description}
+                            name="description"
+                            onChange={handleChange}
                             className="nodrag"
                             style={{ marginBottom: '5px' }}
                         ></textarea>

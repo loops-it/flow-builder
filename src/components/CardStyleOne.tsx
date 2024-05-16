@@ -17,6 +17,15 @@ export default memo((id: any) => {
     const [intent, setIntent] = useState('');
     // const [nodeType, setType] = useState('card');
 
+    const [formData, setFormData] = useState({
+        id: id.id,
+        title: '',
+        description: '',
+        image: null,
+        intent: '',
+        type: 'card',
+    });
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -31,8 +40,17 @@ export default memo((id: any) => {
                     setTitle(node.title);
                     setDescription(node.description);
                     setImage(node.image);
-                    setIntent(nodeIntent.intent)
+                    setIntent(nodeIntent.intent);
+                    setFormData({
+                        id: id.id,
+                        title: node.title,
+                        description: node.description,
+                        image: node.image,
+                        intent: nodeIntent.intent,
+                        type: 'card',
+                    });
                 } else {
+                    console.log("Node not found");
                 }
 
             } catch (error) {
@@ -66,37 +84,33 @@ export default memo((id: any) => {
         setImage(file);
     };
 
-    useEffect(() => {
-        if (image) {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('image', image || '');
-            console.log('Form Data:', formData);
-        }
-    }, [image]);
+    const handleChange = (event) => {
+        const { name, value, files } = event.target;
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: files ? files[0] : value,
+        }));
+    };
+
 
     // add data from node to node list
     const saveNode = async () => {
         try {
-            const formData = new FormData();
-            formData.append('id', id.id);
-            formData.append('title', title);
-            formData.append('description', description);
-            formData.append('image', image || '');
+            
 
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
+                body: JSON.stringify(formData),
                 headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id: id.id, title: title, description: description, image: '/image1', intent: intent, type: "card" }),
+                    'Content-Type': 'application/json'
+                }
             });
 
             if (!response.ok) {
                 throw new Error('Failed to delete node');
             }
+
+            console.log("card style one response : ", response)
 
         } catch (error) {
             console.error('Error saving node:', error);
@@ -144,8 +158,9 @@ export default memo((id: any) => {
                                 <label style={{ marginTop: '8px' }}>Image</label>
                                 <input
                                     type="file"
+                                    name="image"
                                     accept="image/*"
-                                    onChange={handleImageChange}
+                                    onChange={handleChange}
                                     className="nodrag"
                                 />
                             </div>
@@ -153,21 +168,24 @@ export default memo((id: any) => {
                         <label>Intent</label>
                         <input
                             type="text"
-                            value={intent || ''}
-                            onChange={handleIntentChange}
+                            name="intent"
+                            value={formData.intent || ''}
+                            onChange={handleChange}
                             className="nodrag"
                         />
                         <label>Title</label>
                         <input
                             type="text"
-                            value={title}
-                            onChange={handleTitleChange}
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
                             className="nodrag"
                         />
                         <label style={{ marginTop: '8px' }}>Description</label>
                         <textarea
-                            value={description}
-                            onChange={handleDescriptionChange}
+                            value={formData.description}
+                            name="description"
+                            onChange={handleChange}
                             className="nodrag"
                             style={{ marginBottom: '5px' }}
                         ></textarea>
