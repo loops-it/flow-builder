@@ -103,7 +103,7 @@ export default memo((id: any) => {
 
             </div>
             <Handle type="target" position={Position.Top} />
-            <Handle type="source" position={Position.Bottom} />
+            {/* <Handle type="source" position={Position.Bottom} /> */}
         </>
     );
 });
