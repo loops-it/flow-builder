@@ -58,18 +58,24 @@ const edgeTypes = {
 
 
 
+interface FlowPanelProps {
+  language: string;
+}
 
-
-
-
-const FlowPanel = () => {
+const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
 
+  const [selectedLanguage, setSelectedLanguage] = useState(String);
+
+  
+
   useEffect(() => {
+    console.log("Language : ", language.language)
+    setSelectedLanguage(language.language)
     loadDataOnMount(setNodes, setEdges);
     console.log("nodes : ", nodes)
   }, []);
@@ -83,22 +89,22 @@ const FlowPanel = () => {
 
   // add text imput node
   const addTextNode = () => {
-    addNode('textinput', setNodes);
+    addNode(selectedLanguage, 'textinput', setNodes);
   };
 
   // add card header node - need to change this also ----------
   const addCardHeaderNode = () => {
-    addNode('cardStyleOne', setNodes);
+    addNode(selectedLanguage,'cardStyleOne', setNodes);
   };
 
   // text only node
   const addTextOnlyNode = () => {
-    addNode('textOnly', setNodes);
+    addNode(selectedLanguage, 'textOnly', setNodes);
   };
 
   // add start circle node
   const addEndNode = () => {
-    addNode('end', setNodes);
+    addNode(selectedLanguage ,'end', setNodes);
   };
 
   // edge connect
@@ -168,7 +174,8 @@ const FlowPanel = () => {
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999',
         position: 'relative !important'
-      }
+      },
+      language: selectedLanguage
     };
 
     setNodes((prevNodes) => {
@@ -223,6 +230,7 @@ const FlowPanel = () => {
       },
       parentId: groupId,
       extent: 'parent',
+      language: selectedLanguage
     };
 
     setNodes((prevNodes) => {
@@ -274,6 +282,7 @@ const FlowPanel = () => {
       },
       parentId: groupId,
       extent: 'parent',
+      language: selectedLanguage
     };
 
     setNodes((prevNodes) => {
@@ -350,6 +359,7 @@ const FlowPanel = () => {
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999'
       },
+      language: selectedLanguage
     };
 
     setNodes((prevNodes) => {
@@ -412,6 +422,7 @@ const FlowPanel = () => {
       },
       parentId: buttonGroupId,
       extent: 'parent',
+      language: selectedLanguage
     };
 
     setNodes((prevNodes) => {
@@ -453,16 +464,14 @@ const FlowPanel = () => {
   };
 
 
-
+  // const currentTexts = buttonTexts[language.language] || buttonTexts.en;
 
 
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        {/* <button onClick={addCircleNode} >start</button> */}
         <button onClick={addEndNode} style={{ marginTop: '10px' }}>End</button>
         <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
-        {/* <button onClick={addToolNode} style={{ marginTop: '10px' }}>tool</button> */}
         <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
           Buttons
         </button>
@@ -471,11 +480,6 @@ const FlowPanel = () => {
           Card style 1
         </button>
         <button onClick={addGroup} style={{ marginTop: '10px' }}>Card style 2</button>
-
-
-
-
-        {/* {groupId && ( */}
         <button
           style={{
             position: "relative",
@@ -489,8 +493,6 @@ const FlowPanel = () => {
           <IoAddCircle /> Card Buttons
 
         </button>
-        {/* // )} */}
-        {/* {buttonGroupId && ( */}
         <button
           style={{
             position: "relative",
@@ -504,7 +506,6 @@ const FlowPanel = () => {
           <IoAddCircle /> Buttons Group
 
         </button>
-        {/* )} */}
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
