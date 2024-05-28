@@ -2,7 +2,7 @@
 
 import 'reactflow/dist/style.css';
 import React from 'react';
-import FlowPanel from '../components';
+import TamilFlowPanel from '../components/TamilFlowPanel';
 
 
 
@@ -12,7 +12,7 @@ function Tamil() {
 
   return (
     <>
-      <FlowPanel language="tamil" />
+      <TamilFlowPanel language="tamil" />
     </>
   )
 }

@@ -62,14 +62,12 @@ interface FlowPanelProps {
   language: string;
 }
 
-const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
+const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [groups, setGroups] = useState([]);
   const [groupId, setGroupId] = useState(null);
   const [buttonGroupId, setButtonGroupId] = useState(null);
-  const [filteredNodes, setFilteredNodes] = useState([]);
-
 
   const [selectedLanguage, setSelectedLanguage] = useState(String);
 
@@ -83,18 +81,11 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
   }, []);
 
 
-
   useEffect(() => {
 
   }, [groupId])
 
 
-
-  // useEffect(() => {
-  //   const filtered = nodes.filter(node => node.language === language.language);
-  //   setFilteredNodes(filtered);
-  //   console.log("filtered nodes ===== ",filtered)
-  // }, [nodes, language.language]);
 
   // add text imput node
   const addTextNode = () => {
@@ -544,4 +535,4 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
   );
 };
 
-export default FlowPanel;
+export default SinhalaFlowPanel;

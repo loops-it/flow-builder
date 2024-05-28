@@ -2,7 +2,7 @@
 
 import 'reactflow/dist/style.css';
 import React from 'react';
-import FlowPanel from '../components';
+import SinhalaFlowPanel from '../components/SinhalaFlowPanel';
 
 
 
@@ -12,7 +12,7 @@ function Sinhala() {
 
   return (
     <>
-      <FlowPanel language="sinhala" />
+      <SinhalaFlowPanel language="sinhala" />
     </>
   )
 }
