@@ -15,38 +15,40 @@ import ReactFlow, {
 import initialNodes from "../data/nodes";
 import initialEdges from "../data/edges";
 import ButtonEdge from "./ButtonEdge";
-import TextInputNode from "./TextInputNode";
 
 import '../styles/overview.css';
 import ToolBarNode from "./ToolBarNode";
 import CircleNode from "./CircleNode";
 import AnotationNode from "./AnotationNode";
-import TextImageNode from "./TextImageNode";
 
 import { IoAddCircle } from "react-icons/io5";
 import { addNode } from "../service/nodeFunction";
 import { apiUrl, generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
-import TwoWayButton from "./TwoWayButton";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
-import ButtonGroupView from "./ButtonGroupView";
 import CardGroupView from "./CardGroupView";
-import { loadDataOnMount } from "../service/getData";
+import { loadDataOnMountSinhala } from "../service/getData";
 import { onConnectEdge } from "../service/edgeFunctions";
 import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
+import TextImageNodeSinhala from "./sinhala/TextImageNodeSinhala";
+import ButtonGroupViewSinhala from "./sinhala/ButtonGroupViewSinhala";
+import TwoWayButtonSinhala from "./sinhala/TwoWayButtonSinhala";
+import TextInputNodeSinhala from "./sinhala/TextInputNodeSinhala";
+import TextOnlyNodeStyleSinhala from "./sinhala/TextOnlyNodeStyleSinhala";
+import CardStyleOneSinhala from "./sinhala/CardStyleOneSinhala";
 
 
 const nodeTypes = {
-  textinput: TextInputNode,
+  textinput: TextInputNodeSinhala,
   tools: ToolBarNode,
   start: CircleNode,
   annotation: AnotationNode,
-  button: TwoWayButton,
-  cardHeader: TextImageNode,
-  cardStyleOne: CardStyleOne,
-  textOnly: TextOnlyNodeStyle,
+  button: TwoWayButtonSinhala,
+  cardHeader: TextImageNodeSinhala,
+  cardStyleOne: CardStyleOneSinhala,
+  textOnly: TextOnlyNodeStyleSinhala,
   end: EndCircleNode,
-  buttonGroup: ButtonGroupView,
+  buttonGroup: ButtonGroupViewSinhala,
   cardGroup: CardGroupView
 };
 
@@ -70,13 +72,13 @@ const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
   const [buttonGroupId, setButtonGroupId] = useState(null);
 
   const [selectedLanguage, setSelectedLanguage] = useState(String);
-
   
 
   useEffect(() => {
+    
+    loadDataOnMountSinhala(setNodes, setEdges );
     console.log("Language : ", language.language)
     setSelectedLanguage(language.language)
-    loadDataOnMount(setNodes, setEdges);
     console.log("nodes : ", nodes)
   }, []);
 
