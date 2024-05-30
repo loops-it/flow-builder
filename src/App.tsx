@@ -10,12 +10,12 @@ import Tamil from "./pages/Tamil";
 function App() {
   return (
     <>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/english" element={<English />} />
-      <Route path="/sinhala" element={<Sinhala />} />
-      <Route path="/tamil" element={<Tamil />} />
-    </Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/english" element={<English />} />
+        <Route path="/sinhala" element={<Sinhala />} />
+        <Route path="/tamil" element={<Tamil />} />
+      </Routes>
     </>
   );
 }
