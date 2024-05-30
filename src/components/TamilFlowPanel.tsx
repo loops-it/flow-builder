@@ -31,23 +31,30 @@ import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
 import ButtonGroupView from "./ButtonGroupView";
 import CardGroupView from "./CardGroupView";
-import { loadDataOnMount } from "../service/getData";
+import { loadDataOnMount, loadDataOnMountTamil } from "../service/getData";
 import { onConnectEdge } from "../service/edgeFunctions";
 import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
+import TextInputNodeTamil from "./tamil/TextInputNodeTamil";
+import ButtonGroupViewTamil from "./tamil/ButtonGroupViewTamil";
+import TextOnlyNodeStyleTamil from "./tamil/TextOnlyNodeStyleTamil";
+import CardStyleOneTamil from "./tamil/CardStyleOneTamil";
+import TextImageNodeTamil from "./tamil/TextImageNodeTamil";
+import TwoWayButtonTamil from "./tamil/TwoWayButtonTamil";
+import CardGroupViewTamil from "./tamil/CardGroupViewTamil";
 
 
 const nodeTypes = {
-  textinput: TextInputNode,
+  textinput: TextInputNodeTamil,
   tools: ToolBarNode,
   start: CircleNode,
   annotation: AnotationNode,
-  button: TwoWayButton,
-  cardHeader: TextImageNode,
-  cardStyleOne: CardStyleOne,
-  textOnly: TextOnlyNodeStyle,
+  button: TwoWayButtonTamil,
+  cardHeader: TextImageNodeTamil,
+  cardStyleOne: CardStyleOneTamil,
+  textOnly: TextOnlyNodeStyleTamil,
   end: EndCircleNode,
-  buttonGroup: ButtonGroupView,
-  cardGroup: CardGroupView
+  buttonGroup: ButtonGroupViewTamil,
+  cardGroup: CardGroupViewTamil
 };
 
 
@@ -76,7 +83,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
   useEffect(() => {
     console.log("Language : ", language.language)
     setSelectedLanguage(language.language)
-    loadDataOnMount(setNodes, setEdges);
+    loadDataOnMountTamil(setNodes, setEdges);
     console.log("nodes : ", nodes)
   }, []);
 
