@@ -2,6 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
+import { deleteNodeCallSinhala } from '../../service/deleteFunctions';
 
 
 export default memo((id: any) => {
@@ -22,7 +23,7 @@ export default memo((id: any) => {
     console.log("selected : ", isSelected)
     
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "cardGroup",setNodes, setEdges)
+        deleteNodeCallSinhala(nodeId, "cardGroup",setNodes, setEdges)
     };
 
 

@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from "react";
 import { Handle, Position, useReactFlow } from "reactflow";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { getSinhalaNodeData } from "../../service/getData";
-import { deleteNodeCall } from "../../service/deleteFunctions";
+import { deleteNodeCall, deleteNodeCallSinhala } from "../../service/deleteFunctions";
 import { apiUrl } from "../../service/idGenerateFunctions";
 
 
@@ -70,7 +70,7 @@ export default memo((id: any) => {
 
 
   const deleteNode = async () => {
-    deleteNodeCall(nodeId, "textOnly", setNodes, setEdges);
+    deleteNodeCallSinhala(nodeId, "textOnly", setNodes, setEdges);
   };
 
   return (

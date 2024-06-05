@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
-import { deleteNodeCall } from '../../service/deleteFunctions';
+import { deleteNodeCall, deleteNodeCallTamil } from '../../service/deleteFunctions';
 import { apiUrl } from '../../service/idGenerateFunctions';
 import { getNodeData, getSinhalaNodeData, getTamilNodeData } from '../../service/getData';
 
@@ -65,7 +65,7 @@ export default memo((id: any) => {
     };
 
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "buttonGroup", setNodes, setEdges)
+        deleteNodeCallTamil(nodeId, "buttonGroup", setNodes, setEdges)
     };
 
 

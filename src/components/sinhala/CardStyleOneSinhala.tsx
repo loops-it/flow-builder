@@ -3,7 +3,7 @@ import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { getSinhalaNodeData } from '../../service/getData';
 import { apiUrl } from '../../service/idGenerateFunctions';
-import { deleteNodeCall } from '../../service/deleteFunctions';
+import { deleteNodeCall, deleteNodeCallSinhala } from '../../service/deleteFunctions';
 
 
 
@@ -125,7 +125,7 @@ export default memo((id: any) => {
 
     // delete node from list
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "cardStyleOne", setNodes, setEdges)
+        deleteNodeCallSinhala(nodeId, "cardStyleOne", setNodes, setEdges)
     };
 
 

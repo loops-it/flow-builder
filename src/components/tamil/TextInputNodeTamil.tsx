@@ -3,7 +3,7 @@ import { Handle, useStore, Position, useReactFlow, useEdgesState, useNodesState 
 import { RiCloseCircleFill } from "react-icons/ri";
 import { getSinhalaNodeData, getTamilNodeData } from '../../service/getData';
 import { apiUrl } from '../../service/idGenerateFunctions';
-import { deleteNodeCall } from '../../service/deleteFunctions';
+import { deleteNodeCall, deleteNodeCallTamil } from '../../service/deleteFunctions';
 
 
 
@@ -86,7 +86,7 @@ export default memo((id: any) => {
 
     // delete node from list
     const deleteNode = async () => {
-        deleteNodeCall(nodeId, "textinput", setNodes, setEdges)
+        deleteNodeCallTamil(nodeId, "textinput", setNodes, setEdges)
     };
 
 
