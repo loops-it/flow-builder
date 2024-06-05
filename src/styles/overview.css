@@ -206,10 +206,10 @@
     width: calc(100% * 1.41421356237);
     background: conic-gradient(
       from -160deg at 50% 50%,
-      #e92a67 0deg,
-      #a853ba 120deg,
-      #2a8af6 240deg,
-      #e92a67 360deg
+      #2acce9bb 0deg,
+      #536ebabe 120deg,
+      #2a89f6b2 240deg,
+      #832ae9c2 360deg
     );
     left: 50%;
     top: 50%;
@@ -257,10 +257,10 @@
   ); */
   background: conic-gradient(
     from -160deg at 50% 50%,
-    rgba(233, 42, 103, 0.6) 0deg,
-    rgba(168, 83, 186, 0.6) 120deg,
-    rgba(39, 102, 50, 0.6) 240deg,
-    rgba(233, 42, 103, 0.6) 360deg
+    #2acce9bb 0deg,
+    #2a89f6b2 120deg,
+      #2a89f6b2 240deg,
+      #2aa3e9bb 360deg
   );
   }
 
