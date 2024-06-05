@@ -16,6 +16,7 @@ export default memo((id: any) => {
     const [nodeType, setType] = useState('group');
     const [intent, setIntent] = useState('');
     const [parentID, setParentID] = useState('');
+    const [file, setFile] = useState(null);
 
     const [formData, setFormData] = useState({
         id: id.id,
@@ -75,14 +76,14 @@ export default memo((id: any) => {
         fetchData();
     }, []);
 
-   
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: files ? files[0] : value,
-        }));
-    };
+
+    // const handleChange = (event) => {
+    //     const { name, value, files } = event.target;
+    //     setFormData((prevFormData) => ({
+    //         ...prevFormData,
+    //         [name]: files ? files[0] : value,
+    //     }));
+    // };
 
 
     useEffect(() => {
@@ -90,31 +91,82 @@ export default memo((id: any) => {
     }, [formData]);
 
 
+    // const saveNode = async () => {
+    //     console.log("Parent ID found ============== :", parentID);
+    //     try {
+    //         console.log('Form Data 2:', formData);
+
+    //         if (parentID === null) {
+    //             throw new Error('Parent ID is null');
+    //         }
+
+    //         const updatedFormData = { ...formData, parentID };
+    //         console.log('FormDataToSend Data:', updatedFormData);
+
+    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+    //             method: 'POST',
+    //             body: JSON.stringify(updatedFormData),
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to save node');
+    //         }
+
+    //         console.log("card header response : ", response)
+    //     } catch (error) {
+    //         console.error('Error saving node:', error);
+    //     }
+    // };
+
+    const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
+        const { name, value, files } = e.target;
+        if (name === 'image') {
+            setFormData((prevData) => ({
+                ...prevData,
+                image: files[0]
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
+    };
+
     const saveNode = async () => {
         console.log("Parent ID found ============== :", parentID);
         try {
-            console.log('Form Data 2:', formData);
-
             if (parentID === null) {
                 throw new Error('Parent ID is null');
             }
 
-            const updatedFormData = { ...formData, parentID };
-            console.log('FormDataToSend Data:', updatedFormData);
+            const formDataToSend = new FormData();
+            formDataToSend.append('intent', formData.intent);
+            formDataToSend.append('title', formData.title);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('image', formData.image);
+            formDataToSend.append('parentID', parentID);
+
+            console.log("formDataToSend : ",formDataToSend)
+            // Log formDataToSend contents
+        for (let [key, value] of formDataToSend.entries()) {
+            console.log(`${key}:`, value);
+        }
 
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
-                body: JSON.stringify(updatedFormData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formDataToSend,
             });
 
             if (!response.ok) {
                 throw new Error('Failed to save node');
             }
 
-            console.log("card header response : ", response)
+            const data = await response.json();
+            console.log("Card header response: ", data);
         } catch (error) {
             console.error('Error saving node:', error);
         }
@@ -167,7 +219,7 @@ export default memo((id: any) => {
                         <input
                             type="text"
                             name="intent"
-                            value={formData.intent || ''}
+                            value={formData.intent}
                             onChange={handleChange}
                             className="nodrag"
                         />

@@ -1,7 +1,10 @@
-
+'use client';
 
 import 'reactflow/dist/style.css';
 import React from 'react';
+import { useState, useRef } from 'react';
+import type { PutBlobResult } from '@vercel/blob';
+import { apiUrl } from '../service/idGenerateFunctions';
 
 
 interface ButtonPrimaryProps {
@@ -42,6 +45,8 @@ function Home() {
     }
   ]
 
+  
+
   return (
     <>
       <div
@@ -57,13 +62,19 @@ function Home() {
         }}
       >
         <h1>Welcome to Flow Builder</h1>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-        {
-          flowPaths.map((item) => (
-            <ButtonPrimary id={item.id} text={item.text} link={item.link} />
-          ))
-        }
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          {
+            flowPaths.map((item) => (
+              <div key={item.id} className="d-flex">
+                <ButtonPrimary id={item.id} text={item.text} link={item.link} />
+              </div>
+            ))
+          }
+          <div>
+
+          </div>
         </div>
+       
       </div>
     </>
   )

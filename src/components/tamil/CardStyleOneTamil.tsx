@@ -84,38 +84,85 @@ export default memo((id: any) => {
         setImage(file);
     };
 
-    const handleChange = (event) => {
-        const { name, value, files } = event.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: files ? files[0] : value,
-        }));
+    const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
+        const { name, value, files } = e.target;
+        if (name === 'image') {
+            setFormData((prevData) => ({
+                ...prevData,
+                image: files[0]
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: value
+            }));
+        }
     };
 
-
-    // add data from node to node list
     const saveNode = async () => {
         try {
             
 
+            const formDataToSend = new FormData();
+            formDataToSend.append('intent', formData.intent);
+            formDataToSend.append('title', formData.title);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('image', formData.image);
+
+            console.log("formDataToSend : ",formDataToSend)
+            // Log formDataToSend contents
+        for (let [key, value] of formDataToSend.entries()) {
+            console.log(`${key}:`, value);
+        }
+
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formDataToSend,
             });
 
             if (!response.ok) {
-                throw new Error('Failed to delete node');
+                throw new Error('Failed to save node');
             }
 
-            console.log("card style one response : ", response)
-
+            const data = await response.json();
+            console.log("Card header response: ", data);
         } catch (error) {
             console.error('Error saving node:', error);
         }
     };
+
+    // const handleChange = (event) => {
+    //     const { name, value, files } = event.target;
+    //     setFormData((prevFormData) => ({
+    //         ...prevFormData,
+    //         [name]: files ? files[0] : value,
+    //     }));
+    // };
+
+
+    // // add data from node to node list
+    // const saveNode = async () => {
+    //     try {
+            
+
+    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
+    //             method: 'POST',
+    //             body: JSON.stringify(formData),
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to delete node');
+    //         }
+
+    //         console.log("card style one response : ", response)
+
+    //     } catch (error) {
+    //         console.error('Error saving node:', error);
+    //     }
+    // };
 
 
     useEffect(() => {
@@ -137,8 +184,8 @@ export default memo((id: any) => {
                 {/* gradient */}
                 <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
-                    <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'end' }}>
+                <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
@@ -169,7 +216,7 @@ export default memo((id: any) => {
                         <input
                             type="text"
                             name="intent"
-                            value={formData.intent || ''}
+                            value={formData.intent}
                             onChange={handleChange}
                             className="nodrag"
                         />

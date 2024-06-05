@@ -1,5 +1,7 @@
 // groupFunctions.js
 
+import { generateGroupId } from "./idGenerateFunctions";
+
 
 export const generateGroup = (setGroups, setNodes, addGroupCardHeaderNode, addGroupButtonNode) => {
   const groupId = generateGroupId();
