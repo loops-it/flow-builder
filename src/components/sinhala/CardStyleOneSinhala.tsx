@@ -3,7 +3,7 @@ import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { getSinhalaNodeData } from '../../service/getData';
 import { apiUrl } from '../../service/idGenerateFunctions';
-import { deleteNodeCall, deleteNodeCallSinhala } from '../../service/deleteFunctions';
+import {  deleteNodeCallSinhala } from '../../service/deleteFunctions';
 
 
 

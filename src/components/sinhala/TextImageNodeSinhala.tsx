@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
-import { deleteNodeCall } from '../../service/deleteFunctions';
 import { apiUrl } from '../../service/idGenerateFunctions';
 import { getNodeData, getSinhalaNodeData } from '../../service/getData';
 

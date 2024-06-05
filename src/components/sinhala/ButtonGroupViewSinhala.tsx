@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
-import { deleteNodeCall, deleteNodeCallSinhala } from '../../service/deleteFunctions';
+import {  deleteNodeCallSinhala } from '../../service/deleteFunctions';
 import { apiUrl } from '../../service/idGenerateFunctions';
 import { getNodeData, getSinhalaNodeData } from '../../service/getData';
 

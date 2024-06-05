@@ -26,7 +26,6 @@ import { addNode } from "../service/nodeFunction";
 import { apiUrl, generateEdgeId, generateGroupId, generateNodeId } from "../service/idGenerateFunctions";
 import CardStyleOne from "./CardStyleOne";
 import EndCircleNode from "./EndCircleNode";
-import CardGroupView from "./CardGroupView";
 import { loadDataOnMountSinhala } from "../service/getData";
 import { onConnectEdge } from "../service/edgeFunctions";
 import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
@@ -36,6 +35,7 @@ import TwoWayButtonSinhala from "./sinhala/TwoWayButtonSinhala";
 import TextInputNodeSinhala from "./sinhala/TextInputNodeSinhala";
 import TextOnlyNodeStyleSinhala from "./sinhala/TextOnlyNodeStyleSinhala";
 import CardStyleOneSinhala from "./sinhala/CardStyleOneSinhala";
+import CardGroupView from "./sinhala/CardGroupView";
 
 
 const nodeTypes = {
