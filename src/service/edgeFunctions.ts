@@ -1,4 +1,4 @@
-const apiUrl = 'https://diy-bot.vercel.app/';
+const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
 
 export const onConnectEdge = async (params: any): Promise<void> => {

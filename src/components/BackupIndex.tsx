@@ -79,7 +79,7 @@ const FlowPanel = () => {
 
   const [loadData, setLoadData] = useState(null)
 
-  const apiUrl = 'https://diy-bot.vercel.app/';
+  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
 
   
 
