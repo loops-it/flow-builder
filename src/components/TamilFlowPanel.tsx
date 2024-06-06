@@ -98,22 +98,22 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // add text imput node
   const addTextNode = () => {
-    addNode(selectedLanguage, 'textinput', setNodes);
+    addNode('tamil', 'textinput', setNodes);
   };
 
   // add card header node - need to change this also ----------
   const addCardHeaderNode = () => {
-    addNode(selectedLanguage,'cardStyleOne', setNodes);
+    addNode('tamil','cardStyleOne', setNodes);
   };
 
   // text only node
   const addTextOnlyNode = () => {
-    addNode(selectedLanguage, 'textOnly', setNodes);
+    addNode('tamil', 'textOnly', setNodes);
   };
 
   // add start circle node
   const addEndNode = () => {
-    addNode(selectedLanguage ,'end', setNodes);
+    addNode('tamil' ,'end', setNodes);
   };
 
   // edge connect
@@ -184,7 +184,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
         zIndex: '999',
         position: 'relative !important'
       },
-      language: selectedLanguage
+      language: 'tamil'
     };
 
     setNodes((prevNodes) => {
@@ -239,7 +239,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
       },
       parentId: groupId,
       extent: 'parent',
-      language: selectedLanguage
+      language: 'tamil'
     };
 
     setNodes((prevNodes) => {
@@ -291,7 +291,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
       },
       parentId: groupId,
       extent: 'parent',
-      language: selectedLanguage
+      language: 'tamil'
     };
 
     setNodes((prevNodes) => {
@@ -333,12 +333,13 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // Add this function to handle the click event of the delete button
   const addFloatingButton = () => {
-    if (!groupId) {
+    const savedNodeId = localStorage.getItem('selectedTamilNodeID');
+    if (!savedNodeId) {
       console.error("Group ID is not defined");
       return;
     }
 
-    addGroupButtonNode(groupId);
+    addGroupButtonNode(savedNodeId);
   };
 
 
@@ -368,7 +369,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
         zIndex: '999'
       },
-      language: selectedLanguage
+      language: 'tamil'
     };
 
     setNodes((prevNodes) => {
@@ -431,7 +432,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
       },
       parentId: buttonGroupId,
       extent: 'parent',
-      language: selectedLanguage
+      language: 'tamil'
     };
 
     setNodes((prevNodes) => {
@@ -465,13 +466,13 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
   };
 
   const addFloatingButtonForButtonGroup = () => {
-    if (!buttonGroupId) {
+    const savedNodeId = localStorage.getItem('selectedTamilButtonID');
+    if (!savedNodeId) {
       console.error("Group ID is not defined");
       return;
     }
-    addGroupButtonsNodes(buttonGroupId);
+    addGroupButtonsNodes(savedNodeId);
   };
-
 
   // const currentTexts = buttonTexts[language.language] || buttonTexts.en;
 

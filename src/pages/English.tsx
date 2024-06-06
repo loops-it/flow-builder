@@ -12,7 +12,7 @@ function English() {
 
   return (
     <>
-      <FlowPanel language="tamil" />
+      <FlowPanel language="english" />
     </>
   )
 }

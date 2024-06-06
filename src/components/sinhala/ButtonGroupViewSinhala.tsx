@@ -12,6 +12,7 @@ export default memo((id: any) => {
     const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
     const [intent, setIntent] = useState('');
+    const [isSelected, setIsSelected] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -38,6 +39,11 @@ export default memo((id: any) => {
     useEffect(() => {
         setNodeId(id.id)
     }, [nodeId])
+
+    const toggleSelection = () => {
+        setIsSelected(!isSelected);
+        localStorage.setItem('selectedSinhalaButtonID', id.id);
+    };
 
     // node intent input
     const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +82,7 @@ export default memo((id: any) => {
             <div className='elementWrap'>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
+                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
 
                     <div className="inner" style={{ height: '150px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>

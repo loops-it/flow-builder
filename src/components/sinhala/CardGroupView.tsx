@@ -18,8 +18,8 @@ export default memo((id: any) => {
 
     const toggleSelection = () => {
         setIsSelected(!isSelected);
+        localStorage.setItem('selectedSinhalaNodeID', id.id);
     };
-    console.log("selected : ", isSelected)
     
     const deleteNode = async () => {
         deleteNodeCallSinhala(nodeId, "cardGroup",setNodes, setEdges)
@@ -33,6 +33,7 @@ export default memo((id: any) => {
             <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
+                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
 
                     <div className="inner" style={{ height: '480px', width: '300px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
