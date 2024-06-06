@@ -12,6 +12,7 @@ export default memo((id: any) => {
     const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
     const [intent, setIntent] = useState('');
+    const [isSelected, setIsSelected] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,7 +47,7 @@ export default memo((id: any) => {
 
     const saveNode = async () => {
         try {
-            console.log("intent : ", intent, id.id)
+            // console.log("intent : ", intent, id.id)
             const response = await fetch(`${apiUrl}/data-flow-button-group`, {   //group api call
                 method: 'POST',
                 headers: {
@@ -58,11 +59,18 @@ export default memo((id: any) => {
             if (!response.ok) {
                 throw new Error('Failed to delete node');
             }
-            console.log("title , description : ", response)
+            console.log("button group save node : ", response)
         } catch (error) {
 
         }
     };
+
+
+    const toggleSelection = () => {
+        setIsSelected(!isSelected);
+        localStorage.setItem('selectedEnglishButtonID', id.id);
+    };
+    // console.log("selected : ", isSelected)
 
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "buttonGroup", setNodes, setEdges)
@@ -76,7 +84,7 @@ export default memo((id: any) => {
             <div className='elementWrap'>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
-
+                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                     <div className="inner" style={{ height: '150px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>

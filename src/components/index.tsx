@@ -194,7 +194,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
     try {
 
-      // console.log("new group node data : ", group)
+      console.log("new group node data : ", group)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -249,7 +249,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
     });
 
     try {
-      // console.log("new group header node data : ", newNode)
+      console.log("new group header node data : ", newNode)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -302,7 +302,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
     try {
 
-      // console.log("new group button node data : ", newNode)
+      console.log("new group button node data : ", newNode)
       const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
         method: 'POST',
         headers: {
@@ -332,13 +332,23 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
 
   // Add this function to handle the click event of the delete button
+  // const addFloatingButton = () => {
+  //   if (!groupId) {
+  //     console.error("Group ID is not defined");
+  //     return;
+  //   }
+
+  //   addGroupButtonNode(groupId);
+  // };
+
   const addFloatingButton = () => {
-    if (!groupId) {
+    const savedNodeId = localStorage.getItem('selectedEnglishNodeID');
+    if (!savedNodeId) {
       console.error("Group ID is not defined");
       return;
     }
 
-    addGroupButtonNode(groupId);
+    addGroupButtonNode(savedNodeId);
   };
 
 
@@ -464,12 +474,21 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   };
 
+  // const addFloatingButtonForButtonGroup = () => {
+  //   if (!buttonGroupId) {
+  //     console.error("Group ID is not defined");
+  //     return;
+  //   }
+  //   addGroupButtonsNodes(buttonGroupId);
+  // };
+
   const addFloatingButtonForButtonGroup = () => {
-    if (!buttonGroupId) {
+    const savedNodeId = localStorage.getItem('selectedEnglishButtonID');
+    if (!savedNodeId) {
       console.error("Group ID is not defined");
       return;
     }
-    addGroupButtonsNodes(buttonGroupId);
+    addGroupButtonsNodes(savedNodeId);
   };
 
 

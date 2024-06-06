@@ -125,7 +125,7 @@ export default memo((id: any) => {
             }
 
             const data = await response.json();
-            console.log("Card header response: ", data);
+            console.log("card style one save node: ", data);
         } catch (error) {
             console.error('Error saving node:', error);
         }

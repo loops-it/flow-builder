@@ -72,7 +72,7 @@ export default memo((id: any) => {
             if (!response.ok) {
                 throw new Error('Failed to delete node');
             }
-            console.log("title , description : ", response)
+            console.log("text input save node : ", response)
         } catch (error) {
 
         }

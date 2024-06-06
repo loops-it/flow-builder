@@ -7,7 +7,7 @@ const processNode = {
     borderColor: '#872341',
   };
 
-  const apiUrl = 'https://dfcc-chat-bot.vercel.app';
+  const apiUrl = 'https://diy-bot.vercel.app/';
   
 export const addNode = async (language: string, type: string, setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: (prevNodes: any) => any[]): void; }) => {
 
@@ -35,7 +35,7 @@ export const addNode = async (language: string, type: string, setNodes: { (value
   try {
     // Make API call to post the new node data
 
-    console.log("new node data : ", newNode)
+    console.log("new node add : ", newNode)
     const response = await fetch(`${apiUrl}/data-flow-insert-node`, {
       method: 'POST',
       headers: {
@@ -48,7 +48,7 @@ export const addNode = async (language: string, type: string, setNodes: { (value
       throw new Error('Failed to add node');
     }
 
-    console.log('response : ',response )
+    console.log('new node add response : ',response )
 
     setNodes((prevNodes: any) => {
       const updatedNodes = [...prevNodes, newNode];

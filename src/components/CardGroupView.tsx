@@ -18,8 +18,9 @@ export default memo((id: any) => {
 
     const toggleSelection = () => {
         setIsSelected(!isSelected);
+        localStorage.setItem('selectedEnglishNodeID', id.id);
     };
-    console.log("selected : ", isSelected)
+    // console.log("selected : ", isSelected)
     
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "cardGroup",setNodes, setEdges)

@@ -38,13 +38,15 @@ export default memo((id: any) => {
 
                 const nodeData = await getNodeData();
 
+                // console.log("new node data:", nodeData);
+
                 const desiredNodeId = id.id;
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 const nodePatent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-
-                console.log("nodePatent:", nodePatent);
+                // console.log("desiredNodeId :", nodePatent);
+                // console.log("node parent id :", nodePatent);
                 if (nodePatent) {
-                    console.log("Parent ID found:", nodePatent.parentId);
+                    // console.log("Parent ID found:", nodePatent.parentId);
                     setParentID(nodePatent.parentId);
                 } else {
                     console.log("Parent node not found");

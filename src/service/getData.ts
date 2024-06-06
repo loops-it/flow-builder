@@ -28,9 +28,9 @@ const fetchDataFlowData = async () => {
       throw new Error('Failed to add node');
     }
 
-    console.log('response : ',response )
+    
     const data = await response.json();
-          console.log('response ---> :', data); 
+    console.log('get english data response : ',data )
 
       // const filteredNodes = data.nodes.filter(node => node.language === "sinhala");
 
@@ -56,9 +56,8 @@ const fetchDataFlowData = async () => {
       throw new Error('Failed to add node');
     }
 
-    console.log('response : ',response )
     const data = await response.json();
-          console.log('response ---> :', data); 
+    console.log('get sinhala data response : ',data )
 
       // const filteredNodes = data.nodes.filter(node => node.language === "sinhala");
 
@@ -83,9 +82,8 @@ const fetchDataFlowData = async () => {
       throw new Error('Failed to add node');
     }
 
-    console.log('response : ',response )
     const data = await response.json();
-          console.log('response ---> :', data); 
+    console.log('get tamil data response : ',data )
 
       // const filteredNodes = data.nodes.filter(node => node.language === "sinhala");
 
@@ -341,7 +339,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
         });
 
           const data = await response.json();
-          console.log('response buttonData ---> :', data); 
+          console.log('get english data response : ',data )
 
 
         if (!response.ok) {
@@ -366,8 +364,7 @@ export const getTamilNodeData = async () => {
       });
 
         const data = await response.json();
-        console.log('response buttonData ---> :', data); 
-
+        console.log('get sinhala data response : ',data )
 
       if (!response.ok) {
         throw new Error('Failed to get node data');
@@ -391,8 +388,7 @@ export const getSinhalaNodeData = async () => {
       });
 
         const data = await response.json();
-        console.log('response buttonData ---> :', data); 
-
+        console.log('get tamil data response : ',data )
 
       if (!response.ok) {
         throw new Error('Failed to get node data');

@@ -58,7 +58,7 @@ export default memo((id: any) => {
             if (!response.ok) {
                 throw new Error('Failed to delete node');
             }
-            console.log("title , description : ", response)
+            console.log("button grop save node : ", response)
         } catch (error) {
 
         }
