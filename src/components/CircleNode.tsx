@@ -7,7 +7,7 @@ export default memo((id: any ) => {
   return (
     <>
 
-      <div className="wrapper plainColor" style={{ overflow: 'visible' }}>
+      <div className="wrappers" style={{ overflow: 'visible' }}>
         <div className="inner" style={{ color: '#333 !important', overflow: 'visible' }}>
           <p style={{ color: '#333 !important' }}>
             Start

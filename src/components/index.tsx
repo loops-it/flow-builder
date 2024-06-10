@@ -500,16 +500,18 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
     <>
       <div className="controlWrapper">
       <div className="flowHandleCard" style={{ position: 'absolute', top: 10, zIndex: 999, display: 'flex', flexDirection: 'row' }}>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addEndNode}>End</button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextNode}>text card</button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addButtonGroup}>
+      <button className="OptionButton" style={{marginRight: '10px'}} onClick={addButtonGroup}>
           Buttons
         </button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextOnlyNode}>Text</button>
         <button className="OptionButton" style={{marginRight: '10px'}} onClick={addCardHeaderNode}>
           Card style 1
         </button>
         <button className="OptionButton" style={{marginRight: '10px'}} onClick={addGroup} >Card style 2</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addEndNode}>End</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextOnlyNode}>Text</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextNode}>text card</button>
+        
+        
         <button 
         className="OptionButton" 
         style={{marginRight: '10px'}}

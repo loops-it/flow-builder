@@ -14,7 +14,7 @@ export default memo((id: any) => {
 
   return (
     <>
-      <div className="wrapper plainColor"  style={{ overflow: 'visible' }}>
+      <div className="wrapper"  style={{ overflow: 'visible' }}>
         {/* <div className="inner">{label || 'no node connected'}</div> */}
         <div className="inner" style={{color: '#333 !important',  overflow: 'visible' }}>
         <div style={{ display: 'flex', justifyContent: 'end', position: 'absolute', top: -15, right: -5 }}>
