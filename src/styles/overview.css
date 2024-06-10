@@ -266,6 +266,7 @@
       #2a89f6b2 240deg,
       #2aa3e9bb 360deg); */
       background-color: #E9F1FF;
+      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
 }
 
 
