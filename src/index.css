@@ -122,6 +122,16 @@ label{
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
+  background-color: #3871CD;
+}
+.twoWayButton{
+  width: 100% !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  background-color: #fff;
+  border: solid 1px #3871CD;
+  color: #3871CD;
 }
 .toolbarButton{
   font-family: "Poppins", sans-serif;
