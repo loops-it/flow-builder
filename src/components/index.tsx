@@ -499,37 +499,23 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
   return (
     <>
       <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        <button onClick={addEndNode} style={{ marginTop: '10px' }}>End</button>
-        <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
-        <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
+        <button className="OptionButton" onClick={addEndNode}>End</button>
+        <button className="OptionButton" onClick={addTextNode}>text card</button>
+        <button className="OptionButton" onClick={addButtonGroup}>
           Buttons
         </button>
-        <button onClick={addTextOnlyNode} style={{ marginTop: '10px' }}>Text</button>
-        <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
+        <button className="OptionButton" onClick={addTextOnlyNode}>Text</button>
+        <button className="OptionButton" onClick={addCardHeaderNode}>
           Card style 1
         </button>
-        <button onClick={addGroup} style={{ marginTop: '10px' }}>Card style 2</button>
-        <button
-          style={{
-            position: "relative",
-            bottom: "0px",
-            right: "0px",
-            zIndex: "1000",
-            marginTop: '50px'
-          }}
+        <button className="OptionButton" onClick={addGroup} >Card style 2</button>
+        <button className="OptionButton"
           onClick={addFloatingButton}
         >
           <IoAddCircle /> Card Buttons
 
         </button>
-        <button
-          style={{
-            position: "relative",
-            bottom: "0px",
-            right: "0px",
-            zIndex: "1000",
-            marginTop: '10px'
-          }}
+        <button className="OptionButton"
           onClick={addFloatingButtonForButtonGroup}
         >
           <IoAddCircle /> Buttons Group
