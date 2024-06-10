@@ -124,6 +124,13 @@ label{
   font-weight: 300;
   background-color: #3871CD;
 }
+.saveButtonPopUp{
+  width: max-content !important;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  background-color: #3871CD;
+}
 .twoWayButton{
   width: 100% !important;
   font-family: "Poppins", sans-serif;

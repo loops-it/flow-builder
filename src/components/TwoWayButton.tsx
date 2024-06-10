@@ -147,8 +147,8 @@ export default memo((id: any) => {
                             onChange={handleLinkChange}
                             style={{ marginBottom: '10px'}}
                         />
-                        <button onClick={saveNode}>Save</button>
-                        <button onClick={closePopup} style={{ marginLeft: '10px'}}>Cancel</button>
+                        <button onClick={saveNode} className="saveButtonPopUp">Save</button>
+                        <button onClick={closePopup} className="saveButtonPopUp" style={{ marginLeft: '10px'}}>Cancel</button>
                     </div>
                 </div>
             )}
