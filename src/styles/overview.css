@@ -260,11 +260,12 @@
     #2a8af6 240deg,
     #e92a67 360deg
   ); */
-  background: conic-gradient(from -160deg at 50% 50%,
+  /* background: conic-gradient(from -160deg at 50% 50%,
       #2acce9bb 0deg,
       #2a89f6b2 120deg,
       #2a89f6b2 240deg,
-      #2aa3e9bb 360deg);
+      #2aa3e9bb 360deg); */
+      background-color: #E9F1FF;
 }
 
 

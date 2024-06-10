@@ -161,8 +161,9 @@ p{
 }
 
 .groupColor{
-  background-color: #00000018;
-  border: solid 1px #0000005e ;
+  background-color: #F8F8F8;
+  border: none ;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
 }
 
 .saveIntentButton{
