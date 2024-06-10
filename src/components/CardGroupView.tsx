@@ -1,6 +1,8 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
+import { IoClose } from "react-icons/io5";
+
 import { deleteNodeCall } from '../service/deleteFunctions';
 
 
@@ -38,7 +40,7 @@ export default memo((id: any) => {
                     <div className="inner" style={{ height: '480px', width: '300px' }}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
-                                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                            <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
                     </div>

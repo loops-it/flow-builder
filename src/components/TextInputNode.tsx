@@ -4,6 +4,8 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
+import { IoClose } from "react-icons/io5";
+
 
 
 
@@ -101,7 +103,7 @@ export default memo((id: any) => {
                     <div className="inner">
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
-                                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                            <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
                         <label>Intent</label>
