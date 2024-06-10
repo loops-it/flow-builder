@@ -498,29 +498,34 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   return (
     <>
-      <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        <button className="OptionButton" onClick={addEndNode}>End</button>
-        <button className="OptionButton" onClick={addTextNode}>text card</button>
-        <button className="OptionButton" onClick={addButtonGroup}>
+      <div className="controlWrapper">
+      <div className="flowHandleCard" style={{ position: 'absolute', top: 10, zIndex: 999, display: 'flex', flexDirection: 'row' }}>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addEndNode}>End</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextNode}>text card</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addButtonGroup}>
           Buttons
         </button>
-        <button className="OptionButton" onClick={addTextOnlyNode}>Text</button>
-        <button className="OptionButton" onClick={addCardHeaderNode}>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextOnlyNode}>Text</button>
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addCardHeaderNode}>
           Card style 1
         </button>
-        <button className="OptionButton" onClick={addGroup} >Card style 2</button>
-        <button className="OptionButton"
+        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addGroup} >Card style 2</button>
+        <button 
+        className="OptionButton" 
+        style={{marginRight: '10px'}}
           onClick={addFloatingButton}
         >
           <IoAddCircle /> Card Buttons
 
         </button>
-        <button className="OptionButton"
+        <button 
+        className="OptionButton"
           onClick={addFloatingButtonForButtonGroup}
         >
           <IoAddCircle /> Buttons Group
 
         </button>
+      </div>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow

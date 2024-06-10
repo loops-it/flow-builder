@@ -214,3 +214,17 @@ p{
   border-color: #D9D9D9;
   outline: none !important;
 }
+.flowHandleCard{
+  display: flex;
+  flex-direction: row;
+  background-color: #FBFBFB;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.103) !important;
+}
+.controlWrapper{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+}
