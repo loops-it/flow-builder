@@ -4,6 +4,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import {  deleteNodeCallSinhala } from '../../service/deleteFunctions';
 import { apiUrl } from '../../service/idGenerateFunctions';
 import { getNodeData, getSinhalaNodeData } from '../../service/getData';
+import { IoClose } from 'react-icons/io5';
 
 
 
@@ -82,14 +83,16 @@ export default memo((id: any) => {
             <div className='elementWrap'>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
-                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
-
-                    <div className="inner" style={{ height: '150px' }}>
+                <div className='topBarGroup'>
+                        <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
-                                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                                <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
+                    </div>
+                    <div className="inner" style={{ height: '150px' }}>
+                        
                         <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px', alignItems: 'end' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label>Add Intent</label>

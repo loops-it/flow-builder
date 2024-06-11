@@ -17,25 +17,25 @@ export default memo((id: any) => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            
+            try {
+
                 const nodeData = await getNodeData();
                 // console.log("child data ------> ", nodeData)
-                const desiredNodeId = id.id; 
+                const desiredNodeId = id.id;
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-                
+
                 if (nodeIntent) {
                     setIntent(nodeIntent.intent);
                 } else {
                 }
-    
-          } catch (error) {
-            console.error("Error fetching node data:", error);
-          }
+
+            } catch (error) {
+                console.error("Error fetching node data:", error);
+            }
         };
-    
+
         fetchData();
-      }, []);
+    }, []);
 
     useEffect(() => {
         setNodeId(id.id)
@@ -85,13 +85,16 @@ export default memo((id: any) => {
             <div className='elementWrap'>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
-                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
-                    <div className="inner" style={{ height: '150px' }}>
+                    <div className='topBarGroup'>
+                        <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
-                            <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                                <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
+                    </div>
+                    <div className="inner" style={{ height: '150px' }}>
+
                         <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px', alignItems: 'end' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label>Add Intent</label>
@@ -102,7 +105,7 @@ export default memo((id: any) => {
                                     className="nodrag intent_input"
                                 />
                             </div>
-                            <button onClick={saveNode} className='saveIntentButton' style={{marginLeft: '10px'}}>Save</button>
+                            <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px' }}>Save</button>
                         </div>
                     </div>
 
