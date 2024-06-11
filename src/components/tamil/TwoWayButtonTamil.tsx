@@ -138,6 +138,7 @@ export default memo((id: any) => {
                             type="text"
                             value={text}
                             onChange={handleTextChange}
+                            className='cardInput'
                         />
                         <label>Link</label>
                         <input
@@ -145,9 +146,10 @@ export default memo((id: any) => {
                             value={link}
                             onChange={handleLinkChange}
                             style={{ marginBottom: '10px'}}
+                            className='cardInput'
                         />
-                        <button onClick={saveNode} className="saveButtonPopUp">Save</button>
-                        <button onClick={closePopup} style={{ marginLeft: '10px'}} className="saveButtonPopUp">Cancel</button>
+                        <button onClick={saveNode} className="saveButtonPopUp" style={{ width: 'max-content !important', minWidth: '100px'}}>Save</button>
+                        <button onClick={closePopup} className="twoWayButton" style={{ marginLeft: '10px', width: 'max-content !important', minWidth: '100px'}} >Cancel</button>
                     </div>
                 </div>
             )}

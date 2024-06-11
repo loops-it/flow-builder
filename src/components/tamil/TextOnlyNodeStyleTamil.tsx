@@ -105,13 +105,13 @@ export default memo((id: any) => {
                             type="text"
                             value={intent || ''}
                             onChange={handleIntentChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                         />
             <label style={{ marginBottom: "10px" }}>Add your text here</label>
             <textarea
               value={text}
               onChange={handleDescriptionChange}
-              className="nodrag"
+              className="nodrag cardInput"
               style={{ marginBottom: "10px" }}
             ></textarea>
             <button onClick={saveNode} className="saveButton">

@@ -131,13 +131,14 @@ export default memo((id: any) => {
 
             </div>
             {popupOpen && (
-                <div className="popup">
+                <div className="popup" style={{backgroundColor: '#E9F1FF'}}>
                     <div className="popupInner" style={{padding: '10px'}}>
                         <label>Text</label>
                         <input
                             type="text"
                             value={text}
                             onChange={handleTextChange}
+                            className="cardInput"
                         />
                         <label>Link</label>
                         <input
@@ -145,9 +146,10 @@ export default memo((id: any) => {
                             value={link}
                             onChange={handleLinkChange}
                             style={{ marginBottom: '10px'}}
+                            className="cardInput"
                         />
                         <button onClick={saveNode} className="saveButtonPopUp">Save</button>
-                        <button onClick={closePopup} style={{ marginLeft: '10px'}} className="saveButtonPopUp">Cancel</button>
+                        <button onClick={closePopup} style={{ marginLeft: '10px'}} className="twoWayButton">Cancel</button>
                     </div>
                 </div>
             )}

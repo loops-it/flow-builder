@@ -4,6 +4,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { deleteNodeCall, deleteNodeCallTamil } from '../../service/deleteFunctions';
 import { apiUrl } from '../../service/idGenerateFunctions';
 import { getNodeData, getSinhalaNodeData, getTamilNodeData } from '../../service/getData';
+import { IoClose } from "react-icons/io5";
 
 
 
@@ -16,25 +17,25 @@ export default memo((id: any) => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            
+            try {
+
                 const nodeData = await getTamilNodeData();
                 // console.log("child data ------> ", nodeData)
-                const desiredNodeId = id.id; 
+                const desiredNodeId = id.id;
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-                
+
                 if (nodeIntent) {
                     setIntent(nodeIntent.intent);
                 } else {
                 }
-    
-          } catch (error) {
-            console.error("Error fetching node data:", error);
-          }
+
+            } catch (error) {
+                console.error("Error fetching node data:", error);
+            }
         };
-    
+
         fetchData();
-      }, []);
+    }, []);
 
     useEffect(() => {
         setNodeId(id.id)
@@ -82,25 +83,24 @@ export default memo((id: any) => {
             <div className='elementWrap'>
                 {/* gradient */}
                 <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
-                <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
-
-                    <div className="inner" style={{ height: '150px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'end' }}>
-                            <button className='nodeCloseButton' onClick={deleteNode}>
-                                <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
-                            </button>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px', alignItems: 'end' }}>
+                    <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
+                    <div style={{ display: 'flex', justifyContent: 'end' }}>
+                        <button className='nodeCloseButton' onClick={deleteNode}>
+                            <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                        </button>
+                    </div>
+                    <div style={{ height: '120px', backgroundColor: '#E9F1FF', margin: '10px', marginTop: '0px', padding: '10px', borderRadius: '4px', boxShadow: '0 1px 10px rgba(0, 0, 0, 0.103) !important' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', padding: '0px 20px', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label>Add Intent</label>
                                 <input
                                     type="text"
                                     value={intent || ''}
                                     onChange={handleIntentChange}
-                                    className="nodrag intent_input"
+                                    className="nodrag  cardInput"
                                 />
                             </div>
-                            <button onClick={saveNode} className='saveIntentButton' style={{marginLeft: '10px'}}>Save</button>
+                            <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Save</button>
                         </div>
                     </div>
 

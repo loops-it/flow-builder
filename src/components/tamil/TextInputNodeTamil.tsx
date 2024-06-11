@@ -109,7 +109,7 @@ export default memo((id: any) => {
                             type="text"
                             value={intent || ''}
                             onChange={handleIntentChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                         />
 
                         <label>Title</label>
@@ -117,13 +117,13 @@ export default memo((id: any) => {
                             type="text"
                             value={title}
                             onChange={handleTitleChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                         />
                         <label>Description</label>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                         ></textarea>
                         <button onClick={saveNode} className='saveButton'>Save</button>
                     </div>
