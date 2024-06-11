@@ -303,3 +303,22 @@ label{
   line-height: 15px;
   font-family: "Poppins", sans-serif;
 }
+
+.ImageUploadWrapper p{
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  font-family: "Poppins", sans-serif;
+  color: #132A00;
+}
+.ImageUploadWrapper span{
+  color: #1F4690;
+}
+
+.ImageUploadWrapper span{
+  color: #969DB2;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  font-family: "Poppins", sans-serif;
+}

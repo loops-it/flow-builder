@@ -123,19 +123,52 @@ export default memo((id: any) => {
     //     }
     // };
 
+    // const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
+    //     const { name, value, files } = e.target;
+    //     if (name === 'image') {
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             image: files[0]
+    //         }));
+    //     } else {
+    //         setFormData((prevData) => ({
+    //             ...prevData,
+    //             [name]: value
+    //         }));
+    //     }
+    // };
+
+    const [preview, setPreview] = useState('');
+
     const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
         const { name, value, files } = e.target;
         if (name === 'image') {
+            const file = files[0];
             setFormData((prevData) => ({
                 ...prevData,
-                image: files[0]
+                image: file
             }));
+            setPreview("/images/Slide 06.png");
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value
             }));
         }
+    };
+
+    const handleDrop = (e: { preventDefault: () => void; dataTransfer: { files: any[]; }; }) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        setFormData((prevData) => ({
+            ...prevData,
+            image: file
+        }));
+        setPreview("/images/Slide 06.png");
+    };
+
+    const handleDragOver = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
     };
 
     const saveNode = async () => {
@@ -201,8 +234,8 @@ export default memo((id: any) => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <img src='/images/Slide 06.png' alt="Uploaded Image" style={{ width: '150px', marginBottom: '8px' }} />
-                            <div style={{
+                            {/* <img src='/images/Slide 06.png' alt="Uploaded Image" style={{ width: '150px', marginBottom: '8px' }} /> */}
+                            {/* <div style={{
                                 display: 'flex',
                                 flexDirection: 'column',
                                 justifyContent: 'center'
@@ -214,6 +247,54 @@ export default memo((id: any) => {
                                     accept="image/*"
                                     onChange={handleChange}
                                     className="nodrag "
+                                />
+                            </div> */}
+                            <div
+                                onDrop={handleDrop}
+                                onDragOver={handleDragOver}
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    border: '2px dashed #ccc',
+                                    padding: '20px',
+                                    borderRadius: '10px',
+                                    width: '200px',
+                                    height: '80px',
+                                    position: 'relative',
+                                    cursor: 'pointer',
+                                    marginBottom: '10px',
+                                    backgroundColor: '#fff'
+                                }}
+                            >
+                                {preview ? (
+                                    <img
+                                        src={preview}
+                                        alt="Uploaded"
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                ) : (
+                                    <div className='ImageUploadWrapper' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                        <img src='/images/imageUploadIcon.png' alt="Uploaded Image" style={{ width: '50px', marginBottom: '8px' }} />
+                                        <p>Drop your image here, or <span>browse</span></p>
+                                        <span>Supports: PNG, JPG, JPEG,WEBP</span>
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    name="image"
+                                    accept="image/*"
+                                    onChange={handleChange}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: '100%',
+                                        opacity: 0,
+                                        cursor: 'pointer'
+                                    }}
                                 />
                             </div>
                         </div>
