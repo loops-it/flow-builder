@@ -428,7 +428,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language) => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 80,
+        y: 165,
       },
       type: 'button',
       style: {

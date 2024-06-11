@@ -374,10 +374,12 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '300px',
-        minHeight: '150px',
-        height: 'auto !important',
-        backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999'
+        minHeight: '260px',
+        height: '260px !important',
+        backgroundColor: '#f8f8f8 !important',
+        zIndex: '0',
+        pointerEvents: "all",
+        visibility: "visible",
       },
       language: 'english'
     };
@@ -434,7 +436,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
       data: { label: `Node ${newNodeId}` },
       position: {
         x: 10 + (buttonsCount * 95),
-        y: 80,
+        y: 165,
       },
       type: 'button',
       style: {

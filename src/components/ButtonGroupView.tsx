@@ -93,7 +93,7 @@ export default memo((id: any) => {
                             </button>
                         </div>
                     </div>
-                    <div className="inner" style={{ height: '150px' }}>
+                    {/* <div className="inner" style={{ height: '150px' }}>
 
                         <div style={{ display: 'flex', flexDirection: 'row', padding: '0px 20px', alignItems: 'end' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -106,6 +106,20 @@ export default memo((id: any) => {
                                 />
                             </div>
                             <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px' }}>Save</button>
+                        </div>
+                    </div> */}
+                    <div style={{ height: '100px', backgroundColor: '#E9F1FF', margin: '10px', marginTop: '0px', padding: '10px', borderRadius: '4px', boxShadow: '0 1px 10px rgba(0, 0, 0, 0.103) !important' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', padding: '0px 20px', alignItems: 'center' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <label>Add Intent</label>
+                                <input
+                                    type="text"
+                                    value={intent || ''}
+                                    onChange={handleIntentChange}
+                                    className="nodrag  cardInput"
+                                />
+                            </div>
+                            <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Save</button>
                         </div>
                     </div>
 

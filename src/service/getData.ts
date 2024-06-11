@@ -122,8 +122,10 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             width: '300px',
             minHeight: '400px',
             height: 'auto !important',
-            backgroundColor: 'rgba(208, 192, 247, 0.2)',
-            zIndex: '999',
+            backgroundColor: '#f8f8f8 !important',
+            zIndex: '0',
+            pointerEvents: "all",
+            visibility: "visible",
             position: 'relative !important'
           };
         }
@@ -131,10 +133,12 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
           filteredNode.style = {
             position: 'relative !important',
             width: '300px',
-            minHeight: '150px',
-            height: 'auto !important',
-            backgroundColor: 'rgba(208, 192, 247, 0.2)',
-            zIndex: '999'
+            minHeight: '260px',
+            height: '260px !important',
+            backgroundColor: '#f8f8f8 !important',
+            zIndex: '0',
+            pointerEvents: "all",
+            visibility: "visible",
           };
         }
         else {
@@ -197,8 +201,10 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             width: '300px',
             minHeight: '400px',
             height: 'auto !important',
-            backgroundColor: 'rgba(208, 192, 247, 0.2)',
-            zIndex: '999',
+            backgroundColor: '#f8f8f8 !important',
+            zIndex: '0',
+            pointerEvents: "all",
+            visibility: "visible",
             position: 'relative !important'
           };
         }
@@ -206,10 +212,12 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
           filteredNode.style = {
             position: 'relative !important',
             width: '300px',
-            minHeight: '150px',
-            height: 'auto !important',
-            backgroundColor: 'rgba(208, 192, 247, 0.2)',
-            zIndex: '999'
+            minHeight: '260px',
+            height: '260px !important',
+            backgroundColor: '#f8f8f8 !important',
+            zIndex: '0',
+            pointerEvents: "all",
+            visibility: "visible",
           };
         }
         else {
