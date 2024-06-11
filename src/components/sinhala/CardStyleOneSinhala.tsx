@@ -299,7 +299,7 @@ export default memo((id: any) => {
                             name="intent"
                             value={formData.intent}
                             onChange={handleChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                         />
                         <label>Title</label>
                         <input
@@ -307,14 +307,14 @@ export default memo((id: any) => {
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className="nodrag"
+                            className="nodrag cardInput" 
                         />
                         <label style={{ marginTop: '8px' }}>Description</label>
                         <textarea
                             value={formData.description}
                             name="description"
                             onChange={handleChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
                             style={{ marginBottom: '5px' }}
                         ></textarea>
 

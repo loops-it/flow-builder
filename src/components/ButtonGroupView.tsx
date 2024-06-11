@@ -84,7 +84,7 @@ export default memo((id: any) => {
         <>
             <div className='elementWrap'>
                 {/* gradient */}
-                <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
+                <div className="wrapper elementWrap" style={{ borderRadius: '10px' }}>
                     <div className='topBarGroup'>
                         <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
@@ -102,7 +102,7 @@ export default memo((id: any) => {
                                     type="text"
                                     value={intent || ''}
                                     onChange={handleIntentChange}
-                                    className="nodrag intent_input"
+                                    className="nodrag cardInput"
                                 />
                             </div>
                             <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px' }}>Save</button>
