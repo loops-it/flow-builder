@@ -179,7 +179,7 @@ label {
 
 .popup {
   width: 280px;
-  background-color: #E9F1FF  ;
+  background-color: #E9F1FF;
   padding: 10px;
   position: absolute;
   top: 0;
@@ -269,7 +269,8 @@ p {
   align-items: center;
 }
 
-.cardInput, textarea {
+.cardInput,
+textarea {
   background-color: #ffff;
   padding: 6px 10px;
   border-radius: 4px;
@@ -299,14 +300,14 @@ p {
 }
 
 
-label{
+label {
   font-size: 10px;
   font-weight: 500;
   line-height: 15px;
   font-family: "Poppins", sans-serif;
 }
 
-.ImageUploadWrapper p{
+.ImageUploadWrapper p {
   font-size: 12px;
   font-weight: 500;
   line-height: 15px;
@@ -314,13 +315,14 @@ label{
   color: #132A00;
   margin-bottom: 4px;
 }
-.ImageUploadWrapper p span{
+
+.ImageUploadWrapper p span {
   color: #1F4690;
   font-weight: 500;
   font-size: 12px;
 }
 
-.ImageUploadWrapper span{
+.ImageUploadWrapper span {
   color: #969DB2;
   font-size: 10px;
   font-weight: 400;
@@ -328,14 +330,17 @@ label{
   font-family: "Poppins", sans-serif;
 }
 
-.intent_input{
+.intent_input {
   width: 150px !important;
 }
 
 /* react-flow__node react-flow__node-buttonGroup nopan selected selectable parent */
 
-.react-flow__node-buttonGroup{
-  background-color:  #f8f8f8  !important;
+.react-flow__node-buttonGroup {
+  background-color: #f8f8f8 !important;
+  z-index: 0;
+  pointer-events: all;
+  visibility: visible;
   border: none;
   border-radius: 4px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
