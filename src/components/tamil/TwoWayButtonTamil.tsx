@@ -122,7 +122,7 @@ export default memo((id: any) => {
                                 <RiCloseCircleFill style={{ color: '#000 !important', fontSize: '20px !important' }} />
                             </button>
                         </div>
-                        <button onClick={openPopup} className='saveButton'>{text}</button>
+                        <button onClick={openPopup} className='twoWayButton'>{text}</button>
                     </div>
 
 
@@ -146,8 +146,8 @@ export default memo((id: any) => {
                             onChange={handleLinkChange}
                             style={{ marginBottom: '10px'}}
                         />
-                        <button onClick={saveNode}>Save</button>
-                        <button onClick={closePopup} style={{ marginLeft: '10px'}}>Cancel</button>
+                        <button onClick={saveNode} className="saveButtonPopUp">Save</button>
+                        <button onClick={closePopup} style={{ marginLeft: '10px'}} className="saveButtonPopUp">Cancel</button>
                     </div>
                 </div>
             )}
