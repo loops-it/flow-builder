@@ -473,43 +473,36 @@ const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   return (
     <>
-      <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 999, display: 'flex', flexDirection: 'column' }}>
-        <button onClick={addEndNode} style={{ marginTop: '10px' }}>End</button>
-        <button onClick={addTextNode} style={{ marginTop: '10px' }}>text card</button>
-        <button onClick={addButtonGroup} style={{ marginTop: '10px' }}>
-          Buttons
-        </button>
-        <button onClick={addTextOnlyNode} style={{ marginTop: '10px' }}>Text</button>
-        <button onClick={addCardHeaderNode} style={{ marginTop: '10px' }}>
-          Card style 1
-        </button>
-        <button onClick={addGroup} style={{ marginTop: '10px' }}>Card style 2</button>
-        <button
-          style={{
-            position: "relative",
-            bottom: "0px",
-            right: "0px",
-            zIndex: "1000",
-            marginTop: '50px'
-          }}
-          onClick={addFloatingButton}
-        >
-          <IoAddCircle /> Card Buttons
+      <div className="controlWrapper">
+        <div className="flowHandleCard" style={{ position: 'absolute', top: 10, zIndex: 999, display: 'flex', flexDirection: 'row' }}>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addButtonGroup}>
+            Buttons
+          </button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addCardHeaderNode}>
+            Card style 1
+          </button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addGroup} >Card style 2</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addEndNode}>End</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
 
-        </button>
-        <button
-          style={{
-            position: "relative",
-            bottom: "0px",
-            right: "0px",
-            zIndex: "1000",
-            marginTop: '10px'
-          }}
-          onClick={addFloatingButtonForButtonGroup}
-        >
-          <IoAddCircle /> Buttons Group
 
-        </button>
+          <button
+            className="OptionButton"
+            style={{ marginRight: '10px' }}
+            onClick={addFloatingButton}
+          >
+            <IoAddCircle /> Card Buttons
+
+          </button>
+          <button
+            className="OptionButton"
+            onClick={addFloatingButtonForButtonGroup}
+          >
+            <IoAddCircle /> Buttons Group
+
+          </button>
+        </div>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow

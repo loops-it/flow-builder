@@ -62,7 +62,7 @@ interface FlowPanelProps {
   language: string;
 }
 
-const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
+const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [groups, setGroups] = useState([]);
@@ -73,7 +73,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(String);
 
-  
+
 
   useEffect(() => {
     console.log("Language : ", language.language)
@@ -103,7 +103,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // add card header node - need to change this also ----------
   const addCardHeaderNode = () => {
-    addNode('english','cardStyleOne', setNodes);
+    addNode('english', 'cardStyleOne', setNodes);
   };
 
   // text only node
@@ -113,7 +113,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // add start circle node
   const addEndNode = () => {
-    addNode('english' ,'end', setNodes);
+    addNode('english', 'end', setNodes);
   };
 
   // edge connect
@@ -499,35 +499,35 @@ const FlowPanel: React.FC<FlowPanelProps> = (language ) => {
   return (
     <>
       <div className="controlWrapper">
-      <div className="flowHandleCard" style={{ position: 'absolute', top: 10, zIndex: 999, display: 'flex', flexDirection: 'row' }}>
-      <button className="OptionButton" style={{marginRight: '10px'}} onClick={addButtonGroup}>
-          Buttons
-        </button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addCardHeaderNode}>
-          Card style 1
-        </button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addGroup} >Card style 2</button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addEndNode}>End</button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextOnlyNode}>Text</button>
-        <button className="OptionButton" style={{marginRight: '10px'}} onClick={addTextNode}>text card</button>
-        
-        
-        <button 
-        className="OptionButton" 
-        style={{marginRight: '10px'}}
-          onClick={addFloatingButton}
-        >
-          <IoAddCircle /> Card Buttons
+        <div className="flowHandleCard" style={{ position: 'absolute', top: 10, zIndex: 999, display: 'flex', flexDirection: 'row' }}>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addButtonGroup}>
+            Buttons
+          </button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addCardHeaderNode}>
+            Card style 1
+          </button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addGroup} >Card style 2</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addEndNode}>End</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
 
-        </button>
-        <button 
-        className="OptionButton"
-          onClick={addFloatingButtonForButtonGroup}
-        >
-          <IoAddCircle /> Buttons Group
 
-        </button>
-      </div>
+          <button
+            className="OptionButton"
+            style={{ marginRight: '10px' }}
+            onClick={addFloatingButton}
+          >
+            <IoAddCircle /> Card Buttons
+
+          </button>
+          <button
+            className="OptionButton"
+            onClick={addFloatingButtonForButtonGroup}
+          >
+            <IoAddCircle /> Buttons Group
+
+          </button>
+        </div>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
         <ReactFlow
