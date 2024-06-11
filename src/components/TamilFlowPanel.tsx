@@ -71,7 +71,7 @@ interface FlowPanelProps {
 
 
 // tamil flow
-const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
+const TamilFlowPanel: React.FC<FlowPanelProps> = (language) => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [groups, setGroups] = useState([]);
@@ -80,7 +80,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   const [selectedLanguage, setSelectedLanguage] = useState(String);
 
-  
+
 
   useEffect(() => {
     console.log("Language : ", language.language)
@@ -103,7 +103,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // add card header node - need to change this also ----------
   const addCardHeaderNode = () => {
-    addNode('tamil','cardStyleOne', setNodes);
+    addNode('tamil', 'cardStyleOne', setNodes);
   };
 
   // text only node
@@ -113,7 +113,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
 
   // add start circle node
   const addEndNode = () => {
-    addNode('tamil' ,'end', setNodes);
+    addNode('tamil', 'end', setNodes);
   };
 
   // edge connect
@@ -180,8 +180,10 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
         width: '300px',
         minHeight: '400px',
         height: 'auto !important',
-        backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999',
+        backgroundColor: '#f8f8f8 !important',
+        zIndex: '0',
+        pointerEvents: "all",
+        visibility: "visible",
         position: 'relative !important'
       },
       language: 'tamil'
@@ -364,10 +366,12 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language ) => {
       position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
       style: {
         width: '300px',
-        minHeight: '150px',
-        height: 'auto !important',
-        backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999'
+        minHeight: '260px',
+        height: '260px !important',
+        backgroundColor: '#f8f8f8 !important',
+        zIndex: '0',
+        pointerEvents: "all",
+        visibility: "visible",
       },
       language: 'tamil'
     };

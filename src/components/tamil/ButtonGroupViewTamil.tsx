@@ -82,14 +82,14 @@ export default memo((id: any) => {
         <>
             <div className='elementWrap'>
                 {/* gradient */}
-                <div className="wrapper groupColor elementWrap" style={{ borderRadius: '10px' }}>
+                <div className="wrapper elementWrap" style={{ borderRadius: '10px' }}>
                     <input type="checkbox" checked={isSelected} onChange={toggleSelection} className="select-checkbox" />
                     <div style={{ display: 'flex', justifyContent: 'end' }}>
                         <button className='nodeCloseButton' onClick={deleteNode}>
                             <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                         </button>
                     </div>
-                    <div style={{ height: '120px', backgroundColor: '#E9F1FF', margin: '10px', marginTop: '0px', padding: '10px', borderRadius: '4px', boxShadow: '0 1px 10px rgba(0, 0, 0, 0.103) !important' }}>
+                    <div style={{ height: '100px', backgroundColor: '#E9F1FF', margin: '10px', marginTop: '0px', padding: '10px', borderRadius: '4px', boxShadow: '0 1px 10px rgba(0, 0, 0, 0.103) !important' }}>
                         <div style={{ display: 'flex', flexDirection: 'column', padding: '0px 20px', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label>Add Intent</label>

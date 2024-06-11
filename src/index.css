@@ -331,3 +331,12 @@ label{
 .intent_input{
   width: 150px !important;
 }
+
+/* react-flow__node react-flow__node-buttonGroup nopan selected selectable parent */
+
+.react-flow__node-buttonGroup{
+  background-color:  #f8f8f8  !important;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
+}
