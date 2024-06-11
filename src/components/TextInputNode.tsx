@@ -100,7 +100,7 @@ export default memo((id: any) => {
                 {/* gradient */}
                 <div className="wrapper plainColor elementWrap">
 
-                    <div className="inner">
+                    <div className="inner" style={{display: "flex", flexDirection: "column", padding: "10px", borderRadius: "10px"}}>
                         <div style={{ display: 'flex', justifyContent: 'end' }}>
                             <button className='nodeCloseButton' onClick={deleteNode}>
                             <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
@@ -111,7 +111,8 @@ export default memo((id: any) => {
                             type="text"
                             value={intent || ''}
                             onChange={handleIntentChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
+                            placeholder='Add Intent'
                         />
 
                         <label>Title</label>
@@ -119,15 +120,17 @@ export default memo((id: any) => {
                             type="text"
                             value={title}
                             onChange={handleTitleChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
+                            placeholder='Add Card Title'
                         />
                         <label>Description</label>
                         <textarea
                             value={description}
                             onChange={handleDescriptionChange}
-                            className="nodrag"
+                            className="nodrag cardInput"
+                            placeholder='Add Description'
                         ></textarea>
-                        <button onClick={saveNode} className='saveButton'>Save</button>
+                        <button onClick={saveNode} className='saveButton' style={{marginTop:"20px"}}>Save</button>
                     </div>
 
 

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -19,6 +20,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -47,9 +49,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #1C73D4;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -60,16 +64,18 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
 }
 
 
-.edgebutton{
+.edgebutton {
   border-radius: 100% !important;
   background-color: transparent !important;
   border: none !important;
@@ -78,18 +84,19 @@ button:focus-visible {
   /* line-height: 6px !important; */
   font-size: 12px !important;
   display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 30px !important;
-    width: 30px  !important;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 30px !important;
+  width: 30px !important;
 }
 
-.elementWrap{
+.elementWrap {
   display: flex;
   flex-direction: column;
 }
-input{
+
+input {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
@@ -99,7 +106,8 @@ input{
   border: none;
   border-bottom: solid 1px #2d373e;
 }
-textarea{
+
+textarea {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
@@ -109,7 +117,8 @@ textarea{
   border: none;
   border-bottom: solid 1px #2d373e;
 }
-label{
+
+label {
   font-family: "Poppins", sans-serif;
   font-size: 14px;
   font-weight: 300;
@@ -117,36 +126,43 @@ label{
   font-weight: 600;
   font-family: "Poppins", sans-serif;
 }
-.saveButton{
-  width: 100% !important;
+
+.saveButton {
+  width: max-content;
+  min-width: 100px;
+  align-self: center;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   background-color: #3871CD;
 }
-.saveButtonPopUp{
+
+.saveButtonPopUp {
   width: max-content !important;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   background-color: #3871CD;
 }
-.twoWayButton{
+
+.twoWayButton {
   width: 100% !important;
   font-family: "Poppins", sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   background-color: #fff;
   border: solid 1px #3871CD;
   color: #3871CD;
 }
-.toolbarButton{
+
+.toolbarButton {
   font-family: "Poppins", sans-serif;
   font-size: 12px;
   font-weight: 300;
   color: #333 !important;
 }
-.nodeCloseButton{
+
+.nodeCloseButton {
   background-color: transparent !important;
   color: #000 !important;
   font-size: 18px !important;
@@ -159,7 +175,7 @@ label{
   right: -20px; */
 }
 
-.popup{
+.popup {
   width: 280px;
   background-color: #fff;
   padding: 10px;
@@ -171,19 +187,19 @@ label{
   color: #333
 }
 
-p{
+p {
   color: #383D44 !important;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
 }
 
-.groupColor{
+.groupColor {
   background-color: #F8F8F8;
-  border: none ;
+  border: none;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
 }
 
-.saveIntentButton{
+.saveIntentButton {
   width: 100% !important;
   font-family: "Poppins", sans-serif;
   font-size: 14px;
@@ -192,7 +208,7 @@ p{
   height: 30px !important;
 }
 
-.primaryButton{
+.primaryButton {
   text-decoration: none;
   font-size: 16px;
   font-family: "Poppins", sans-serif;
@@ -206,15 +222,15 @@ p{
   transition: color 0.5s ease-in, background-color 0.5s ease-in;
 }
 
-.primaryButton:hover{
-  font-size: 16px;
+.primaryButton:hover {
+  font-size: 12pxpx;
   color: #1C73D4;
   background-color: #fff;
 }
 
 
 
-.OptionButton{
+.OptionButton {
   color: #383D44;
   background-color: #ffffff;
   border: solid 1px #D9D9D9;
@@ -223,16 +239,19 @@ p{
   line-height: 24px;
   font-family: "Poppins", sans-serif;
 }
+
 .OptionButton:hover {
   /* border-color: #1C73D4; */
   border-color: #D9D9D9;
 }
+
 .OptionButton:focus {
   /* border-color: #1C73D4; */
   border-color: #D9D9D9;
   outline: none !important;
 }
-.flowHandleCard{
+
+.flowHandleCard {
   display: flex;
   flex-direction: row;
   background-color: #FBFBFB;
@@ -240,9 +259,47 @@ p{
   border-radius: 10px;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.103) !important;
 }
-.controlWrapper{
+
+.controlWrapper {
   display: flex;
   justify-content: center;
   width: 100%;
   align-items: center;
+}
+
+.cardInput, textarea {
+  background-color: #ffff;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 8px;
+  font-family: "Poppins", sans-serif;
+}
+
+.cardInput::placeholder {
+  color: #AAB6C1 !important;
+}
+
+
+/* Firefox */
+.cardInput::-moz-placeholder {
+  color: #AAB6C1 !important;
+}
+
+/* Internet Explorer 10-11 */
+.cardInput:-ms-input-placeholder {
+  color: #AAB6C1 !important;
+}
+
+/* Microsoft Edge */
+.cardInput::-ms-input-placeholder {
+  color: #AAB6C1 !important;
+}
+
+
+label{
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 15px;
+  font-family: "Poppins", sans-serif;
 }
