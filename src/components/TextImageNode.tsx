@@ -222,7 +222,7 @@ export default memo((id: any) => {
             formDataToSend.append('intent', formData.intent);
             formDataToSend.append('title', formData.title);
             formDataToSend.append('description', formData.description);
-            formDataToSend.append('image', formData.image);
+            formDataToSend.append('file', formData.image);
             formDataToSend.append('parentID', parentID);
 
             console.log("formDataToSend : ",formDataToSend)
