@@ -10,4 +10,4 @@ export const generateEdgeId = () => `edge_${uuidv4()}`;
 // group id
 export const generateGroupId = () => `group_${uuidv4()}`;
 
-export const apiUrl = 'https://dfcc.vercel.app/';
+export const apiUrl = 'https://dfcc.vercel.app';
