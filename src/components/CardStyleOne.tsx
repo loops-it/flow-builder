@@ -288,7 +288,7 @@ export default memo((id: any) => {
                                     className="nodrag"
                                 />
                             </div> */}
-                            {/* <div
+                            <div
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
                                 style={{
@@ -336,55 +336,7 @@ export default memo((id: any) => {
                                     }}
                                 />
                             </div>
-                        </div> */}
-                        <div
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: '2px dashed #ccc',
-                padding: '20px',
-                borderRadius: '10px',
-                width: '200px',
-                height: '80px',
-                position: 'relative',
-                cursor: 'pointer',
-                marginBottom: '10px',
-                backgroundColor: '#fff'
-            }}
-        >
-            {preview ? (
-                <img
-                    src={preview}
-                    alt="Uploaded"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-            ) : (
-                <div className='ImageUploadWrapper' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src='/images/imageUploadIcon.png' alt="Uploaded Image" style={{ width: '50px', marginBottom: '8px' }} />
-                    <p>Drop your image here, or <span>browse</span></p>
-                    <span>Supports: PNG, JPG, JPEG, WEBP</span>
-                </div>
-            )}
-            <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleChange}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0,
-                    cursor: 'pointer'
-                }}
-            />
-        </div>
+                        </div>
                         <label>Intent</label>
                         <input
                             type="text"
