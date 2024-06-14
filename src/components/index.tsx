@@ -80,6 +80,19 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
     setSelectedLanguage(language.language)
     loadDataOnMount(setNodes, setEdges);
     console.log("nodes : ", nodes)
+
+    const savedEnglishNodeID = localStorage.getItem('selectedEnglishNodeID');
+    const savedEnglishButtonID = localStorage.getItem('selectedEnglishButtonID');
+
+    if (savedEnglishNodeID) {
+      localStorage.removeItem('selectedEnglishNodeID');
+    }
+    if (savedEnglishButtonID) {
+      localStorage.removeItem('selectedEnglishButtonID');
+    }
+
+    setEnglishNodeID(savedEnglishNodeID);
+    setEnglishButtonID(savedEnglishButtonID);
   }, []);
 
 
@@ -342,14 +355,31 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   //   addGroupButtonNode(groupId);
   // };
 
+
+  const [englishNodeID, setEnglishNodeID] = useState<string | null>(null);
+  const [englishButtonID, setEnglishButtonID] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    const savedEnglishNodeID = localStorage.getItem('selectedEnglishNodeID');
+    const savedEnglishButtonID = localStorage.getItem('selectedEnglishButtonID');
+    setEnglishNodeID(savedEnglishNodeID);
+    setEnglishButtonID(savedEnglishButtonID);
+  }, []);
+
   const addFloatingButton = () => {
-    const savedNodeId = localStorage.getItem('selectedEnglishNodeID');
-    if (!savedNodeId) {
+    // const savedNodeId = localStorage.getItem('selectedEnglishNodeID');
+    // if (!savedNodeId) {
+    //   console.error("Group ID is not defined");
+    //   return;
+    // }
+
+    // addGroupButtonNode(savedNodeId);
+    if (!englishNodeID) {
       console.error("Group ID is not defined");
       return;
     }
-
-    addGroupButtonNode(savedNodeId);
+    addGroupButtonNode(englishNodeID);
   };
 
 
@@ -486,12 +516,17 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   // };
 
   const addFloatingButtonForButtonGroup = () => {
-    const savedNodeId = localStorage.getItem('selectedEnglishButtonID');
-    if (!savedNodeId) {
+    // const savedNodeId = localStorage.getItem('selectedEnglishButtonID');
+    // if (!savedNodeId) {
+    //   console.error("Group ID is not defined");
+    //   return;
+    // }
+    // addGroupButtonsNodes(savedNodeId);
+    if (!englishButtonID) {
       console.error("Group ID is not defined");
       return;
     }
-    addGroupButtonsNodes(savedNodeId);
+    addGroupButtonsNodes(englishButtonID);
   };
 
 
@@ -514,7 +549,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
 
 
-          <button
+          {/* <button
             className="OptionButton"
             style={{ marginRight: '10px' }}
             onClick={addFloatingButton}
@@ -528,7 +563,25 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
           >
             <IoAddCircle /> Buttons Group
 
-          </button>
+          </button> */}
+
+          {englishNodeID && (
+            <button
+              className="OptionButton"
+              style={{ marginRight: '10px' }}
+              onClick={addFloatingButton}
+            >
+              <IoAddCircle /> Card Buttons
+            </button>
+          )}
+          {englishButtonID && (
+            <button
+              className="OptionButton"
+              onClick={addFloatingButtonForButtonGroup}
+            >
+              <IoAddCircle /> Buttons Group
+            </button>
+          )}
         </div>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>
