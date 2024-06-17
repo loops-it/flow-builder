@@ -519,13 +519,8 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   //   addGroupButtonsNodes(buttonGroupId);
   // };
 
+
   const addFloatingButtonForButtonGroup = () => {
-    // const savedNodeId = localStorage.getItem('selectedEnglishButtonID');
-    // if (!savedNodeId) {
-    //   console.error("Group ID is not defined");
-    //   return;
-    // }
-    // addGroupButtonsNodes(savedNodeId);
     if (!englishButtonID) {
       console.error("Group ID is not defined");
       return;
@@ -570,7 +565,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
 
           </button> */}
 
-          {englishNodeID && (
+          {/* {englishNodeID && ( */}
             <button
               className="OptionButton"
               style={{ marginRight: '10px' }}
@@ -578,15 +573,15 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
             >
               <IoAddCircle /> Card Buttons
             </button>
-          )}
-          {englishButtonID && (
+          {/* )} */}
+          {/* {englishButtonID && ( */}
             <button
               className="OptionButton"
               onClick={addFloatingButtonForButtonGroup}
             >
               <IoAddCircle /> Buttons Group
             </button>
-          )}
+          {/* )} */}
         </div>
       </div>
       <div style={{ width: "100vw", height: "100vh" }}>

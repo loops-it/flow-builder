@@ -18,11 +18,22 @@ export default memo((id: any) => {
         setNodeId(id.id)
     }, [nodeId])
 
+    // const toggleSelection = () => {
+    //     setIsSelected(!isSelected);
+    //     localStorage.setItem('selectedEnglishNodeID', id.id);
+    //     console.log("selected : ", id.id)
+    // };
+
     const toggleSelection = () => {
+        if (isSelected) {
+          localStorage.removeItem('selectedEnglishNodeID');
+        //   setEnglishButtonID(null);
+        } else {
+          localStorage.setItem('selectedEnglishNodeID', id.id);
+        //   setEnglishButtonID(id.id);
+        }
         setIsSelected(!isSelected);
-        localStorage.setItem('selectedEnglishNodeID', id.id);
-        console.log("selected : ", id.id)
-    };
+      };
     // console.log("selected : ", isSelected)
     
     const deleteNode = async () => {

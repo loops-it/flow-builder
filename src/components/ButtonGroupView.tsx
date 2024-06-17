@@ -67,10 +67,20 @@ export default memo((id: any) => {
     };
 
 
+    // const toggleSelection = () => {
+    //     setIsSelected(!isSelected);
+    //     localStorage.setItem('selectedEnglishButtonID', id.id);
+    // };
     const toggleSelection = () => {
+        if (isSelected) {
+          localStorage.removeItem('selectedEnglishButtonID');
+        //   setEnglishButtonID(null);
+        } else {
+          localStorage.setItem('selectedEnglishButtonID', id.id);
+        //   setEnglishButtonID(id.id);
+        }
         setIsSelected(!isSelected);
-        localStorage.setItem('selectedEnglishButtonID', id.id);
-    };
+      };
     // console.log("selected : ", isSelected)
 
     const deleteNode = async () => {
