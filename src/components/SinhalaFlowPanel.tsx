@@ -174,7 +174,7 @@ const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
         minHeight: '400px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999',
+        zIndex: '0',
         position: 'relative !important'
       },
       language: 'sinhala'

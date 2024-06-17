@@ -99,6 +99,13 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       const data = await fetchDataFlowData();
 
       console.log("fetchDataFlowData ---> ", data)
+
+      data.nodes.forEach((node: { parentId: any; parent_id: any; }) => {
+        node.parentId = node.parent_id;
+        delete node.parent_id;
+    });
+    
+    console.log("test english : ", data.nodes);
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
         const filteredNode: any = {};
@@ -187,6 +194,13 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
   export const loadDataOnMountSinhala = async (setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: any): void; }, setEdges: { (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (arg0: any): void; }) => {
     try {
       const data = await fetchDataFlowDataSinhala();
+
+      data.nodes.forEach((node: { parentId: any; parent_id: any; }) => {
+        node.parentId = node.parent_id;
+        delete node.parent_id;
+    });
+    
+    console.log("test sinhala : ", data.nodes);
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
         const filteredNode: any = {};
@@ -222,7 +236,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '400px',
             height: 'auto !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
             position: 'relative !important'
@@ -235,7 +249,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '260px',
             height: '260px !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
           };
@@ -276,6 +290,13 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
   export const loadDataOnMountTamil = async (setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: any): void; }, setEdges: { (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (arg0: any): void; }) => {
     try {
       const data = await fetchDataFlowDataTamil();
+
+      data.nodes.forEach((node: { parentId: any; parent_id: any; }) => {
+        node.parentId = node.parent_id;
+        delete node.parent_id;
+    });
+    
+    console.log("test tamil : ", data);
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
         const filteredNode: any = {};

@@ -129,6 +129,10 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
     addNode('english', 'end', setNodes);
   };
 
+  const addStartNode = () => {
+    addNode('english', 'start', setNodes);
+  };
+
   // edge connect
   const onConnect = useCallback(
     async (params: Edge | Connection) => {
@@ -195,7 +199,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
         minHeight: '400px',
         height: 'auto !important',
         backgroundColor: 'rgba(208, 192, 247, 0.2)',
-        zIndex: '999',
+        zIndex: '0',
         position: 'relative !important'
       },
       language: 'english'
@@ -300,8 +304,8 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
         y: 380,
       },
       type: 'button',
-      style: {
-        position: 'absolute !important'
+     style: {
+        position: 'relative !important'
       },
       parentId: groupId,
       extent: 'parent',
@@ -545,6 +549,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
           </button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addGroup} >Card style 2</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addEndNode}>End</button>
+          {/* <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addStartNode}>start</button> */}
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
 

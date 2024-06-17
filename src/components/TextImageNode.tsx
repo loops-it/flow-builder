@@ -17,6 +17,7 @@ export default memo((id: any) => {
     const [intent, setIntent] = useState('');
     const [parentID, setParentID] = useState('');
     const [file, setFile] = useState(null);
+    const [preview, setPreview] = useState('');
 
     const [formData, setFormData] = useState({
         id: id.id,
@@ -38,13 +39,19 @@ export default memo((id: any) => {
 
                 const nodeData = await getNodeData();
 
-                // console.log("new node data:", nodeData);
+
 
                 const desiredNodeId = id.id;
+                console.log("desiredNodeId :", desiredNodeId);
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 const nodePatent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 // console.log("desiredNodeId :", nodePatent);
-                // console.log("node parent id :", nodePatent);
+                console.log("node parent id :", nodePatent);
+
+                nodePatent.parentId = nodePatent.parent_id;
+                delete nodePatent.parent_id;
+                console.log("test : ",nodePatent);
+
                 if (nodePatent) {
                     // console.log("Parent ID found:", nodePatent.parentId);
                     setParentID(nodePatent.parentId);
@@ -56,7 +63,9 @@ export default memo((id: any) => {
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
+                    // console.log("image === ", node.image)
                     setImage(node.image);
+                    setPreview(node.image);
                     setIntent(nodeIntent.intent);
                     setFormData({
                         id: id.id,
@@ -78,98 +87,11 @@ export default memo((id: any) => {
         fetchData();
     }, []);
 
-
-    // const handleChange = (event) => {
-    //     const { name, value, files } = event.target;
-    //     setFormData((prevFormData) => ({
-    //         ...prevFormData,
-    //         [name]: files ? files[0] : value,
-    //     }));
-    // };
-
-
     useEffect(() => {
         console.log('Form Data:', formData);
     }, [formData]);
 
 
-    // const saveNode = async () => {
-    //     console.log("Parent ID found ============== :", parentID);
-    //     try {
-    //         console.log('Form Data 2:', formData);
-
-    //         if (parentID === null) {
-    //             throw new Error('Parent ID is null');
-    //         }
-
-    //         const updatedFormData = { ...formData, parentID };
-    //         console.log('FormDataToSend Data:', updatedFormData);
-
-    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-    //             method: 'POST',
-    //             body: JSON.stringify(updatedFormData),
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to save node');
-    //         }
-
-    //         console.log("card header response : ", response)
-    //     } catch (error) {
-    //         console.error('Error saving node:', error);
-    //     }
-    // };
-
-    // const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
-    //     const { name, value, files } = e.target;
-    //     if (name === 'image') {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             image: files[0]
-    //         }));
-    //     } else {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             [name]: value
-    //         }));
-    //     }
-    // };
-
-    const [preview, setPreview] = useState('');
-
-    // const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
-    //     const { name, value, files } = e.target;
-    //     if (name === 'image') {
-    //         const file = files[0];
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             image: file
-    //         }));
-    //         setPreview("/images/Slide 06.png");
-    //     } else {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             [name]: value
-    //         }));
-    //     }
-    // };
-
-    // const handleDrop = (e: { preventDefault: () => void; dataTransfer: { files: any[]; }; }) => {
-    //     e.preventDefault();
-    //     const file = e.dataTransfer.files[0];
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         image: file
-    //     }));
-    //     setPreview("/images/Slide 06.png");
-    // };
-
-    // const handleDragOver = (e: { preventDefault: () => void; }) => {
-    //     e.preventDefault();
-    // };
 
 
     const handleChange = (e) => {
@@ -224,12 +146,14 @@ export default memo((id: any) => {
             formDataToSend.append('description', formData.description);
             formDataToSend.append('file', formData.image);
             formDataToSend.append('parentID', parentID);
+            formDataToSend.append('id', id.id);
+            formDataToSend.append('type', 'group');
 
-            console.log("formDataToSend : ",formDataToSend)
+            console.log("formDataToSend : ", formDataToSend)
             // Log formDataToSend contents
-        for (let [key, value] of formDataToSend.entries()) {
-            console.log(`${key}:`, value);
-        }
+            for (let [key, value] of formDataToSend.entries()) {
+                console.log(`${key}:`, value);
+            }
 
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
@@ -274,22 +198,8 @@ export default memo((id: any) => {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            {/* <img src='/images/Slide 06.png' alt="Uploaded Image" style={{ width: '150px', marginBottom: '8px' }} /> */}
-                            {/* <div style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <label style={{ marginTop: '8px' }}>Image</label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    accept="image/*"
-                                    onChange={handleChange}
-                                    className="nodrag "
-                                />
-                            </div> */}
-                            {/* <div
+
+                            <div
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
                                 style={{
@@ -315,10 +225,10 @@ export default memo((id: any) => {
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 ) : (
-                                    <div className='ImageUploadWrapper' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                    <div className='ImageUploadWrapper' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                         <img src='/images/imageUploadIcon.png' alt="Uploaded Image" style={{ width: '50px', marginBottom: '8px' }} />
                                         <p>Drop your image here, or <span>browse</span></p>
-                                        <span>Supports: PNG, JPG, JPEG,WEBP</span>
+                                        <span>Supports: PNG, JPG, JPEG, WEBP</span>
                                     </div>
                                 )}
                                 <input
@@ -336,56 +246,7 @@ export default memo((id: any) => {
                                         cursor: 'pointer'
                                     }}
                                 />
-                            </div> */}
-
-<div
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: '2px dashed #ccc',
-                padding: '20px',
-                borderRadius: '10px',
-                width: '200px',
-                height: '80px',
-                position: 'relative',
-                cursor: 'pointer',
-                marginBottom: '10px',
-                backgroundColor: '#fff'
-            }}
-        >
-            {preview ? (
-                <img
-                    src={preview}
-                    alt="Uploaded"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                />
-            ) : (
-                <div className='ImageUploadWrapper' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <img src='/images/imageUploadIcon.png' alt="Uploaded Image" style={{ width: '50px', marginBottom: '8px' }} />
-                    <p>Drop your image here, or <span>browse</span></p>
-                    <span>Supports: PNG, JPG, JPEG, WEBP</span>
-                </div>
-            )}
-            <input
-                type="file"
-                name="image"
-                accept="image/*"
-                onChange={handleChange}
-                style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    opacity: 0,
-                    cursor: 'pointer'
-                }}
-            />
-        </div>
+                            </div>
                         </div>
                         <label>Intent</label>
                         <input

@@ -15,6 +15,8 @@ export default memo((id: any) => {
     const [nodeType, setType] = useState('group');
     const [intent, setIntent] = useState('');
     const [parentID, setParentID] = useState('');
+    const [preview, setPreview] = useState('');
+
 
     const [formData, setFormData] = useState({
         id: id.id,
@@ -37,12 +39,18 @@ export default memo((id: any) => {
                 const nodeData = await getSinhalaNodeData();
 
                 const desiredNodeId = id.id;
+                console.log("desiredNodeId :", desiredNodeId);
                 const node = nodeData.cardData.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
                 const nodePatent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                // console.log("desiredNodeId :", nodePatent);
+                console.log("node parent id :", nodePatent);
 
-                console.log("nodePatent:", nodePatent);
+                nodePatent.parentId = nodePatent.parent_id;
+                delete nodePatent.parent_id;
+                console.log("test sin : ",nodePatent);
+
                 if (nodePatent) {
-                    console.log("Parent ID found:", nodePatent.parentId);
+                    // console.log("Parent ID found:", nodePatent.parentId);
                     setParentID(nodePatent.parentId);
                 } else {
                     console.log("Parent node not found");
@@ -52,7 +60,9 @@ export default memo((id: any) => {
                 if (node) {
                     setTitle(node.title);
                     setDescription(node.description);
+                    // console.log("image === ", node.image)
                     setImage(node.image);
+                    setPreview(node.image);
                     setIntent(nodeIntent.intent);
                     setFormData({
                         id: id.id,
@@ -74,33 +84,11 @@ export default memo((id: any) => {
         fetchData();
     }, []);
 
+
    
-    // const handleChange = (event: { target: { name: any; value: any; files: any; }; }) => {
-    //     const { name, value, files } = event.target;
-    //     setFormData((prevFormData) => ({
-    //         ...prevFormData,
-    //         [name]: files ? files[0] : value,
-    //     }));
-    // };
 
-    // const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
-    //     const { name, value, files } = e.target;
-    //     if (name === 'image') {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             image: files[0]
-    //         }));
-    //     } else {
-    //         setFormData((prevData) => ({
-    //             ...prevData,
-    //             [name]: value
-    //         }));
-    //     }
-    // };
 
-    const [preview, setPreview] = useState('');
-
-    const handleChange = (e: { target: { name: any; value: any; files: any; }; }) => {
+    const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'image') {
             const file = files[0];
@@ -108,7 +96,11 @@ export default memo((id: any) => {
                 ...prevData,
                 image: file
             }));
-            setPreview("/images/Slide 06.png");
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
         } else {
             setFormData((prevData) => ({
                 ...prevData,
@@ -117,17 +109,21 @@ export default memo((id: any) => {
         }
     };
 
-    const handleDrop = (e: { preventDefault: () => void; dataTransfer: { files: any[]; }; }) => {
+    const handleDrop = (e) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         setFormData((prevData) => ({
             ...prevData,
             image: file
         }));
-        setPreview("/images/Slide 06.png");
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
     };
 
-    const handleDragOver = (e: { preventDefault: () => void; }) => {
+    const handleDragOver = (e) => {
         e.preventDefault();
     };
 
@@ -142,14 +138,15 @@ export default memo((id: any) => {
             formDataToSend.append('intent', formData.intent);
             formDataToSend.append('title', formData.title);
             formDataToSend.append('description', formData.description);
-            formDataToSend.append('image', formData.image);
+            formDataToSend.append('file', formData.image);
             formDataToSend.append('parentID', parentID);
+            formDataToSend.append('id', id.id);
 
-            console.log("formDataToSend : ",formDataToSend)
+            console.log("formDataToSend : ", formDataToSend)
             // Log formDataToSend contents
-        for (let [key, value] of formDataToSend.entries()) {
-            console.log(`${key}:`, value);
-        }
+            for (let [key, value] of formDataToSend.entries()) {
+                console.log(`${key}:`, value);
+            }
 
             const response = await fetch(`${apiUrl}/data-flow-card-data`, {
                 method: 'POST',
@@ -173,36 +170,6 @@ export default memo((id: any) => {
     }, [formData]);
 
 
-    // const saveNode = async () => {
-    //     console.log("Parent ID found ============== :", parentID);
-    //     try {
-    //         console.log('Form Data 2:', formData);
-
-    //         if (parentID === null) {
-    //             throw new Error('Parent ID is null');
-    //         }
-
-    //         const updatedFormData = { ...formData, parentID };
-    //         console.log('FormDataToSend Data:', updatedFormData);
-
-    //         const response = await fetch(`${apiUrl}/data-flow-card-data`, {
-    //             method: 'POST',
-    //             body: JSON.stringify(updatedFormData),
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to save node');
-    //         }
-
-    //         console.log("card header response : ", response)
-    //     } catch (error) {
-    //         console.error('Error saving node:', error);
-    //     }
-    // };
-
 
     useEffect(() => {
         setNodeId(id.id)
@@ -220,28 +187,14 @@ export default memo((id: any) => {
                 {/* gradient */}
                 <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
-                <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
+                    <div className="inner" style={{ display: 'flex', flexDirection: 'column', padding: '10px', borderRadius: '10px' }}>
                         <div style={{
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            {/* <img src='/images/Slide 06.png' alt="Uploaded Image" style={{ width: '150px', marginBottom: '8px' }} />
-                            <div style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center'
-                            }}>
-                                <label style={{ marginTop: '8px' }}>Image</label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    accept="image/*"
-                                    onChange={handleChange}
-                                    className="nodrag"
-                                />
-                            </div> */}
+                           
                             <div
                                 onDrop={handleDrop}
                                 onDragOver={handleDragOver}
@@ -253,8 +206,8 @@ export default memo((id: any) => {
                                     border: '2px dashed #ccc',
                                     padding: '20px',
                                     borderRadius: '10px',
-                                    width: '220px',
-                                    height: '120px',
+                                    width: '200px',
+                                    height: '80px',
                                     position: 'relative',
                                     cursor: 'pointer',
                                     marginBottom: '10px',
@@ -268,10 +221,10 @@ export default memo((id: any) => {
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
                                 ) : (
-                                    <div className='ImageUploadWrapper' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                                    <div className='ImageUploadWrapper' style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                         <img src='/images/imageUploadIcon.png' alt="Uploaded Image" style={{ width: '50px', marginBottom: '8px' }} />
-                                        <p className='mb-0'>Drop your image here, or <span>browse</span></p>
-                                        <span className='mb-0'>Supports: PNG, JPG, JPEG,WEBP</span>
+                                        <p>Drop your image here, or <span>browse</span></p>
+                                        <span>Supports: PNG, JPG, JPEG, WEBP</span>
                                     </div>
                                 )}
                                 <input

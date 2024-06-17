@@ -18,7 +18,7 @@ export const generateGroup = (setGroups, setNodes, addGroupCardHeaderNode, addGr
       maxHeight: '450px',
       height: 'auto !important',
       backgroundColor: 'rgba(208, 192, 247, 0.2)',
-      zIndex: '999'
+      zIndex: '0'
     },
   };
 
