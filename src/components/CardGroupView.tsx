@@ -21,6 +21,7 @@ export default memo((id: any) => {
     const toggleSelection = () => {
         setIsSelected(!isSelected);
         localStorage.setItem('selectedEnglishNodeID', id.id);
+        console.log("selected : ", id.id)
     };
     // console.log("selected : ", isSelected)
     

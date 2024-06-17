@@ -141,7 +141,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '400px',
             height: 'auto !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
             position: 'relative !important'
@@ -154,7 +154,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '260px',
             height: '260px !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
           };
@@ -332,7 +332,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '400px',
             height: 'auto !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
             position: 'relative !important'
@@ -345,7 +345,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
             minHeight: '260px',
             height: '260px !important',
             backgroundColor: '#f8f8f8 !important',
-            zIndex: '0',
+            zIndex: '0 !important',
             pointerEvents: "all",
             visibility: "visible",
           };
