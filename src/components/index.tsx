@@ -34,6 +34,7 @@ import CardGroupView from "./CardGroupView";
 import { loadDataOnMount } from "../service/getData";
 import { onConnectEdge } from "../service/edgeFunctions";
 import TextOnlyNodeStyle from "./TextOnlyNodeStyle";
+import FormGroup from "./FormGroup";
 
 
 const nodeTypes = {
@@ -47,7 +48,8 @@ const nodeTypes = {
   textOnly: TextOnlyNodeStyle,
   end: EndCircleNode,
   buttonGroup: ButtonGroupView,
-  cardGroup: CardGroupView
+  cardGroup: CardGroupView,
+  formGroup: FormGroup
 };
 
 
@@ -102,13 +104,6 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   }, [groupId])
 
 
-
-  // useEffect(() => {
-  //   const filtered = nodes.filter(node => node.language === language.language);
-  //   setFilteredNodes(filtered);
-  //   console.log("filtered nodes ===== ",filtered)
-  // }, [nodes, language.language]);
-
   // add text imput node
   const addTextNode = () => {
     addNode('english', 'textinput', setNodes);
@@ -131,6 +126,10 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
 
   const addStartNode = () => {
     addNode('english', 'start', setNodes);
+  };
+
+  const addFormGroupNode = () => {
+    addNode('english', 'formGroup', setNodes);
   };
 
   // edge connect
@@ -342,24 +341,6 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
 
 
 
-
-
-
-
-
-
-
-  // Add this function to handle the click event of the delete button
-  // const addFloatingButton = () => {
-  //   if (!groupId) {
-  //     console.error("Group ID is not defined");
-  //     return;
-  //   }
-
-  //   addGroupButtonNode(groupId);
-  // };
-
-
   const [englishNodeID, setEnglishNodeID] = useState<string | null>(null);
   const [englishButtonID, setEnglishButtonID] = useState<string | null>(null);
 
@@ -372,13 +353,6 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
   }, []);
 
   const addFloatingButton = () => {
-    // const savedNodeId = localStorage.getItem('selectedEnglishNodeID');
-    // if (!savedNodeId) {
-    //   console.error("Group ID is not defined");
-    //   return;
-    // }
-
-    // addGroupButtonNode(savedNodeId);
     if (!englishNodeID) {
       console.error("Group ID is not defined");
       return;
@@ -547,6 +521,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
           {/* <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addStartNode}>start</button> */}
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addFormGroupNode}>Form</button>
 
 
           {/* <button
