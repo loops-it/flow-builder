@@ -359,6 +359,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
       console.error("Group ID is not defined");
       return;
     }
+    console.log("savedEnglishButtonID : ", englishNodeID)
     addGroupButtonNode(englishNodeID);
   };
 
@@ -501,6 +502,7 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
       console.error("Group ID is not defined");
       return;
     }
+    console.log("savedEnglishNodeID : ", englishButtonID)
     addGroupButtonsNodes(englishButtonID);
   };
 

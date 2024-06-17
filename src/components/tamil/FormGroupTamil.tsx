@@ -4,7 +4,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { getTamilNodeData } from '../../service/getData';
 import { deleteNodeCall } from '../../service/deleteFunctions';
-import { formElementId } from '../../service/idGenerateFunctions';
+import { apiUrl, formElementId } from '../../service/idGenerateFunctions';
 
 
 
@@ -17,8 +17,13 @@ export default memo((id: any) => {
     const [field, setField] = useState('');
     const [intent, setIntent] = useState('');
 
+    const language = 'tamil'
+
     const [inputs, setInputs] = useState([
-        { id: formElementId(), type: 'text', value: '', placeholder: 'text' }
+        { id: formElementId(), type: 'text', value: '', placeholder: 'text', language: language, position: {
+            "x": 0,
+            "y": 0
+        } }
     ]);
 
     useEffect(() => {
@@ -47,22 +52,23 @@ export default memo((id: any) => {
     }, [nodeId])
 
 
-    const language = 'tamil'
+    
 
     const saveNode = async () => {
         try {
-            // const response = await fetch(`${apiUrl}/data-flow-button-group`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({ id: id.id, name: name }),
-            // });
+            const response = await fetch(`${apiUrl}/data-flow-form-data`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: id.id, intent: intent, language: language, inputs: inputs }),
+            });
 
-            // if (!response.ok) {
-            //     throw new Error('Failed to delete node');
-            // }
-            // console.log("button group save node : ", response)
+            if (!response.ok) {
+                throw new Error('Failed to delete node');
+            }
+            const data = await response.json();
+            console.log("response form data save : ", data)
             // console.log(`inputs in form : id: ${id.id}, intent: ${intent}, language: english, inputs: ${inputs.join(', ')}`)
             console.log(`inputs in form : id: ${id.id}, intent: ${intent}, language: ${language}, inputs:\n${inputs.map(input => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
 
@@ -96,7 +102,16 @@ export default memo((id: any) => {
     };
 
     const addInput = (type: string) => {
-        setInputs([...inputs, { id: formElementId(), type, value: '', placeholder: capitalizeFirstLetter(type), label: capitalizeFirstLetter(type) }]);
+        setInputs([...inputs, { 
+            id: formElementId(), 
+            type, value: '', 
+            placeholder: capitalizeFirstLetter(type), 
+            label: capitalizeFirstLetter(type), 
+            language: language,
+            position: {
+                "x": 0,
+                "y": 0
+            }  }]);
     };
 
     const capitalizeFirstLetter = (string: string) => {
