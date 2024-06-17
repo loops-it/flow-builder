@@ -97,19 +97,30 @@ const fetchDataFlowData = async () => {
 export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: any): void; }, setEdges: { (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (arg0: any): void; }) => {
     try {
       const data = await fetchDataFlowData();
+
+      console.log("fetchDataFlowData ---> ", data)
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
-        const filteredNode = {};
+        const filteredNode: any = {};
         for (const key in node) {
           if (key === 'id') {
             continue; // Skip the id attribute
           } else if (key === 'node_id') {
             filteredNode['id'] = node[key]; // Rename node_id to id
           } else if (key === 'position' && node[key] !== null) {
-            // Parse the position string into an object
-            const positionObj = JSON.parse(node[key]);
-            // Assign x and y to the filteredNode under position
-            filteredNode.position = { x: positionObj.x, y: positionObj.y };
+            if (typeof node[key] === 'string') {
+              try {
+                // Parse the position string into an object
+                const positionObj = JSON.parse(node[key]);
+                // Assign x and y to the filteredNode under position
+                filteredNode.position = { x: positionObj.x, y: positionObj.y };
+              } catch (parseError) {
+                console.error(`Failed to parse position string for node ${node.node_id}:`, node[key]);
+              }
+            } else if (typeof node[key] === 'object' && node[key] !== null) {
+              // Assign position directly if it's already an object
+              filteredNode.position = { x: node[key].x, y: node[key].y };
+            }
           } else if (key !== 'style' && node[key] !== null) {
             // For other attributes, copy non-null values directly
             filteredNode[key] = node[key];
@@ -151,7 +162,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       });
   
       const filteredEdges = data.edges.map((edge: { [x: string]: any; }) => {
-        const filteredEdge = {};
+        const filteredEdge: any = {};
         for (const key in edge) {
           if (key === 'id') {
             continue; // Skip the id attribute
@@ -178,17 +189,26 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       const data = await fetchDataFlowDataSinhala();
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
-        const filteredNode = {};
+        const filteredNode: any = {};
         for (const key in node) {
           if (key === 'id') {
             continue; // Skip the id attribute
           } else if (key === 'node_id') {
             filteredNode['id'] = node[key]; // Rename node_id to id
           } else if (key === 'position' && node[key] !== null) {
-            // Parse the position string into an object
-            const positionObj = JSON.parse(node[key]);
-            // Assign x and y to the filteredNode under position
-            filteredNode.position = { x: positionObj.x, y: positionObj.y };
+            if (typeof node[key] === 'string') {
+              try {
+                // Parse the position string into an object
+                const positionObj = JSON.parse(node[key]);
+                // Assign x and y to the filteredNode under position
+                filteredNode.position = { x: positionObj.x, y: positionObj.y };
+              } catch (parseError) {
+                console.error(`Failed to parse position string for node ${node.node_id}:`, node[key]);
+              }
+            } else if (typeof node[key] === 'object' && node[key] !== null) {
+              // Assign position directly if it's already an object
+              filteredNode.position = { x: node[key].x, y: node[key].y };
+            }
           } else if (key !== 'style' && node[key] !== null) {
             // For other attributes, copy non-null values directly
             filteredNode[key] = node[key];
@@ -230,7 +250,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       });
   
       const filteredEdges = data.edges.map((edge: { [x: string]: any; }) => {
-        const filteredEdge = {};
+        const filteredEdge: any = {};
         for (const key in edge) {
           if (key === 'id') {
             continue; // Skip the id attribute
@@ -258,17 +278,26 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       const data = await fetchDataFlowDataTamil();
   
       const filteredNodes = data.nodes.map((node: { [x: string]: any; }) => {
-        const filteredNode = {};
+        const filteredNode: any = {};
         for (const key in node) {
           if (key === 'id') {
             continue; // Skip the id attribute
           } else if (key === 'node_id') {
             filteredNode['id'] = node[key]; // Rename node_id to id
           } else if (key === 'position' && node[key] !== null) {
-            // Parse the position string into an object
-            const positionObj = JSON.parse(node[key]);
-            // Assign x and y to the filteredNode under position
-            filteredNode.position = { x: positionObj.x, y: positionObj.y };
+            if (typeof node[key] === 'string') {
+              try {
+                // Parse the position string into an object
+                const positionObj = JSON.parse(node[key]);
+                // Assign x and y to the filteredNode under position
+                filteredNode.position = { x: positionObj.x, y: positionObj.y };
+              } catch (parseError) {
+                console.error(`Failed to parse position string for node ${node.node_id}:`, node[key]);
+              }
+            } else if (typeof node[key] === 'object' && node[key] !== null) {
+              // Assign position directly if it's already an object
+              filteredNode.position = { x: node[key].x, y: node[key].y };
+            }
           } else if (key !== 'style' && node[key] !== null) {
             // For other attributes, copy non-null values directly
             filteredNode[key] = node[key];
@@ -310,7 +339,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
       });
   
       const filteredEdges = data.edges.map((edge: { [x: string]: any; }) => {
-        const filteredEdge = {};
+        const filteredEdge: any = {};
         for (const key in edge) {
           if (key === 'id') {
             continue; // Skip the id attribute
