@@ -2,9 +2,9 @@ import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { deleteNodeCall } from '../service/deleteFunctions';
-import { apiUrl, formElementId } from '../service/idGenerateFunctions';
-import { getNodeData } from '../service/getData';
+import { getTamilNodeData } from '../../service/getData';
+import { deleteNodeCall } from '../../service/deleteFunctions';
+import { formElementId } from '../../service/idGenerateFunctions';
 
 
 
@@ -25,7 +25,7 @@ export default memo((id: any) => {
         const fetchData = async () => {
             try {
 
-                const nodeData = await getNodeData();
+                const nodeData = await getTamilNodeData();
                 const desiredNodeId = id.id;
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
 
@@ -47,7 +47,7 @@ export default memo((id: any) => {
     }, [nodeId])
 
 
-    const language = 'english'
+    const language = 'tamil'
 
     const saveNode = async () => {
         try {

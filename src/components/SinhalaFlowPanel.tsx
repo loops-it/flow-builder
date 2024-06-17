@@ -36,6 +36,7 @@ import TextInputNodeSinhala from "./sinhala/TextInputNodeSinhala";
 import TextOnlyNodeStyleSinhala from "./sinhala/TextOnlyNodeStyleSinhala";
 import CardStyleOneSinhala from "./sinhala/CardStyleOneSinhala";
 import CardGroupView from "./sinhala/CardGroupView";
+import FormGroupSinhala from "./sinhala/FormGroupSinhala";
 
 
 const nodeTypes = {
@@ -49,7 +50,8 @@ const nodeTypes = {
   textOnly: TextOnlyNodeStyleSinhala,
   end: EndCircleNode,
   buttonGroup: ButtonGroupViewSinhala,
-  cardGroup: CardGroupView
+  cardGroup: CardGroupView,
+  formGroup: FormGroupSinhala
 };
 
 
@@ -107,6 +109,10 @@ const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
   // add start circle node
   const addEndNode = () => {
     addNode('sinhala' ,'end', setNodes);
+  };
+
+  const addFormGroupNode = () => {
+    addNode('sinhala', 'formGroup', setNodes);
   };
 
   // edge connect
@@ -487,6 +493,7 @@ const SinhalaFlowPanel: React.FC<FlowPanelProps> = (language ) => {
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addEndNode}>End</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addFormGroupNode}>Form</button>
 
 
           <button

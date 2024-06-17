@@ -41,6 +41,7 @@ import CardStyleOneTamil from "./tamil/CardStyleOneTamil";
 import TextImageNodeTamil from "./tamil/TextImageNodeTamil";
 import TwoWayButtonTamil from "./tamil/TwoWayButtonTamil";
 import CardGroupViewTamil from "./tamil/CardGroupViewTamil";
+import FormGroupTamil from "./tamil/FormGroupTamil";
 
 
 const nodeTypes = {
@@ -54,7 +55,8 @@ const nodeTypes = {
   textOnly: TextOnlyNodeStyleTamil,
   end: EndCircleNode,
   buttonGroup: ButtonGroupViewTamil,
-  cardGroup: CardGroupViewTamil
+  cardGroup: CardGroupViewTamil,
+  formGroup: FormGroupTamil
 };
 
 
@@ -114,6 +116,10 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language) => {
   // add start circle node
   const addEndNode = () => {
     addNode('tamil', 'end', setNodes);
+  };
+
+  const addFormGroupNode = () => {
+    addNode('tamil', 'formGroup', setNodes);
   };
 
   // edge connect
@@ -495,6 +501,7 @@ const TamilFlowPanel: React.FC<FlowPanelProps> = (language) => {
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addEndNode}>End</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextOnlyNode}>Text</button>
           <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addTextNode}>text card</button>
+          <button className="OptionButton" style={{ marginRight: '10px' }} onClick={addFormGroupNode}>Form</button>
 
 
           <button
