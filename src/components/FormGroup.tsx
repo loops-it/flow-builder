@@ -3,7 +3,7 @@ import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { deleteNodeCall } from '../service/deleteFunctions';
-import { apiUrl } from '../service/idGenerateFunctions';
+import { apiUrl, formElementId } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
 
 
@@ -13,11 +13,12 @@ export default memo((id: any) => {
     const { setEdges } = useReactFlow();
     const [nodeId, setNodeId] = useState('');
     const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [contactNo, setContactNo] = useState('');
+
+    const [field, setField] = useState('');
+    const [intent, setIntent] = useState('');
 
     const [inputs, setInputs] = useState([
-        { type: 'text', value: '', placeholder: 'Name' }
+        { id: formElementId(), type: 'text', value: '', placeholder: 'text' }
     ]);
 
     useEffect(() => {
@@ -72,17 +73,27 @@ export default memo((id: any) => {
 
 
 
-    const handleInputChange = (index, event) => {
+    const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         const values = [...inputs];
         values[index].value = event.target.value;
         setInputs(values);
     };
 
-    const addInput = (type) => {
-        setInputs([...inputs, { type, value: '', placeholder: capitalizeFirstLetter(type) }]);
+    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setIntent(event.target.value);
     };
 
-    const capitalizeFirstLetter = (string) => {
+    const handleLabelChange = (index: string | number, event: { target: { value: any; }; }) => {
+        const values = [...inputs];
+        values[index].label = event.target.value;
+        setInputs(values);
+    };
+
+    const addInput = (type: string) => {
+        setInputs([...inputs, { id: formElementId(), type, value: '', placeholder: capitalizeFirstLetter(type), label: capitalizeFirstLetter(type) }]);
+    };
+
+    const capitalizeFirstLetter = (string: string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     };
 
@@ -104,25 +115,54 @@ export default memo((id: any) => {
                             </div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', padding: '0px 20px', alignItems: 'center' }}>
-
-                            <div style={{ display: 'flex', flexDirection: 'row', position: 'relative', }}>
-                                <button onClick={() => addInput('name')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Name</button>
-                                <button onClick={() => addInput('email')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Email</button>
-                                <button onClick={() => addInput('text')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Contact</button>
+                            <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                                <button onClick={() => addInput('text')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Text Field</button>
+                                <button onClick={() => addInput('message')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>TextArea</button>
                                 <button onClick={() => addInput('date')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Date</button>
                             </div>
+
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                            <label>Intent</label>
+                        <input
+                            type="text"
+                            value={intent || ''}
+                            onChange={handleIntentChange}
+                            className="nodrag cardInput"
+                        />
+                            </div>
+                            
                             {inputs.map((input, index) => (
-                                <div key={index} style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                                    <label>{capitalizeFirstLetter(input.placeholder)}</label>
-                                    <input
-                                        type={input.type}
-                                        value={input.value}
-                                        onChange={(event) => handleInputChange(index, event)}
-                                        className="nodrag cardInput"
-                                    />
+                                <div key={input.id} style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
+                                    <label>
+                                        <input
+                                            type="text"
+                                            className="nodrag cardInput"
+                                            value={input.label}
+                                            onChange={(event) => handleLabelChange(index, event)}
+                                            placeholder="Label"
+                                            style={{ marginBottom: "0px",
+                                                paddingBottom: "5px",
+                                                outline: "none", backgroundColor: 'transparent' }}
+                                        />
+                                    </label>
+                                    {input.type === 'message' ? (
+                                        <textarea
+                                            value={input.value}
+                                            onChange={(event) => handleInputChange(index, event)}
+                                            className="nodrag cardInput"
+                                            placeholder={input.placeholder}
+                                        />
+                                    ) : (
+                                        <input
+                                            type={input.type}
+                                            value={input.value}
+                                            onChange={(event) => handleInputChange(index, event)}
+                                            className="nodrag cardInput"
+                                            placeholder={input.placeholder}
+                                        />
+                                    )}
                                 </div>
                             ))}
-
                             <button onClick={saveNode} className='saveButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Save</button>
                         </div>
                     </div>
