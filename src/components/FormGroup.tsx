@@ -83,6 +83,7 @@ export default memo((id: any) => {
 
 
     const saveNode = async () => {
+        console.log("send id", id.id)
         try {
             const response = await fetch(`${apiUrl}/data-flow-form-data`, {
                 method: 'POST',
@@ -150,7 +151,7 @@ export default memo((id: any) => {
     };
 
     const deleteField = async (id: string) => {
-        setInputs(inputs.filter(input => input.id !== id));
+        // setInputs(inputs.filter(input => input.id !== id));
         console.log("field id: ", id)
     };
 
