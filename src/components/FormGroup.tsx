@@ -16,6 +16,8 @@ export default memo((id: any) => {
 
     const [field, setField] = useState('');
     const [intent, setIntent] = useState('');
+    const [nodeFields, setNodeFields] = useState([]);
+
 
     const language = 'english'
 
@@ -30,17 +32,9 @@ export default memo((id: any) => {
 
 
 
-    // setInputs(modifiedInputs);
 
 
-    const [nodeFields, setNodeFields] = useState([]);
 
-    // useEffect(() => {
-    //     const fields = nodeData.nodes.filter(node => node.parent_id === parentId);
-    //     console.log(parentId);
-    //     console.log("all fields: ", fields);
-    //     setNodeFields(fields);
-    // }, [nodeData, parentId]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -49,32 +43,25 @@ export default memo((id: any) => {
                 const nodeData = await getNodeData();
                 const desiredNodeId = id.id;
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
-                // console.log(`form id: ${desiredNodeId} , form data : , ${nodeData.nodes}`)
+
+
+                if (nodeIntent) {
+                    setIntent(nodeIntent.intent);
+                    setName(nodeIntent.intent);
+                }
+
 
                 const formData = nodeData.nodes
                 console.log("get intent : ", nodeIntent.intent)
                 setIntent(nodeIntent.intent)
-                // const nodeFields = nodeData.nodes.find((node: { parent_id: any; }) => node.parent_id === id.id);
-                // console.log(id.id)
-                // console.log("all fields: ",nodeFields)
                 const fields = nodeData.nodes.filter((node: { parent_id: any; }) => node.parent_id === desiredNodeId);
                 console.log(desiredNodeId);
                 console.log("all fields: ", fields);
                 setNodeFields(fields);
 
-                // const fieldRegex = /^field_/;
-                // const modifiedInputs = inputs.map(input => ({
-                //     ...input,
-                //     id: fieldRegex.test(input.id) ? input.id : input.node_id
-                // }));
-                // console.log("modifiedInputs : ", modifiedInputs)
+                setInputs(fields)
 
-                setInputs(fields);
-                // setInputs(modifiedInputs);
                 console.log(`${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
-
-                // console.log(`node field list: ${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`)
-                // console.log(`form id:  ${id.id}, One: ${nodeIntent},\n form data :\n${formData.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
 
                 if (nodeIntent) {
                     setName(nodeIntent.intent);
@@ -87,27 +74,36 @@ export default memo((id: any) => {
         };
 
         fetchData();
-    }, []);
+    }, [id.id]);
 
     useEffect(() => {
         setNodeId(id.id)
-    }, [nodeId])
+    }, [id.id])
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     modifyNodes();
+    // }, [inputs])
+
+
+    // const modifyNodes = () => {
+    //     const fieldRegex = /^field_/;
+    //     const modifiedInputs = inputs.map(input => ({
+    //         ...input,
+    //         id: fieldRegex.test(input.id) ? input.id : input.node_id
+    //     }));
+        
+    //     setInputs(modifiedInputs);
+    // }
+
+    const saveNode = async () => {
+
+        // modifyNodes()
         const fieldRegex = /^field_/;
         const modifiedInputs = inputs.map(input => ({
             ...input,
             id: fieldRegex.test(input.id) ? input.id : input.node_id
         }));
-        // console.log("modifiedInputs : ", modifiedInputs)
-        setInputs(modifiedInputs);
-    }, [inputs])
-
-
-    const saveNode = async () => {
-
-
-
+        console.log("modifiedInputs : ", modifiedInputs)
         try {
             console.log("send id", id.id)
             console.log("send intent", intent)
@@ -118,7 +114,7 @@ export default memo((id: any) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: id.id, intent: intent, language: language, inputs: inputs }),
+                body: JSON.stringify({ id: id.id, intent: intent, language: language, inputs: modifiedInputs }),
             });
 
             if (!response.ok) {
