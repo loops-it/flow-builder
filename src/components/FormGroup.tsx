@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { Handle, Position, useReactFlow } from 'reactflow';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
-import { deleteNodeCall } from '../service/deleteFunctions';
+import { deleteFieldCall, deleteNodeCall } from '../service/deleteFunctions';
 import { apiUrl, formElementId } from '../service/idGenerateFunctions';
 import { getNodeData } from '../service/getData';
 
@@ -150,9 +150,29 @@ export default memo((id: any) => {
         deleteNodeCall(nodeId, "formGroup", setNodes, setEdges)
     };
 
-    const deleteField = async (id: string) => {
-        // setInputs(inputs.filter(input => input.id !== id));
-        console.log("field id: ", id)
+    // const deleteField = async (id: string, type: string) => {
+    //     // setInputs(inputs.filter(input => input.id !== id));
+    //     // deleteNodeCall(id, "formGroup", setNodes, setEdges)
+    //     console.log("field id: ", id,type )
+    // };
+
+
+
+    const deleteField = async (id: string, type: string, node_id: string) => {
+        const fieldRegex = /^field_/;
+    
+        if (fieldRegex.test(id)) {
+            console.log("field id: ", id, type);
+            const deleteID = id;
+            setInputs(inputs.filter(input => input.id !== id));
+            deleteFieldCall(deleteID, type)
+        } else {
+            // const node_id = getNodeID(id);
+            const deleteID = node_id;
+            console.log("node id: ", node_id,  type);
+            setInputs(inputs.filter(input => input.node_id !== node_id));
+            deleteFieldCall(deleteID, type)
+        }
     };
 
 
@@ -212,7 +232,7 @@ export default memo((id: any) => {
                                                 }}
                                             />
                                         </label>
-                                        <button className='nodeCloseButton' onClick={() => deleteField(input.id)} >
+                                        <button className='nodeCloseButton' onClick={() => deleteField(input.id, input.type, input.node_id)} >
                                             <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
                                         </button>
                                     </div>

@@ -50,6 +50,29 @@ export const deleteNodeCall = async (id: any , type: string, setNodes: { (value:
       
 };
 
+export const deleteFieldCall = async (id: any , type: string) => {
+  try {
+    // console.log("-------------- delete id api ------- : ", id)
+    console.log("Node ID button - english: ",id, "type: ", type )
+      const response = await fetch(`${apiUrl}/data-flow-delete-node`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({id, type}), 
+        });
+  
+      if (!response.ok) {
+        throw new Error('Failed to delete node');
+      }
+      console.log("english node delete response : ",response)
+
+    } catch (error) {
+      console.error('Error deleting node:', error);
+    }
+    
+};
+
 export const deleteNodeCallSinhala = async (id: any , type: string, setNodes: { (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (value: SetStateAction<Node<any, string | undefined>[]>): void; (arg0: any): void; } | undefined, setEdges: { (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (value: SetStateAction<Edge<any>[]>): void; (arg0: any): void; } | undefined) => {
   try {
     // console.log("-------------- delete id api ------- : ", id)
