@@ -29,6 +29,10 @@ export default memo((id: any) => {
     ]);
 
 
+
+    // setInputs(modifiedInputs);
+
+
     const [nodeFields, setNodeFields] = useState([]);
 
     // useEffect(() => {
@@ -48,7 +52,8 @@ export default memo((id: any) => {
                 // console.log(`form id: ${desiredNodeId} , form data : , ${nodeData.nodes}`)
 
                 const formData = nodeData.nodes
-                // console.log(nodeIntent.node_id)
+                console.log("get intent : ", nodeIntent.intent)
+                setIntent(nodeIntent.intent)
                 // const nodeFields = nodeData.nodes.find((node: { parent_id: any; }) => node.parent_id === id.id);
                 // console.log(id.id)
                 // console.log("all fields: ",nodeFields)
@@ -56,7 +61,16 @@ export default memo((id: any) => {
                 console.log(desiredNodeId);
                 console.log("all fields: ", fields);
                 setNodeFields(fields);
+
+                // const fieldRegex = /^field_/;
+                // const modifiedInputs = inputs.map(input => ({
+                //     ...input,
+                //     id: fieldRegex.test(input.id) ? input.id : input.node_id
+                // }));
+                // console.log("modifiedInputs : ", modifiedInputs)
+
                 setInputs(fields);
+                // setInputs(modifiedInputs);
                 console.log(`${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
 
                 // console.log(`node field list: ${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`)
@@ -79,12 +93,26 @@ export default memo((id: any) => {
         setNodeId(id.id)
     }, [nodeId])
 
-
+    useEffect(() => {
+        const fieldRegex = /^field_/;
+        const modifiedInputs = inputs.map(input => ({
+            ...input,
+            id: fieldRegex.test(input.id) ? input.id : input.node_id
+        }));
+        // console.log("modifiedInputs : ", modifiedInputs)
+        setInputs(modifiedInputs);
+    }, [inputs])
 
 
     const saveNode = async () => {
-        console.log("send id", id.id)
+
+
+
         try {
+            console.log("send id", id.id)
+            console.log("send intent", intent)
+            console.log("send language", language)
+            console.log("send inputs", inputs)
             const response = await fetch(`${apiUrl}/data-flow-form-data`, {
                 method: 'POST',
                 headers: {
@@ -98,6 +126,9 @@ export default memo((id: any) => {
             }
             const data = await response.json();
             console.log("response form data save : ", data)
+
+
+
             // console.log(`inputs in form : id: ${id.id}, intent: ${intent}, language: english, inputs: ${inputs.join(', ')}`)
             console.log(`inputs in form : id: ${id.id}, intent: ${intent}, language: ${language}, inputs:\n${inputs.map(input => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
 
@@ -150,17 +181,9 @@ export default memo((id: any) => {
         deleteNodeCall(nodeId, "formGroup", setNodes, setEdges)
     };
 
-    // const deleteField = async (id: string, type: string) => {
-    //     // setInputs(inputs.filter(input => input.id !== id));
-    //     // deleteNodeCall(id, "formGroup", setNodes, setEdges)
-    //     console.log("field id: ", id,type )
-    // };
-
-
-
     const deleteField = async (id: string, type: string, node_id: string) => {
         const fieldRegex = /^field_/;
-    
+
         if (fieldRegex.test(id)) {
             console.log("field id: ", id, type);
             const deleteID = id;
@@ -169,7 +192,7 @@ export default memo((id: any) => {
         } else {
             // const node_id = getNodeID(id);
             const deleteID = node_id;
-            console.log("node id: ", node_id,  type);
+            console.log("node id: ", node_id, type);
             setInputs(inputs.filter(input => input.node_id !== node_id));
             deleteFieldCall(deleteID, type)
         }
