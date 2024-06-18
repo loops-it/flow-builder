@@ -358,3 +358,24 @@ label {
   justify-self: start;
   margin: 0px;
 }
+
+
+.addButton {
+  text-decoration: none;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  color: #1C73D4;
+  background-color: #fff;
+  padding: 5px;
+  font-weight: 300;
+  border-radius: 8px;
+  min-width: 80px;
+  margin: 0px 10px;
+  border: solid 1px #1C73D4;
+  transition: color 0.5s ease-in, background-color 0.5s ease-in;
+}
+
+.addButton:hover {
+  color: #fff;
+  background-color: #1C73D4;
+}

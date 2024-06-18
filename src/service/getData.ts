@@ -404,6 +404,17 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
           console.log('get english data response : ',data )
 
 
+          // const filteredNodes = data.nodes.filter((node: { id: string; }) => !/^field_/.test(node.id));
+
+    // Create a new data object with the filtered nodes
+    // const newData = {
+    //     ...data,
+    //     nodes: filteredNodes
+    // };
+
+    // console.log('filtered data: ', filteredNodes);
+
+
         if (!response.ok) {
           throw new Error('Failed to get node data');
         }

@@ -17,14 +17,26 @@ export default memo((id: any) => {
     const [field, setField] = useState('');
     const [intent, setIntent] = useState('');
 
-     const language = 'english'
+    const language = 'english'
 
     const [inputs, setInputs] = useState([
-        { id: formElementId(), type: 'text', value: '', placeholder: 'text', language: language, position: {
-            "x": 0,
-            "y": 0
-        } }
+        {
+            id: formElementId(), type: 'text', value: '', placeholder: 'text', language: language, position: {
+                "x": 0,
+                "y": 0
+            }
+        }
     ]);
+
+
+    const [nodeFields, setNodeFields] = useState([]);
+
+    // useEffect(() => {
+    //     const fields = nodeData.nodes.filter(node => node.parent_id === parentId);
+    //     console.log(parentId);
+    //     console.log("all fields: ", fields);
+    //     setNodeFields(fields);
+    // }, [nodeData, parentId]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +45,22 @@ export default memo((id: any) => {
                 const nodeData = await getNodeData();
                 const desiredNodeId = id.id;
                 const nodeIntent = nodeData.nodes.find((node: { node_id: any; }) => node.node_id === desiredNodeId);
+                // console.log(`form id: ${desiredNodeId} , form data : , ${nodeData.nodes}`)
+
+                const formData = nodeData.nodes
+                // console.log(nodeIntent.node_id)
+                // const nodeFields = nodeData.nodes.find((node: { parent_id: any; }) => node.parent_id === id.id);
+                // console.log(id.id)
+                // console.log("all fields: ",nodeFields)
+                const fields = nodeData.nodes.filter((node: { parent_id: any; }) => node.parent_id === desiredNodeId);
+                console.log(desiredNodeId);
+                console.log("all fields: ", fields);
+                setNodeFields(fields);
+                setInputs(fields);
+                console.log(`${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
+
+                // console.log(`node field list: ${nodeFields.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`)
+                // console.log(`form id:  ${id.id}, One: ${nodeIntent},\n form data :\n${formData.map((input: any) => `- ${JSON.stringify(input, null, 2)}`).join('\n')}`);
 
                 if (nodeIntent) {
                     setName(nodeIntent.intent);
@@ -52,7 +80,7 @@ export default memo((id: any) => {
     }, [nodeId])
 
 
-   
+
 
     const saveNode = async () => {
         try {
@@ -79,36 +107,37 @@ export default memo((id: any) => {
     };
 
 
-    
 
 
-    const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const values = [...inputs];
         values[index].value = event.target.value;
         setInputs(values);
     };
 
-    const handleIntentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleIntentChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
         setIntent(event.target.value);
     };
 
-    const handleLabelChange = (index: string | number, event: { target: { value: any; }; }) => {
+    const handleLabelChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
         const values = [...inputs];
         values[index].label = event.target.value;
         setInputs(values);
     };
 
     const addInput = (type: string) => {
-        setInputs([...inputs, { 
-            id: formElementId(), 
-            type, value: '', 
-            placeholder: capitalizeFirstLetter(type), 
-            label: capitalizeFirstLetter(type), 
+        setInputs([...inputs, {
+            id: formElementId(),
+            type, value: '',
+            placeholder: capitalizeFirstLetter(type),
+            label: capitalizeFirstLetter(type),
             language: language,
             position: {
                 "x": 0,
                 "y": 0
-            }  }]);
+            }
+        }]);
     };
 
     const capitalizeFirstLetter = (string: string) => {
@@ -118,6 +147,11 @@ export default memo((id: any) => {
 
     const deleteNode = async () => {
         deleteNodeCall(nodeId, "formGroup", setNodes, setEdges)
+    };
+
+    const deleteField = async (id: string) => {
+        setInputs(inputs.filter(input => input.id !== id));
+        console.log("field id: ", id)
     };
 
 
@@ -139,37 +173,48 @@ export default memo((id: any) => {
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', padding: '0px 20px', alignItems: 'center' }}>
                             <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-                                <button onClick={() => addInput('text')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Text Field</button>
-                                <button onClick={() => addInput('message')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>TextArea</button>
-                                <button onClick={() => addInput('date')} className='addButton' style={{ marginLeft: '10px', marginTop: '10px' }}>Date</button>
+                                <button onClick={() => addInput('text')} className='addButton' style={{}}>Text Field</button>
+                                <button onClick={() => addInput('message')} className='addButton' style={{ marginLeft: '5px' }}>TextArea</button>
+                                <button onClick={() => addInput('date')} className='addButton' style={{ marginLeft: '5px' }}>Date</button>
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                <label>Intent</label>
+                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                <div style={{ display: 'flex', flexDirection: 'row', width: '100%', paddingTop: '10px', justifyContent: 'space-between' }}>
+                                    <label>Intent</label>
+                                    {/* <button className='nodeCloseButton' onClick={deleteNode} >
+                                    <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                                </button> */}
+                                </div>
                                 <input
                                     type="text"
                                     value={intent || ''}
                                     onChange={handleIntentChange}
                                     className="nodrag cardInput"
+                                    style={{ width: '100%' }}
                                 />
                             </div>
 
                             {inputs.map((input, index) => (
                                 <div key={input.id} style={{ display: 'flex', flexDirection: 'column', marginBottom: '10px' }}>
-                                    <label>
-                                        <input
-                                            type="text"
-                                            className="nodrag cardInput"
-                                            value={input.label}
-                                            onChange={(event) => handleLabelChange(index, event)}
-                                            placeholder="Label"
-                                            style={{
-                                                marginBottom: "0px",
-                                                paddingBottom: "5px",
-                                                outline: "none", backgroundColor: 'transparent'
-                                            }}
-                                        />
-                                    </label>
+                                    <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+                                        <label>
+                                            <input
+                                                type="text"
+                                                className="nodrag cardInput"
+                                                value={input.label}
+                                                onChange={(event) => handleLabelChange(index, event)}
+                                                placeholder="Label"
+                                                style={{
+                                                    marginBottom: "0px",
+                                                    paddingBottom: "5px",
+                                                    outline: "none", backgroundColor: 'transparent'
+                                                }}
+                                            />
+                                        </label>
+                                        <button className='nodeCloseButton' onClick={() => deleteField(input.id)} >
+                                            <IoClose style={{ color: '#000 !important', fontSize: '20px !important' }} />
+                                        </button>
+                                    </div>
                                     {input.type === 'message' ? (
                                         <textarea
                                             value={input.value}
