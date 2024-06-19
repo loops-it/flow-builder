@@ -461,7 +461,7 @@ export const getSinhalaNodeData = async () => {
       });
 
         const data = await response.json();
-        console.log('get tamil data response : ',data )
+        console.log('get sinhala data response : ',data )
 
       if (!response.ok) {
         throw new Error('Failed to get node data');

@@ -80,20 +80,6 @@ export default memo((id: any) => {
         setNodeId(id.id)
     }, [id.id])
 
-    // useEffect(() => {
-    //     modifyNodes();
-    // }, [inputs])
-
-
-    // const modifyNodes = () => {
-    //     const fieldRegex = /^field_/;
-    //     const modifiedInputs = inputs.map(input => ({
-    //         ...input,
-    //         id: fieldRegex.test(input.id) ? input.id : input.node_id
-    //     }));
-        
-    //     setInputs(modifiedInputs);
-    // }
 
     const saveNode = async () => {
 
