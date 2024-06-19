@@ -353,15 +353,17 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
     const savedEnglishButtonID = localStorage.getItem('selectedEnglishButtonID');
     setEnglishNodeID(savedEnglishNodeID);
     setEnglishButtonID(savedEnglishButtonID);
-  }, []);
+  }, [englishNodeID, englishButtonID]);
 
   const addFloatingButton = () => {
-    if (!englishNodeID) {
+    let savedEnglishNodeID = localStorage.getItem('selectedEnglishNodeID');
+    console.log("englishNodeID : ",savedEnglishNodeID)
+    if (!savedEnglishNodeID) {
       console.error("Group ID is not defined");
       return;
     }
-    console.log("savedEnglishButtonID : ", englishNodeID)
-    addGroupButtonNode(englishNodeID);
+    console.log("savedEnglishButtonID : ", savedEnglishNodeID)
+    addGroupButtonNode(savedEnglishNodeID);
   };
 
 
@@ -499,12 +501,13 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
 
 
   const addFloatingButtonForButtonGroup = () => {
-    if (!englishButtonID) {
+    let savedEnglishButtonID = localStorage.getItem('selectedEnglishButtonID');
+    if (!savedEnglishButtonID) {
       console.error("Group ID is not defined");
       return;
     }
-    console.log("savedEnglishNodeID : ", englishButtonID)
-    addGroupButtonsNodes(englishButtonID);
+    console.log("savedEnglishButtonID : ", savedEnglishButtonID)
+    addGroupButtonsNodes(savedEnglishButtonID);
   };
 
 

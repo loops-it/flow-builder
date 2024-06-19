@@ -196,7 +196,7 @@ p {
 }
 
 .groupColor {
-  background-color: #F8F8F8;
+  background-color: #f8f8f83d !important;
   border: none;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
 }
@@ -337,7 +337,7 @@ label {
 /* react-flow__node react-flow__node-buttonGroup nopan selected selectable parent */
 
 .react-flow__node-buttonGroup {
-  background-color: #f8f8f8 !important;
+  background-color: #f8f8f83d !important;
   z-index: 0;
   pointer-events: all;
   visibility: visible;

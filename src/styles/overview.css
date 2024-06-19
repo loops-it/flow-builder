@@ -307,3 +307,7 @@
   pointer-events: "all";
   visibility: "visible",
 }
+
+.react-flow__node-buttonGroup{
+  background-color: #f8f8f83d !important;
+}
