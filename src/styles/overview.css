@@ -301,3 +301,9 @@
   pointer-events: "all";
   visibility: "visible",
 }
+
+.imageCard {
+  z-index: '999 !important';
+  pointer-events: "all";
+  visibility: "visible",
+}

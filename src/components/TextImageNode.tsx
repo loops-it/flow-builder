@@ -187,7 +187,7 @@ export default memo((id: any) => {
 
     return (
         <>
-            <div className='elementWrap' style={{ zIndex: '99998 !important' }}>
+            <div className='elementWrap imageCard' style={{ zIndex: '99998 !important' }}>
                 {/* gradient */}
                 <div className="wrapper plainColor  elementWrap" style={{ borderRadius: '10px', margin: '10px' }}>
 
