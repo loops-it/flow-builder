@@ -254,7 +254,8 @@ const FlowPanel: React.FC<FlowPanelProps> = (language) => {
       },
       type: 'cardHeader',
       style: {
-        position: 'absolute !important'
+        position: 'absolute !important',
+        zIndex: '99 !important'
       },
       parentId: groupId,
       extent: 'parent',

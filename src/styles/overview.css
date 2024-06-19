@@ -205,9 +205,11 @@
   padding: 6px 10px;
   color: #555;
 }
-.react-flow__node-textinput input::placeholder{
+
+.react-flow__node-textinput input::placeholder {
   color: #AAB6C1 !important;
 }
+
 .gradient:before {
   content: '';
   position: absolute;
@@ -267,8 +269,8 @@
       #2a89f6b2 120deg,
       #2a89f6b2 240deg,
       #2aa3e9bb 360deg); */
-      background-color: #E9F1FF;
-      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
+  background-color: #E9F1FF;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.178) !important;
 }
 
 
@@ -289,7 +291,13 @@
 }
 
 
-.react-flow__node-default{
+.react-flow__node-default {
   visibility: hidden !important;
   pointer-events: none !important;
+}
+
+.react-flow__node-cardGroup {
+  z-index: '999 !important';
+  pointer-events: "all";
+  visibility: "visible",
 }

@@ -135,7 +135,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
         }
 
         // Add style for group nodes
-        if (filteredNode.type === 'group') {
+        if (filteredNode.type === 'cardGroup') {
           filteredNode.style = {
             width: '300px',
             minHeight: '400px',
@@ -230,7 +230,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
         }
 
         // Add style for group nodes
-        if (filteredNode.type === 'group') {
+        if (filteredNode.type === 'cardGroup') {
           filteredNode.style = {
             width: '300px',
             minHeight: '400px',
@@ -326,7 +326,7 @@ export const loadDataOnMount = async (setNodes: { (value: SetStateAction<Node<an
         }
 
         // Add style for group nodes
-        if (filteredNode.type === 'group') {
+        if (filteredNode.type === 'cardGroup') {
           filteredNode.style = {
             width: '300px',
             minHeight: '400px',
